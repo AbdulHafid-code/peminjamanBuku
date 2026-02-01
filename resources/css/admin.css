@@ -1,0 +1,219 @@
+@import "tailwindcss";
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+body{
+	@apply overflow-x-hidden bg-gray-100 dark:bg-gray-900 transition-colors duration-300 ease-in-out;
+}
+
+a, button {
+    @apply cursor-pointer;
+}
+
+/* SIDEBAR */
+#sidebar {
+    @apply fixed max-w-[260px] w-full bg-white dark:bg-gray-900 top-0 left-0 h-full border-r border-gray-200 dark:border-gray-800 overflow-y-auto transition-all duration-300 z-[200];
+	scrollbar-width: none;
+}
+#sidebar.hide {
+    @apply max-w-15;
+}
+#sidebar.hide:hover {
+    @apply max-w-65;
+}
+#sidebar::-webkit-scrollbar {
+	display: none;
+}
+#sidebar .brand {
+    @apply text-2xl flex items-center h-16 font-bold text-violet-500 sticky top-0 left-0 z-100 bg-white dark:bg-gray-900 transition-all duration-300 px-1.5;
+}
+#sidebar .icon {
+    @apply min-w-[48px] flex justify-center text-xl items-center mr-[6px];
+}
+#sidebar .icon-right {
+    @apply ml-auto transition-all duration-300;
+}
+#sidebar .side-menu {
+    @apply my-9 px-5 transition-all duration-300;
+}
+#sidebar.hide .side-menu {
+	@apply px-[6px];
+}
+#sidebar.hide .side-menu form {
+	@apply px-4;
+}
+#sidebar.hide:hover .side-menu {
+	@apply px-5;
+}
+#sidebar .side-menu a {
+    @apply flex items-center font-medium text-sm text-gray-600 dark:text-gray-400 py-2 pr-4 transition-all duration-300 rounded-[10px] my-1 whitespace-nowrap;
+}
+#sidebar .side-menu > li > a:hover,
+#sidebar .side-menu > li > ul > li > a:hover,
+#sidebar .side-menu > li > form:hover {
+	@apply bg-gray-100 dark:bg-gray-100/10;
+}
+#sidebar .side-menu > li > a.active .icon-right {
+    @apply rotate-z-90;
+}
+#sidebar .side-menu > li > a.active,
+#sidebar .side-menu > li > a.active:hover, 
+#sidebar .side-menu > li > ul > li > a.active,
+#sidebar .side-menu > li > a.active:hover {
+	@apply bg-violet-500/10 text-violet-500;
+}
+#sidebar .divider {
+    @apply mt-6 text-xs uppercase font-bold text-gray-800 dark:text-gray-200 transition-all duration-300 whitespace-nowrap;
+}
+#sidebar.hide:hover .divider {
+	@apply text-left;
+}
+#sidebar.hide .divider {
+	@apply text-center;
+}
+#sidebar .side-dropdown {
+    @apply pl-[54px] max-h-0 overflow-y-hidden transition-all duration-300;
+}
+#sidebar .side-dropdown.show {
+	@apply max-h-[1000px];
+}
+#sidebar .side-dropdown a:hover {
+	@apply text-violet-500;
+}
+
+/* CONTENT */
+#content {
+    @apply relative left-65 transition-all duration-300 w-[calc(100%-60px)] md:w-[calc(100%-260px)];
+}
+#sidebar.hide + #content {
+    @apply left-15;
+	width: calc(100% - 60px);
+}
+
+/* NAVBAR */
+nav {
+    @apply bg-white dark:bg-gray-900 h-18 border-b border-gray-200 dark:border-gray-800 px-5 flex items-center sticky top-0 left-0 z-100;
+	grid-gap: 28px;
+}
+nav .toggle-sidebar {
+    @apply text-lg text-gray-800 dark:text-gray-100 cursor-pointer;
+}
+nav form {
+    @apply max-w-100 w-75 sm:w-125 mr-auto;
+}
+nav .form-group {
+	@apply relative;
+}
+nav .form-group input {
+    @apply w-full text-gray-800 dark:text-gray-200 bg-gray-50 dark:bg-gray-800 rounded-[5px] border border-gray-200 dark:border-gray-700 outline-0 p-[10px_36px_10px_16px] transition-all duration-300 focus:shadow shadow-violet-100 dark:shadow-violet-900;
+}
+nav .form-group .icon {
+    @apply absolute top-1/2 -translate-1/2 right-4 text-gray-800 dark:text-gray-200;
+}
+nav .nav-link {
+    @apply relative hidden md:block lg:flex justify-center items-center rounded-full border border-gray-200 dark:border-gray-800 w-10 h-10 transition-all duration-300 hover:bg-gray-400/10 dark:hover:bg-gray-600/20;
+}
+nav .nav-link .icon {
+    @apply text-xl text-gray-600 dark:text-gray-400;
+}
+nav .divider {
+    @apply w-[1px] bg-gray-500 h-3 hidden md:block;
+}
+nav .profile {
+    @apply relative flex justify-center items-center gap-2;
+}
+nav .profile img {
+    @apply max-w-9 max-h-9 w-10 h-10 rounded-[50%] object-cover cursor-pointer;
+}
+nav .profile h3{
+    @apply font-medium text-gray-700 dark:text-gray-100 text-base
+}
+nav .profile .profile-link {
+    @apply absolute right-0 mt-4 bg-white dark:bg-gray-800 p-4 rounded-md w-50 opacity-0 pointer-events-none transition-all duration-300;
+	top: calc(100% + 10px);
+	box-shadow: 4px 4px 16px rgba(0, 0, 0, .1);
+}
+nav .profile .profile-link.show {
+    @apply opacity-100 pointer-events-auto top-full;
+}
+nav .profile .profile-link a,
+nav .profile .profile-link form{
+    @apply py-2.5 px-4 flex gap-5 font-medium text-sm w-full text-gray-600 dark:text-gray-400 w-fit rounded-lg items-center transition-all duration-300 hover:bg-gray-100 hover:dark:bg-gray-100/10;
+}
+
+nav .profile .profile-link i,
+nav .profile .profile-link button i {
+    @apply text-lg
+}
+
+
+
+/* MAIN */
+main {
+    @apply w-full p-3 sm:p-[24px_20px_20px_20px];
+}
+main .title-container {
+    @apply flex justify-between min-[600px]:items-center mb-5 px-4 flex-col min-[600px]:flex-row items-start gap-5;
+}
+main .title-container div{
+    @apply flex flex-col justify-between items-start w-auto
+}
+main .title-container .btn-plus {
+    @apply flex items-center gap-2 px-3 py-2 bg-violet-500 text-gray-50 text-[15px] rounded-lg;
+}
+main .title {
+    @apply text-3xl font-bold dark:text-gray-50 text-gray-950;
+}
+main .breadcrumbs {
+    @apply flex justify-center items-center;
+}
+main .breadcrumbs li,
+main .breadcrumbs li a {
+	@apply text-sm font-medium;
+}
+main .breadcrumbs li a {
+	@apply text-gray-600 dark:text-gray-400 ;
+}
+main .breadcrumbs .divider{
+    @apply text-3xl text-gray-600 dark:text-gray-400;
+}
+main .breadcrumbs li a.active {
+	@apply text-violet-500 pointer-events-none;
+}
+main .info-data {
+	@apply mt-[36px] grid grid-cols-4 gap-5 grid-cols-[repeat(auto-fit,minmax(240px,1fr))];
+}
+main .info-data .card {
+	@apply p-5 rounded-[20px] bg-gray-50;
+	box-shadow: 4px 4px 16px rgba(0, 0, 0, .05);
+}
+main .card .head {
+	@apply flex justify-between items-start;
+}
+main .card .head h2 {
+	@apply text-2xl font-semibold;
+}
+main .card .head p {
+	@apply text-sm;
+}
+main .card .head .icon {
+	@apply text-[20px] text-green-500;
+}
+main .card .head .icon.down {
+	@apply text-red-500;
+}
+main .card .progress {
+	@apply block mt-6 h-[10px] w-full rounded-[10px] bg-gray-100 overflow-y-hidden relative mb-1;
+}
+main .card .progress::before {
+	@apply content-[''] absolute top-0 left-0 h-full bg-violet-500;
+	width: var(--value);
+}
+main .card .label {
+	@apply text-sm font-bold;
+}
+
+
+
+.rotate-360 {
+  transform: rotate(360deg);
+}
