@@ -11,12 +11,12 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    
+
     public function index()
     {
 
         $bukuPopuler = Buku::withCount([
-            'transaksi as total_pinjam' => function($query){
+            'transaksi as total_pinjam' => function ($query) {
                 $query->where('status', 1);
             }
         ])->orderByDesc('total_pinjam')->limit(6)->get();
@@ -51,7 +51,7 @@ class HomeController extends Controller
             'kategori' => $data
         ]);
     }
-    
+
     public function buku(Request $request)
     {
 
@@ -79,25 +79,24 @@ class HomeController extends Controller
 
     public function buku_detail(string $id)
     {
-        $isFavorit = false;
-        if (!auth()->check()) {
-            return redirect()->route('login');
-        }
-
         $buku = Buku::findOrFail($id);
 
-        $isFavorit = Buku_Favorit::where('user_id', auth()->user()->id_user)
-                                    ->where('buku_id', $buku->id_buku)
-                                    ->exists();
-    
+        $isFavorit = false;
+
+        if (auth()->check()) {
+            $isFavorit = Buku_Favorit::where('user_id', auth()->user()->id_user)
+                ->where('buku_id', $buku->id_buku)
+                ->exists();
+        }
+
         return view('home.buku.detail', [
             'buku' => $buku,
-            'transaksi' => Transaksi::where('buku_id', $id)->where('status', 1)->get(),
-            'isFavorit' =>$isFavorit,
+            'transaksi' => Transaksi::where('buku_id', $id)
+                ->where('status', 1)
+                ->get(),
+            'isFavorit' => $isFavorit,
         ]);
     }
-
-
 
 
 

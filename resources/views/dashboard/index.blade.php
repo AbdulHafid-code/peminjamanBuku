@@ -1,7 +1,7 @@
 @extends('dashboard.layouts.main')
 
 @section('title')
-	Dashboard Admin | Kategori Buku
+	Dashboard Admin | Dashboard Buku
 @endsection
 
 @section('content')
@@ -21,7 +21,7 @@
 
 	{{-- alert --}}
 	<x-alert-success-error :session="session('success')"/>
-	<x-alert-success-error type="'error'" :session="session('error')"/>
+	<x-alert-success-error type='error' :session="session('error')"/>
 
 	@can('admin')
 		{{-- card --}}
@@ -84,6 +84,7 @@
 			
 		</div>
 
+		{{-- chart --}}
 		<div class="rounded-lg bg-white dark:bg-gray-800 shadow-md shadow-gray-200/60 dark:shadow-violet-800/20 p-3 sm:p-6 mb-5">
 			<div id="chartTraffic" class="min-w-150"></div>
 		</div>
@@ -151,18 +152,23 @@
 								<td class="px-1.5 sm:px-4 py-2 gap-2 hidden sm:block">
 									{{ mb_strimwidth($item->buku->judul_buku, 0, 17, '...') }}
 								</td>
-								<td class="px-1.5 sm:px-4 py-2">{{$item->total_pinjam}} <span class="hidden md:inline">Buku</span></td>
+								<td class="px-1.5 sm:px-4 py-2">{{$item->total_pinjam - $item->jumlah_dikembalikan }} <span class="hidden md:inline">Buku</span></td>
 								<td class="px-1.5 sm:px-4 py-2 align-middle">
 									<div class="flex justify-center gap-2 font-normal text-sm">
 										<x-button-detail :href="route('buku.show', $item->buku->id_buku)"></x-button-detail>
-										<x-button-edit :href="route('buku.edit', $item->buku->id_buku)" :edit='true'></x-button-edit>
+										<form action="{{ route('status', $item->user->id_user) }}" method="POST">
+											@csrf
+											<button id="btn-delete" data-pesan="Apakah Anda Yakin Ingin Mengnonaktifkan {{$item->user->nama}}" type="submit" class="rounded-sm bg-red-500 px-5 py-2 text-sm font-medium text-white hover:bg-red-600 flex items-center gap-2">
+												<i class='bx bx-x' ></i> Non Aktif
+											</button>
+										</form>
 									</div>
 								</td>
 							</tr>
 						@empty
 							<tr>
 								<td colspan="100%" class="py-3 text-gray-600 dark:text-gray-400 text-center">
-									Data Buku Kosong
+									Data Transaksi Kosong
 								</td>
 							</tr>
 						@endforelse

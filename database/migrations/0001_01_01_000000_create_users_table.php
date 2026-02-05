@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nama');
             $table->string('username')->unique();
             $table->string('password');
+            $table->enum('status_akun', ['pending', 'aktif', 'nonaktif'])->default('pending');
             $table->foreignId('role_id');
             $table->string('profil')->nullable();
             $table->timestamps();

@@ -70,6 +70,13 @@ class TransaksiController extends Controller
 
     public function store(Request $request)
     {
+        $user = User::find($request->user_id);
+        if ($user->status_akun == 'nonaktif') {
+            return redirect()->route('transaksi.index')->with('error', 'Gagal Menambah Transaksi, Pengguna Sedang Di Non-Aktifkan');
+        } else {
+            return redirect()->route('transaksi.index')->with('error', 'Gagal Menambah Transaksi, Pengguna Masih Pending');
+        }
+
         $validate = $request->validate([
             'buku_id' => 'required|exists:buku,id_buku',
             'user_id' => 'required|exists:user,id_user',
@@ -78,6 +85,10 @@ class TransaksiController extends Controller
             'total_pinjam' => 'required|integer|min:1',
             'status' => 'required|in:0,1,2,3'
         ]);
+
+        if (Transaksi::where('user_id', $request->user_id)->where('status', 1)->exists() || Transaksi::where('user_id', $request->user_idun)->where('status', 0)->exists()) {
+            return redirect()->route('transaksi.index')->with('error', 'Maaf, Anda Masih Memiliki Buku Yang Belum Dikembalikan');
+        }
 
         $buku = Buku::where('id_buku', $request->buku_id)->firstOrFail();
 
@@ -92,10 +103,6 @@ class TransaksiController extends Controller
         if ($tanggalKembali->gt($tanggalPinjam->copy()->addYear())) {
             return back()->withErrors(['tanggal_kembali' => 'Tanggal kembali tidak boleh lebih dari satu tahun dari tanggal pinjam.'])->withInput();
         }
-
-        // if($tanggalKembali->diffInDays($tanggalPinjam) > 1){
-        //     return back()->withErrors(['tanggal_kembali' => 'Tanggal Kembali Minimal 1 Hari Dari Tanggal Dipinjam'])->withInput();
-        // }
 
         try {
             Transaksi::create($validate);
@@ -128,6 +135,12 @@ class TransaksiController extends Controller
 
     public function update(Request $request, string $id)
     {
+        $user = User::find($request->user_id);
+
+        if ($user->status_akun == 'nonaktif') {
+            return redirect()->route('transaksi.index')->with('error', 'Gagal Mengubah Transaksi, Pengguna Sedang Di Non-Aktifkan');
+        }
+
         $transaksi = Transaksi::findOrFail($id);
         if ($transaksi->status != 0) {
             abort(403, "Transaksi Ini Statusnya bukan Pending");
@@ -179,12 +192,13 @@ class TransaksiController extends Controller
         }
     }
 
-
-    public function edit_status(Request $request, string $id, string $status) {
+    public function edit_status(Request $request, $id, string $status)
+    {
+        // dd($request->all(), $id, $status);
         $gagalTransaksi = null;
 
         try {
-            DB::transaction(function () use ($id, $status, &$gagalTransaksi) {
+            DB::transaction(function () use ($id, $request, $status, &$gagalTransaksi) {
 
                 // Lock transaksi
                 $transaksi = Transaksi::lockForUpdate()->findOrFail($id);
@@ -207,44 +221,67 @@ class TransaksiController extends Controller
                     // Kondisi Ketika Disetujui Transaksi
                     if ($status === 'disetujui') {
 
+                        if ($transaksi->user->status_akun == 'nonaktif') {
+                            throw new \Exception('NONAKTIF');
+                        }
+
+                        if (Transaksi::where('user_id', $transaksi->user_id)->where('status', 1)->exists()) {
+                            $transaksi->update(['status' => 3]);
+                            $gagalTransaksi = "Maaf, Pengguna Ini Masih Memiliki Buku Yang Belum Dikembalikan";
+                            return;
+                        }
+
                         // Cek stok jika stok kurang maka kirim pesan error
                         if ($transaksi->total_pinjam > $buku->stok) {
                             throw new \Exception('STOK_KURANG');
                         }
 
                         //  Kurangi stok
-                        $buku->stok -= $transaksi->total_pinjam;
+                        $buku->stok -= $transaksi->total_pinjam - $transaksi->jumlah_dikembalikan;
                         $buku->save();
 
                         $statusQuery = 1;
 
-                    // Kondisi Ketika Di Tolak
+                        // Kondisi Ketika Di Tolak
                     } elseif ($status === 'ditolak') {
                         $statusQuery = 3;
 
-                    // Jika Selain Transaksi Diatas Maka Kirimkan Pesan Error Invalid Pending    
+                        // Jika Selain Transaksi Diatas Maka Kirimkan Pesan Error Invalid Pending    
                     } else {
                         throw new \Exception('INVALID_STATUS_PENDING');
                     }
 
-                // Kondisi Ketika Transaksinya Sama Dengan 1 Atau Dipinjamm
+                    // Kondisi Ketika Transaksinya Sama Dengan 1 Atau Dipinjamm
                 } elseif ($transaksi->status == 1) {
 
                     // Kondisi Ketika Dia Mau Merubah Status Dikembalikan
                     if ($status === 'dikembalikan') {
 
+                        $jumlahDikembalikan = $request->jumlah_dikembalikan;
+
                         // Kembalikan stok
-                        $buku->stok += $transaksi->total_pinjam;
+                        $buku->stok += $jumlahDikembalikan;
                         $buku->save();
 
-                        $statusQuery = 2;
+                        $transaksi->jumlah_dikembalikan  += $jumlahDikembalikan;
+                        $transaksi->save();
 
-                    // Jika Statusnya Selain Diatas Maka Kirim Pesan Error
+                        if ($transaksi->jumlah_dikembalikan == $transaksi->total_pinjam) {
+                            $statusQuery = 2;
+                        } else {
+                            $statusQuery = 1;
+                        }
+
+                        // Jika Statusnya Selain Diatas Maka Kirim Pesan Error
+                    } elseif ($status === 'dipulihkan') {
+                        $buku->stok += $transaksi->total_pinjam - $transaksi->jumlah_dikembalikan;
+                        $buku->save();
+                        $statusQuery = 0;
                     } else {
                         throw new \Exception('INVALID_STATUS_SETUJU');
                     }
 
-                // Ketika Transaksinya Status Ditolak
+                    // Ketika Transaksinya Status Ditolak
                 } elseif ($transaksi->status == 3) {
 
                     // Ketika Mau Melakukan Pemulihan Tapi Tanggal Kembalinya Sudah Lewat Maka Gagalkan Perubahan Transaksi
@@ -256,12 +293,12 @@ class TransaksiController extends Controller
                     if ($status === 'dipulihkan') {
                         $statusQuery = 0;
 
-                    // Jika perubahan status selain diatas maka kembalikan pesan error
+                        // Jika perubahan status selain diatas maka kembalikan pesan error
                     } else {
                         throw new \Exception('INVALID_STATUS_TOLAK');
                     }
 
-                // Jika Statusnya selain diatas maka berikan error status tidak diketahui
+                    // Jika Statusnya selain diatas maka berikan error status tidak diketahui
                 } else {
                     throw new \Exception('UNKNOWN_STATUS');
                 }
@@ -270,12 +307,11 @@ class TransaksiController extends Controller
                 $transaksi->update(['status' => $statusQuery]);
             });
 
-            if(!empty($gagalTransaksi)) {
+            if (!empty($gagalTransaksi)) {
                 return redirect()->back()->with('error', $gagalTransaksi);
             }
 
-            return redirect()->back()->with('sukses', 'Status berhasil diperbarui menjadi ' . $status);
-
+            return redirect()->back()->with('success', 'Status berhasil diperbarui menjadi ' . $status);
         } catch (\Exception $e) {
 
             return redirect()->back()->with('error', match ($e->getMessage()) {
@@ -285,9 +321,9 @@ class TransaksiController extends Controller
                 'STOK_KURANG' => 'Stok buku tidak mencukupi',
                 'AUTO_TOLAK' => 'Transaksi ditolak karena tanggal kembali sudah lewat',
                 'UNKNOWN_STATUS' => 'Gagal mengubah status, status tidak diketahui',
+                'NONAKTIF' => 'Tidak Dapat Menyetujui, Pengguna Sedang Di Non-Aktifkan',
                 default => 'Gagal Mengubah Status, Terjadi Error'
             });
         }
     }
-
 }

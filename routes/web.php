@@ -3,7 +3,6 @@
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BukuController;
-use App\Http\Controllers\CobaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KategoriController;
@@ -22,7 +21,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/register', [AuthController::class, 'register'])->name('register.post');
 });
 
-Route::prefix('dashboard')->middleware(['auth'])->group(function () {
+Route::prefix('dashboard')->middleware(['auth', 'statusAkun'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout.post');
     Route::get('/',  [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/editprofil',  [DashboardController::class, 'edit_profil'])->name('edit_profil');
@@ -36,12 +35,16 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
 
 
     Route::middleware('role:1')->group(function () {
+        Route::put('/transaksi/Editstatus/{id}/{status}', [TransaksiController::class, 'edit_status'])->name('edit_status_transaksi');
+        Route::get('/aktifasi-user', [UserController::class, 'aktifasi'])->name('aktifasi');
+        Route::get('/nonaktif-user', [UserController::class, 'nonaktif'])->name('nonaktif');
+
         Route::resource('/buku', BukuController::class);
         Route::resource('/kategori', KategoriController::class);
         Route::resource('/role', RoleController::class);
         Route::resource('/user', UserController::class);
+        Route::post('/ubahStatus/{id_user}', [UserController::class, 'ubahStatus'])->name('status');
         Route::resource('/transaksi', TransaksiController::class);
-        Route::put('/transaksi/Editstatus/{id}/{status}', [TransaksiController::class, 'edit_status'])->name('edit_status_transaksi');
     });
 
     Route::resource('/profil', DashboardController::class);

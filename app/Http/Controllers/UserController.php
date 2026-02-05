@@ -22,10 +22,9 @@ class UserController extends Controller
         $this->imageHelper = $imageHelper;
     }
 
-    
     public function index(Request $request)
     {
-        $query = User::query();
+        $query = User::where('status_akun', 'aktif');
 
         // filter reset
         if ($request->filled('reset')) {
@@ -72,10 +71,18 @@ class UserController extends Controller
         $validateUser = $request->validate([
             'nama' => 'required|min:2',
             'username' => 'required|min:3|unique:user,username',
-            'password' => 'required|min:5|confirmed',
+            'password' => [
+                'required',
+                'min:5',
+                'confirmed',
+                'regex:/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]+$/'
+            ],
             'role_id' => 'required|exists:role,id_role',
             'profil' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:3048',
+        ], [
 
+            'password.regex' => 'Password harus mengandung huruf, angka, dan minimal satu karakter spesial (#, @, !, dll).',
+            'password.min' => 'Password minimal 5 karakter.',
         ]);
 
         try {
@@ -86,6 +93,7 @@ class UserController extends Controller
             }
 
             $validateUser['profil'] = $file;
+            $validateUser['status_akun'] = 'aktif';
             $validateUser['password'] = Hash::make($validateUser['password']);
 
             User::create($validateUser);
@@ -147,7 +155,11 @@ class UserController extends Controller
             $validateUser['profil'] = $profil;
 
             $user->update($validateUser);
-            return redirect()->route('user.index')->with('success', 'Pengguna Berhasil Diedit');
+            if ($user->status_akun == 'aktif') {
+                return redirect()->route('user.index')->with('success', 'Pengguna Berhasil Diedit');
+            } elseif ($user->status_akun == 'pending') {
+                return redirect()->route('aktifasi')->with('success', 'Pengguna Berhasil Diedit');
+            }
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Terjadi Kesalahan Saat Mengedit Data Pengguna.');
         }
@@ -168,5 +180,98 @@ class UserController extends Controller
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Terjadi Kesalahan Saat Menghapus Data Pengguna.');
         }
+    }
+
+    public function ubahStatus($id_user)
+    {
+        try {
+            $user = User::findOrFail($id_user);
+
+            if ($user->status_akun === 'aktif') {
+                $status['status_akun'] = 'nonaktif';
+            } elseif ($user->status_akun === 'nonaktif' || $user->status_akun === 'pending') {
+                $status['status_akun'] = 'aktif';
+            }
+
+            $user->update($status);
+
+            return redirect()->back()->with('success', "Status akun {$user->nama} berhasil diubah menjadi {$status['status_akun']}.");
+        } catch (\Throwable $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat mengubah status akun.');
+        }
+    }
+
+    public function aktifasi(Request $request)
+    {
+        $query = User::where('status_akun', 'pending');
+
+        // filter reset
+        if ($request->filled('reset')) {
+            return redirect()->route('user.index');
+        }
+
+        // filter role
+        if ($request->filled('role')) {
+            $query->where('role_id', $request->role);
+        }
+
+        // filter search
+        if ($request->filled('search')) {
+            $query->where('nama', 'like', "%{$request->search}%")
+                ->orWhere('username', 'like', "%{$request->search}%");
+        }
+
+        // filter waktu
+        match ($request->order) {
+            'asc' => $query->orderBy('nama', 'asc'),
+            'desc' => $query->orderBy('nama', 'desc'),
+            'newest' => $query->orderBy('created_at', 'desc'),
+            'oldest' => $query->orderBy('created_at', 'asc'),
+            default => $query->orderBy('nama', 'asc'),
+        };
+
+        $data = $query->get();
+
+        return view('dashboard.user.aktifasi', [
+            'users' => $data,
+            'role' => Role::all(),
+        ]);
+    }
+
+    public function nonaktif(Request $request)
+    {
+        $query = User::where('status_akun', 'nonaktif');
+
+        // filter reset
+        if ($request->filled('reset')) {
+            return redirect()->route('user.index');
+        }
+
+        // filter role
+        if ($request->filled('role')) {
+            $query->where('role_id', $request->role);
+        }
+
+        // filter search
+        if ($request->filled('search')) {
+            $query->where('nama', 'like', "%{$request->search}%")
+                ->orWhere('username', 'like', "%{$request->search}%");
+        }
+
+        // filter waktu
+        match ($request->order) {
+            'asc' => $query->orderBy('nama', 'asc'),
+            'desc' => $query->orderBy('nama', 'desc'),
+            'newest' => $query->orderBy('created_at', 'desc'),
+            'oldest' => $query->orderBy('created_at', 'asc'),
+            default => $query->orderBy('nama', 'asc'),
+        };
+
+        $data = $query->get();
+
+        return view('dashboard.user.nonaktif', [
+            'users' => $data,
+            'role' => Role::all(),
+        ]);
     }
 }

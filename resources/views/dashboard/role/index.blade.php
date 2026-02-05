@@ -16,12 +16,12 @@
 		</div>
 
 		{{-- btn create --}}
-		<x-button-create :href="route('role.create')">Tambah Hak Akses</x-button-create>
+		{{-- <x-button-create :href="route('role.create')">Tambah Hak Akses</x-button-create> --}}
 	</div>
 
 	{{-- alert --}}
 	<x-alert-success-error :session="session('success')"/>
-	<x-alert-success-error type="'error'" :session="session('error')"/>
+	<x-alert-success-error type='error' :session="session('error')"/>
 
 	{{-- filter bar --}}
 	<x-filter-bar :searchPlaceholder="'Cari Nama Kategori...'"/> 

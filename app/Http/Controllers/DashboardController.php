@@ -25,7 +25,6 @@ class DashboardController extends Controller
 
     public function index()
     {
-
         $tahun = Carbon::now()->year;
         $dataMentah = DB::table('transaksi')
             ->selectRaw('MONTH(created_at) as bulan,status,tanggal_kembali,COUNT(*) as total')
@@ -64,13 +63,18 @@ class DashboardController extends Controller
         $user = User::where('role_id', 2);
 
         $BukuHabis = Buku::where('stok', '<=', 1)->get();
-        $UserTerlambat = Transaksi::where('status', '<=', Carbon::parse('tanggal_kembali' <= today()))->get();
+        $UserTerlambat = Transaksi::whereHas('user', function ($q) {
+            $q->where('status_akun', 'aktif');
+        })
+            ->where('status', 1) // misal transaksi aktif
+            ->where('tanggal_kembali', '<', now())
+            ->get();
+
 
         $bukuFavorit = Buku_Favorit::where('user_id', auth()->user()->id_user)->get();
-        $riwayatTransaksi = Transaksi::where('user_id', auth()->user()->id_user)->orWhere('status', 2)->get();
+        $riwayatTransaksi = Transaksi::where('user_id', auth()->user()->id_user)->get();
         $dipinjam = Transaksi::where('user_id', auth()->user()->id_user)->where('status', 1)->count();
         $totalBuku = Transaksi::where('user_id', auth()->user()->id_user)->sum('total_pinjam');
-
 
         // untuk user
         $bukuUser = Buku_Favorit::where('user_id', auth()->user()->id_user)->get();
@@ -170,11 +174,17 @@ class DashboardController extends Controller
 
     public function edit_password(Request $request)
     {
-        $request->session()->flash('password_edit', true);
-
         $validate = $request->validate([
             'password_lama' => 'required',
-            'password' => 'required|min:5|confirmed',
+            'password' => [
+                'required',
+                'min:5', // minimal 8 karakter
+                'confirmed',
+                'regex:/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]+$/'
+            ],
+        ], [
+            'password.regex' => 'Password harus mengandung huruf, angka, dan minimal satu karakter spesial (#, @, !, dll).',
+            'password.min' => 'Password minimal 5 karakter.',
         ]);
 
         try {
@@ -205,12 +215,16 @@ class DashboardController extends Controller
             return redirect()->route('login');
         }
 
+        if (Transaksi::where('user_id', auth()->user()->id_user)->where('status', 1)->exists()) {
+            return redirect()->back()->with('error', 'Maaf, Anda Masih Memiliki Buku Yang Belum Dikembalikan');
+        }
+
         $buku = Buku::where('id_buku', $request->buku_id)->firstOrFail();
 
         $validate = $request->validate([
             'tanggal_pinjam' => 'required|date|after_or_equal:today',
             'tanggal_kembali' => 'required|date|after_or_equal:tanggal_pinjam',
-            'total_pinjam' => 'required|integer|min:1'
+            'total_pinjam' => 'required|integer|min:1|max:3'
         ]);
 
         // total pinjam tidak bileh lebih dari stok

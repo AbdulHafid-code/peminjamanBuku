@@ -15,30 +15,62 @@ class AuthController extends Controller
         return view('auth.auth');
     }
 
+    // public function login(Request $request)
+    // {
+    //     try {
+    //         $validate = $request->validate([
+    //             'username_login' => 'required',
+    //             'password_login' => 'required'
+    //         ]);
+
+    //         $credentials = [
+    //             'username' => $validate['username_login'],
+    //             'password' => $validate['password_login']
+    //         ];
+
+    //         if (!Auth::attempt($credentials)) {
+    //             return redirect()->back()->with('error', 'Login Gagal, Periksa kembali username dan password anda!');
+    //         }
+
+    //         $request->session()->regenerate();
+
+    //         return redirect()->route('dashboard');
+    //     } catch (\Throwable $e) {
+    //         return redirect()->back()->with('error', 'Gagal Melakukan Login');
+    //     }
+    // }
+
     public function login(Request $request)
     {
-        try {
-            $validate = $request->validate([
-                'username_login' => 'required',
-                'password_login' => 'required'
-            ]);
+        $validate = $request->validate([
+            'username_login' => 'required',
+            'password_login' => 'required'
+        ]);
 
-            $credentials = [
-                'username' => $validate['username_login'],
-                'password' => $validate['password_login']
-            ];
+        $credentials = [
+            'username' => $validate['username_login'],
+            'password' => $validate['password_login']
+        ];
 
-            if (!Auth::attempt($credentials)) {
-                return redirect()->back()->with('success', 'Login Gagal, Periksa kembali username dan password anda!');
-            }
+        $user = User::where('username', $credentials['username'])->first();
 
-            $request->session()->regenerate();
-
-            return redirect()->route('dashboard');
-        } catch (\Throwable $e) {
-            return redirect()->back()->with('error', 'Gagal Melakukan Login');
+        if (!$user) {
+            return back()->with('error', 'Username / Password Salah');
         }
+
+        if ($user->status_akun === 'pending') {
+            return back()->with('error', 'Akun Belum Aktif');
+        }
+
+        if (!Auth::attempt($credentials)) {
+            return back()->with('error', 'Login gagal, periksa kembali data anda');
+        }
+
+        $request->session()->regenerate();
+
+        return redirect()->route('dashboard');
     }
+
 
     public function logout(Request $request)
     {
@@ -54,30 +86,71 @@ class AuthController extends Controller
         }
     }
 
+    // public function register(Request $request)
+    // {
+
+    //     $request->session()->flash('halaman_register', true);
+
+    //     $validate = $request->validate([
+    //         'nama' => 'required|min:3',
+    //         'username' => 'required|min:3|unique:user,username',
+    //         'password' => [
+    //             'required',
+    //             'min:5', // minimal 8 karakter
+    //             'confirmed',
+    //             'regex:/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]+$/'
+    //         ],
+    //     ], [
+    //         'password.regex' => 'Password harus mengandung huruf, angka, dan minimal satu karakter spesial (#, @, !, dll).',
+    //         'password.min' => 'Password minimal 5 karakter.',
+    //     ]);
+
+    //     try {
+
+    //         $validate['password'] = Hash::make($validate['password']);
+    //         $validate['role_id'] = 2;
+    //         $validate['status_akun'] = 'pending';
+
+    //         User::create($validate);
+
+    //         Auth::attempt($request->only('username', 'password'));
+
+    //         return redirect()->route('home');
+    //     } catch (\Throwable $e) {
+    //         return redirect()->back()->with('error', 'Gagal Melakukan Register')->with('halaman_register', true);
+    //     }
+    // }
+
     public function register(Request $request)
     {
-
-        $request->session()->flash('halaman_register', true);
 
         $validate = $request->validate([
             'nama' => 'required|min:3',
             'username' => 'required|min:3|unique:user,username',
-            'password' => 'required|min:5|confirmed',
+            'password' => [
+                'required',
+                'min:5', // minimal 8 karakter
+                'confirmed',
+                'regex:/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]+$/'
+            ],
+        ], [
+            'password.regex' => 'Password harus mengandung huruf, angka, dan minimal satu karakter spesial (#, @, !, dll).',
+            'password.min' => 'Password minimal 5 karakter.',
         ]);
 
         try {
 
             $validate['password'] = Hash::make($validate['password']);
             $validate['role_id'] = 2;
+            $validate['status_akun'] = 'pending';
 
             User::create($validate);
 
-            Auth::attempt($request->only('username', 'password'));
+            $request->session()->forget('halaman_register');
 
-            return redirect()->route('dashboard');
+            return redirect()->route('login')->with('success', 'Akun Anda Sedang Di Aktivasi');
         } catch (\Throwable $e) {
             return redirect()->back()->with('error', 'Gagal Melakukan Register')->with('halaman_register', true);
         }
     }
-
 }

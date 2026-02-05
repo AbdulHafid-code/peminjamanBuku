@@ -32,7 +32,7 @@
 
       <div class="flex flex-wrap mt-10 gap-5 items-center justify-center">
         @foreach ($kategori as $item)
-          <a href="{{ route('buku.home') }}?kategori_id={{ $item->id_kategori }}" class="group block rounded-xl max-w-96.25 border border-gray-200 bg-white p-5 transition hover:-translate-y-1 hover:shadow-lg">
+          <a href="{{ route('buku.home') }}?kategori={{ $item->id_kategori }}" class="group block rounded-xl max-w-96.25 border border-gray-200 bg-white p-5 transition hover:-translate-y-1 hover:shadow-lg">
 
               <!-- Header -->
               <div class="flex items-start justify-between gap-3">

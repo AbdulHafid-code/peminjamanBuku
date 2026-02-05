@@ -19,7 +19,7 @@
 	</div>
 
     {{-- error alert --}}
-	<x-alert-success-error type="'error'" :session="session('error')"/>
+	<x-alert-success-error type='error' :session="session('error')"/>
 
 
     <form method="POST" action="{{ route('transaksi.store')}}" class="w-full rounded-lg bg-white dark:bg-gray-800/50 shadow-md shadow-gray-200/60 dark:shadow-violet-800/20 p-3 sm:p-6 space-y-4 text-gray-600 dark:text-gray-400">

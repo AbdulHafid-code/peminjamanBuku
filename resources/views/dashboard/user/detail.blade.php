@@ -53,6 +53,10 @@
                         <p class="text-gray-950 dark:text-gray-50">{{ $user->role->role }}</p>
                     </div>
                     <div>
+                        <p class="text-gray-600 dark:text-gray-400">Status Akun</p>
+                        <p class="text-gray-950 dark:text-gray-50">{{ $user->status_akun }}</p>
+                    </div>
+                    <div>
                         <p class="text-gray-600 dark:text-gray-400">Tanggal Dibuat</p>
                         <p class="text-gray-950 dark:text-gray-50">{{ $user->created_at->format('d M Y') }}</p>
                     </div>
@@ -60,8 +64,17 @@
             </div>
 
             <!-- ACTIONS -->
-            <div class="flex gap-3">
-                <x-button-edit :href="route('user.edit', $user->id_user)" />
+            <div class="flex gap-3">                
+                @if ($user->status_akun != 'aktif')
+                    <form action="{{ route('status', $user->id_user) }}" method="POST">
+                        @csrf
+                        <button id="btn-delete" data-pesan="Apakah Anda Yakin Ingin Mengaktifkan {{$user->nama}}" type="submit" class="rounded-sm bg-amber-500 px-5 py-2 text-sm font-medium text-white hover:bg-amber-600 flex items-center gap-2">
+                            <i class='bx bxs-check-circle ' ></i> Aktif
+                        </button>
+                    </form>	
+                @else
+                    <x-button-edit :href="route('user.edit', $user->id_user)" />
+                @endif
                 <x-button-delete :action="route('user.destroy', $user->id_user)" />
             </div>
         </div>

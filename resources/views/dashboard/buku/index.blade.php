@@ -21,7 +21,7 @@
 	
 	{{-- alert --}}
 	<x-alert-success-error :session="session('success')"/>
-	<x-alert-success-error type="'error'" :session="session('error')"/>
+	<x-alert-success-error type='error' :session="session('error')"/>
 
 	{{-- filter bar --}}
     <x-filter-bar 

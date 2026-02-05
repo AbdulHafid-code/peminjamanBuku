@@ -39,19 +39,37 @@
                                     <span>Stok:</span>
                                     <span class="{{$buku->stok > 0 ? 'text-green-600' : 'text-red-600'}}">{{$buku->stok > 0 ? 'Tersedia ( ' . $buku->stok . ')' : 'Habis'}}</span>
                                 </p>
-                                <form action="{{ route('favorit_toggle', $buku->id_buku) }}" method="POST" class="mt-3">
-                                    @csrf
+                                @if (auth()->check() && auth()->user()->status_akun === 'aktif')                                    
+                                    <form action="{{ route('favorit_toggle', $buku->id_buku) }}" method="POST" class="mt-3">
+                                        @csrf
+                                        <button
+                                            type="submit"
+                                            class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition cursor-pointer
+                                            {{ $isFavorit 
+                                                ? 'bg-red-500 hover:bg-red-600 text-white' 
+                                                : 'bg-gray-200 hover:bg-gray-300 text-gray-700' }}">
+                                            
+                                            <i class="bx {{ $isFavorit ? 'bxs-heart' : 'bx-heart' }} text-lg"></i>
+                                            {{ $isFavorit ? 'Hapus dari Favorit' : 'Tambahkan ke Favorit' }}
+                                        </button>
+                                    </form>
+                                @else
                                     <button
-                                        type="submit"
-                                        class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition cursor-pointer
-                                        {{ $isFavorit 
-                                            ? 'bg-red-500 hover:bg-red-600 text-white' 
-                                            : 'bg-gray-200 hover:bg-gray-300 text-gray-700' }}">
-                                        <i class="bx {{ false ? 'bxs-heart' : 'bx-heart' }} text-lg"></i>
+                                        type="button"
+                                        disabled
+                                        class="mt-3 flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium 
+                                            bg-gray-300 text-gray-500 cursor-not-allowed opacity-70">
 
-                                        {{ $isFavorit ? 'Hapus dari Favorit' : 'Tambahkan ke Favorit' }}
+                                        <i class="bx bx-lock text-lg"></i>
+
+                                        Tidak Dapat Menambah Favorit
                                     </button>
-                                </form>
+
+                                    <p class="text-xs text-gray-500 mt-1">
+                                        Login / Aktifkan akun untuk menggunakan fitur favorit
+                                    </p>
+                                @endif
+
                             </div>
                         </div>
                     </div>
@@ -66,65 +84,56 @@
             </div>
 
             <!-- FORM PEMINJAMAN -->
-            <div class="form-peminjaman-buku">
-                <div class="card-form-peminjaman-buku">
+            {{-- @if (auth()->user()->status_akun === 'aktif')  --}}
+                <div class="form-peminjaman-buku">
+                    <div class="card-form-peminjaman-buku">
 
-                    <h2 class="title-form-peminjaman-buku">
-                        Form Peminjaman
-                    </h2>
+                        <h2 class="title-form-peminjaman-buku">
+                            Form Peminjaman
+                        </h2>
 
-                    @if (session()->has('success'))
-                        <div class="flex mt-3 items-center gap-3 rounded-lg border border-green-300 bg-green-50 px-4 py-3 text-sm text-green-700">
-                            <i class='bx bx-check-circle text-lg'></i>
-                            <span>{{session('success')}}</span>
-                        </div>
-                    @endif
-                    @if (session()->has('error'))
-                        <div class="flex mt-3 items-center gap-3 rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700">
-                            <i class='bx bx-x-circle text-lg'></i>
-                            <span>
-                                {{ session('error') }}
-                            </span>
-                        </div>
-                    @endif
+                        {{-- alert --}}
+                        <x-alert-success-error :session="session('success')"/>
+                        <x-alert-success-error type='error' :session="session('error')"/>
 
-                    <form action="{{ route('transaksi_pinjam')}}" method="POST">
-                        @csrf
-                        <input type="hidden" value="{{$buku->id_buku}}" name="buku_id">
-                        <!-- Tanggal Pinjam -->
-                        <div class="input-container">
-                            <label>Tanggal Pinjam</label>
-                            <input type="date" name="tanggal_pinjam" placeholder="Masukkan tanggal pinjam..."/>
-                            @error('tanggal_pinjam')
-                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
-                        <!-- Tanggal Kembali -->
-                        <div class="input-container">
-                            <label>Tanggal Kembali</label>
-                            <input type="date" name="tanggal_kembali" placeholder="Masukkan tanggal kembali..."/>
-                            @error('tanggal_kembali')
-                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
-                        <!-- Total Buku -->
-                        <div class="input-container">
-                            <label>Total Buku</label>
-                            <input type="number" name="total_pinjam" placeholder="Masukkan jumlah buku..."/>
-                            @error('total_pinjam')
-                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                            @enderror
-                        </div> 
+                        <form action="{{ route('transaksi_pinjam')}}" method="POST">
+                            @csrf
+                            <input type="hidden" value="{{$buku->id_buku}}" name="buku_id">
+                            <!-- Tanggal Pinjam -->
+                            <div class="input-container">
+                                <label>Tanggal Pinjam</label>
+                                <input type="date" name="tanggal_pinjam" placeholder="Masukkan tanggal pinjam..."/>
+                                @error('tanggal_pinjam')
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <!-- Tanggal Kembali -->
+                            <div class="input-container">
+                                <label>Tanggal Kembali</label>
+                                <input type="date" name="tanggal_kembali" placeholder="Masukkan tanggal kembali..."/>
+                                @error('tanggal_kembali')
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <!-- Total Buku -->
+                            <div class="input-container">
+                                <label>Total Buku</label>
+                                <input type="number" name="total_pinjam" placeholder="Masukkan jumlah buku..."/>
+                                @error('total_pinjam')
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @enderror
+                            </div> 
 
 
-                        <!-- Button -->
-                        <button type="submit">
-                            Pinjam Buku
-                        </button>
-                    </form>
+                            <!-- Button -->
+                            <button type="submit">
+                                Pinjam Buku
+                            </button>
+                        </form>
 
+                    </div>
                 </div>
-            </div>
+            {{-- @endif --}}
 
         </div>
 
@@ -157,7 +166,7 @@
         
                                 <p class="total-buku-transaksi">
                                     Total Buku:
-                                    <span>{{$item->total_pinjam}} Buku</span>
+                                    <span>{{$item->total_pinjam - $item->jumlah_dikembalikan}} Buku</span>
                                 </p>
                             </div>
         

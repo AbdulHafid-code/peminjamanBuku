@@ -21,14 +21,14 @@
 
 	{{-- alert --}}
 	<x-alert-success-error :session="session('success')"/>
-	<x-alert-success-error type="'error'" :session="session('error')"/>
+	<x-alert-success-error type='error' :session="session('error')"/>
 
 	{{-- filter bar --}}
 	<x-filter-bar 
 		:searchPlaceholder="'Cari Nama Pengguna...'"
 		:showTransaksi="true"/>
 
-    <div class="w-full rounded-lg bg-white dark:bg-gray-800/50 shadow-md shadow-gray-200/60 dark:shadow-violet-800/20 p-3 sm:p-6">
+    <div class="relative w-full rounded-lg bg-white dark:bg-gray-800/50 shadow-md shadow-gray-200/60 dark:shadow-violet-800/20 p-3 sm:p-6">
 		<table class="border-collapse w-full divide-y divide-gray-300 dark:divide-gray-700 text-sm">
 			<thead class="text-sm text-gray-600 dark:text-gray-400">
 				<tr>
@@ -37,6 +37,7 @@
 					<th class="text-center px-1.5 sm:px-4 py-2">User</th>
 					<th class="text-left px-1.5 sm:px-4 py-2 hidden md:table-cell">Tanggal Pinjam</th>
 					<th class="text-left px-1.5 sm:px-4 py-2 hidden md:table-cell">Tanggal Kembali</th>
+					<th class="text-left px-1.5 sm:px-4 py-2 hidden md:table-cell">Jumlah</th>
 					<th class="text-center px-1.5 sm:px-4 py-2">Aksi</th>
 				</tr>
 			</thead>
@@ -60,13 +61,12 @@
 								</span>
 							</div>
 						</td>
-						<td class="px-1.5 sm:px-4 py-2 hidden md:table-cell"> {{ $item->tanggal_pinjam->translatedFormat('d F Y') }} </td>
-						<td class="px-1.5 sm:px-4 py-2 hidden md:table-cell">{{$item->tanggal_kembali->translatedFormat('d F Y')}} </td>
+						<td class="px-1.5 sm:px-4 py-2 hidden md:table-cell"> {{ $item->tanggal_pinjam->translatedFormat('d M Y') }} </td>
+						<td class="px-1.5 sm:px-4 py-2 hidden md:table-cell">{{$item->tanggal_kembali->translatedFormat('d M Y')}} </td>
+						<td class="px-1.5 sm:px-4 py-2 hidden md:table-cell">{{$item->total_pinjam - $item->jumlah_dikembalikan}} Buku</td>
 						<td class="px-1.5 sm:px-4 py-2 align-middle">
 							<div class="flex justify-center gap-2 font-normal text-sm">
-
 								<x-button-detail :href="route('transaksi.show', $item->id_transaksi)"></x-button-detail>
-								
 								@if ($item->status == 0)
 									<form action="{{ route('edit_status_transaksi', [$item->id_transaksi, 'disetujui'] ) }}" class="hidden md:flex" method="POST">
 										@method('PUT')
@@ -81,11 +81,30 @@
 									</form>
 								@elseif($item->status == 1)
 
-									<form action="{{ route('edit_status_transaksi', [$item->id_transaksi, 'dikembalikan'] ) }}" class="hidden md:flex" method="POST">
-										@method('PUT')
-										@csrf
-										<button type="submit" id="btn-delete" data-pesan="Apakah Anda Yakin Data Ini Sudah Dikembalikan" class="hidden md:flex items-center justify-center px-2 py-2 gap-2 rounded-md bg-sky-200 border border-sky-600 text-sky-800 transition-all duration-300 hover:bg-sky-600 hover:text-white "><i class='bx bx-check'></i> Dikembalikan </button>
-									</form>
+									@if($item->tanggal_kembali > now())
+										<form action="{{ route('edit_status_transaksi', [$item->id_transaksi, 'dipulihkan'] ) }}" class="hidden lg:flex" method="POST">
+											@method('PUT')
+											@csrf
+											<button type="submit" id="btn-delete" data-pesan="Apakah Anda Yakin Ingin Mengembalikan Data ini" class="flex items-center justify-center px-2 py-2 gap-2 rounded-md text-white bg-green-500 transition-all duration-300 hover:bg-green-600"><i class='bx bx-revision'></i> Pulihkan </button>
+										</form>
+									@endif
+
+									@if(($item->total_pinjam - $item->jumlah_dikembalikan) > 1)
+										<button type="button"
+											class="px-2 py-2 bg-sky-200 text-sky-800 rounded hover:bg-sky-600 hover:text-white"
+											onclick="openReturnModal({{ $item->id_transaksi }}, {{ $item->total_pinjam }}, {{ $item->jumlah_dikembalikan }})">
+											<i class='bx bx-check'></i> Dikembalikan
+										</button>
+									@else
+										<form action="{{ route('edit_status_transaksi', [$item->id_transaksi, 'dikembalikan']) }}" method="POST">
+											@csrf
+											@method('PUT')
+											<input type="hidden" name="jumlah_dikembalikan" value="{{$item->total_pinjam - $item->jumlah_dikembalikan}}">
+											<button type="submit" class="px-2 py-2 bg-sky-200 text-sky-800 rounded hover:bg-sky-600 hover:text-white">
+												<i class='bx bx-check'></i> Dikembalikan
+											</button>
+										</form>
+									@endif
 
 								@elseif($item->status == 3)
 
@@ -108,6 +127,58 @@
 				@endforelse
 			</tbody>
 		</table>
+
+		<div id="returnModal" class="fixed inset-0 bg-black/10 bg-opacity-50 flex items-center justify-center hidden z-50">
+			<div class="bg-white rounded-lg p-6 w-80 shadow-lg">
+				<h2 class="text-lg font-semibold mb-4">Kembalikan Buku</h2>
+				<form id="returnForm" method="POST">
+					@csrf
+					@method('PUT')
+					<label for="jumlah_dikembalikan" class="block mb-2">Jumlah yang ingin dikembalikan:</label>
+					<input 
+						type="number" 
+						id="jumlah_dikembalikan" 
+						name="jumlah_dikembalikan" 
+						min="1" 
+						value="1" 
+						class="w-full border rounded p-2 mb-4"
+					>
+					<div class="flex justify-end gap-2">
+						<button type="button" onclick="closeReturnModal()" class="px-3 py-1 bg-gray-300 rounded hover:bg-gray-400">Batal</button>
+						<button type="submit" class="px-3 py-1 bg-sky-500 text-white rounded hover:bg-sky-600">Kembalikan</button>
+					</div>
+				</form>
+			</div>
+		</div>
 	</div>
+
+
+<script>
+	function openReturnModal(transaksiId, totalPinjam, jumlahDikembalikan) {
+		const modal = document.getElementById('returnModal');
+		const form = document.getElementById('returnForm');
+		const input = document.getElementById('jumlah_dikembalikan');
+
+		// Set action form sesuai transaksi
+		form.action = `/dashboard/transaksi/Editstatus/${transaksiId}/dikembalikan`;
+		
+		// Set max value sesuai total pinjam
+		input.max = totalPinjam;
+
+		if (!jumlahDikembalikan) {
+			input.value = totalPinjam;
+		} else {
+			input.value = totalPinjam - jumlahDikembalikan; // default semua dikembalikan
+		}
+
+		modal.classList.remove('hidden');
+	}
+
+	function closeReturnModal() {
+		const modal = document.getElementById('returnModal');
+		modal.classList.add('hidden');
+	}
+</script>
+
 
 @endsection

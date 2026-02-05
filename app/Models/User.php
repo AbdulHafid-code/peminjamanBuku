@@ -30,6 +30,10 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class, 'role_id', 'id_role');
     }
 
+    public function transaksi(){
+        return $this->hasMany(Transaksi::class, 'user_id', 'id_user');
+    }
+
     public function buku_favorit() {
         return $this->belongsToMany(Buku::class, 'buku_favorit', 'user_id', 'buku_id');
     }

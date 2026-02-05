@@ -20,11 +20,11 @@
 
                     {{-- alert --}}
                     <x-alert-success-error :session="session('success')"/>
-                    <x-alert-success-error type="'error'" :session="session('error')"/>
+                    <x-alert-success-error type='error' :session="session('error')"/>
                     
                     <div class="input-container">
                         <div class="input-box">
-                            <input type="text" name="username_login" placeholder="Username...">
+                            <input type="text" name="username_login" value="{{old('username_login')}}" placeholder="Username...">
                             <i class='bx bxs-user'></i>
                         </div>
                         <x-input-error name="username_login" />
@@ -52,14 +52,14 @@
                     
                     <div class="input-container">
                         <div class="input-box">
-                            <input type="text" name="nama" placeholder="Nama...">
+                            <input type="text" name="nama" value="{{old('nama')}}" placeholder="Nama...">
                             <i class='bx bxs-user'></i>
                             <x-input-error name="nama" />
                         </div>
                     </div>
                     <div class="input-container">
                         <div class="input-box">
-                            <input type="text" name="username" placeholder="Username...">
+                            <input type="text" name="username" value="{{old('nama')}}" placeholder="Username...">
                             <i class='bx bxs-user'></i>
                             <x-input-error name="username" />
                         </div>

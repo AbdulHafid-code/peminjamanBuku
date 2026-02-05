@@ -17,9 +17,11 @@
 			</li>
 			<li>
 				<a href="#" class="{{ request()->is('dashboard/role*') || request()->is('dashboard/user*') ? 'active' : ''}}"><i class='bx bx-shield icon' ></i> Keanggotaan <i class='bx bx-chevron-right icon-right' ></i></a>
-				<ul class="side-dropdown {{ request()->is('dashboard/role*') || request()->is('dashboard/user*') ? 'show' : '' }}">
+				<ul class="side-dropdown {{ request()->is('dashboard/role*') || request()->is('dashboard/user*') || request()->is('dashboard/aktifasi-user*') || request()->is('dashboard/nonaktif-user*') ? 'show' : '' }}">
 					<li><a href="{{ route('role.index') }}" class="{{ request()->is('dashboard/role*') ? 'active' : ''}}"><i class='bx bx-group icon'></i>Hak Akses</a></li>
 					<li><a href="{{ route('user.index') }}" class="{{ request()->is('dashboard/user*') ? 'active' : ''}}"><i class='bx bx-user icon'></i>Pengguna</a></li>
+					<li><a href="{{ route('aktifasi') }}" class="{{ request()->is('dashboard/aktifasi-user*') ? 'active' : ''}}"><i class='bx bx-user-plus icon'></i>Akun Baru</a></li>
+					<li><a href="{{ route('nonaktif') }}" class="{{ request()->is('dashboard/nonaktif-user*') ? 'active' : ''}}"><i class='bx bx-user-x icon'></i>Akun Nonaktif</a></li>
 				</ul>
 			</li>
 			<li><a href="{{ route('transaksi.index') }}" class="{{ request()->is('dashboard/transaksi*') ? 'active' : ''}}"><i class='bx bx-cart icon' ></i></i>Transaksi</a></li>

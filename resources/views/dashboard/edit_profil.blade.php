@@ -18,7 +18,7 @@
 
 	{{-- alert --}}
 	<x-alert-success-error :session="session('success')"/>
-	<x-alert-success-error type="'error'" :session="session('error')"/>
+	<x-alert-success-error type='error' :session="session('error')"/>
 
     <div class="flex gap-5">
         <div class="relative flex w-96 flex-col items-center gap-6 h-fit rounded-lg p-6 bg-white dark:bg-gray-800/50 shadow-md shadow-gray-200/60 dark:shadow-violet-800/20">

@@ -21,7 +21,7 @@
 
 	{{-- alert --}}
 	<x-alert-success-error :session="session('success')"/>
-	<x-alert-success-error type="'error'" :session="session('error')"/>
+	<x-alert-success-error type='error' :session="session('error')"/>
 
 	{{-- filter bar --}}
 	<x-filter-bar 
@@ -49,7 +49,6 @@
 							<div class="flex flex-col gap-1">
 								<span class="line-clamp-2">
 									{{ mb_strimwidth($item->nama, 0, 17, '...') }}
-									{{-- {{$item->nama}} --}}
 								</span>
 							</div>
 						</td>
@@ -59,7 +58,13 @@
 							<div class="flex justify-center gap-2 font-normal text-sm">
 								<x-button-detail :href="route('user.show', $item->id_user)"></x-button-detail>
 								<x-button-edit :href="route('user.edit', $item->id_user)" :edit='true'></x-button-edit>
-                                <x-button-delete :action="route('user.destroy', $item->id_user)" :trash="true" dataPesan="Apakah Anda Yakin Ingin Menghapus Data User {{$item->nama}}"></x-button-delete>
+								<form action="{{ route('status', $item->id_user) }}" method="POST">
+									@csrf
+									<button id="btn-delete" data-pesan="Apakah Anda Yakin Ingin Mengnonaktifkan {{$item->nama}}" type="submit" class="rounded-sm bg-red-500 px-5 py-1.5 text-sm font-medium text-white hover:bg-red-600 flex items-center gap-2">
+										<i class='bx bx-x' ></i> Non Aktif
+									</button>
+								</form>
+								<x-button-delete :action="route('user.destroy', $item->id_user)" :trash="true" dataPesan="Apakah Anda Yakin Ingin Menghapus Data User {{$item->nama}}"></x-button-delete>
 							</div>
 						</td>
 					</tr>

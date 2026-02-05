@@ -5,6 +5,7 @@
     'showRole' => false,
     'role' => [],
     'showTransaksi' => false,
+    'statusAkun' => false,
 ])
 
     <div class="w-full rounded-lg bg-white dark:bg-gray-800/50 shadow-md shadow-gray-200/60 dark:shadow-violet-800/20 p-4 mb-4">
@@ -79,6 +80,7 @@
 						</select>
 						<i class='bx bx-filter-alt absolute right-3 bottom-1.5 text-2xl'></i>
 					</div>
+                
                 @endif
 
                 {{-- reset --}}
