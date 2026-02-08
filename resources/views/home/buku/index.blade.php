@@ -4,248 +4,270 @@
     Halaman Buku
 @endsection
 
-@section('navbar')
-  @include('home.layouts.navbar-page')
-@endsection
-
 @section('container')
 
-
-    <!-- MATERI SECTION -->
     <section id="materi" class="pt-30">
-      <div class="flex items-center flex-col">
-            <h1 class="text-2xl min-[420px]:text-3xl min-[570px]:text-3xl md:text-4xl font-fredoka font-semibold text-center">
+        <div class="flex items-center flex-col text-center">
+            <h1 class="text-2xl min-[420px]:text-3xl md:text-4xl font-fredoka font-semibold">
                 Cari Buku Yang Mau Dibaca
             </h1>
-            <p class="text-[12px] min-[420px]:text-[13px] min-[570px]:text-sm md:text-[15px] text-center mt-2">
+            <p class="text-[12px] min-[420px]:text-[13px] md:text-[15px] mt-2 text-gray-600">
                 Temukan dan pinjam buku sesuai minatmu dengan mudah, lalu nikmati pengalaman membaca yang nyaman dan teratur.
             </p>
 
-            <form action="" id="form_search_buku" class="searchingtext kategoripage">
-                <div>
-                    <i class='bx bx-search-alt-2' ></i>
-                    <input type="text" value="{{Request('search')}}" name="search" placeholder="Cari Buku Berdasarkan Nama...">
+            {{-- search --}}
+            <form action="" method="GET" id="form_search_buku" class="mt-6 w-2/3">
+                <div class="flex items-center gap-2 bg-white/80 backdrop-blur rounded-full px-4 py-2 shadow-md
+                            transition-all duration-300 focus-within:ring-2 focus-within:ring-violet-400">
+
+                    <div class="relative flex items-center w-full">
+                        <i class='bx bx-search-alt-2 absolute left-3 text-gray-400 text-lg'></i>
+                        <input
+                            type="text"
+                            name="search"
+                            value="{{ request('search') }}"
+                            placeholder="Cari Buku Berdasarkan Nama..."
+                            class="w-full bg-transparent pl-10 pr-4 py-2 text-sm md:text-base
+                                outline-none text-gray-800 placeholder-gray-400"
+                        >
+                    </div>
+
+                    {{-- dekstop --}}
+                    <button
+                        type="submit"
+                        class="hidden md:flex items-center justify-center
+                            px-6 py-2 rounded-full
+                            bg-violet-600 text-white font-medium
+                            hover:bg-violet-700 transition">
+                        Cari
+                    </button>
                 </div>
-                <input type="hidden" id="kategori_input" name="kategori">
-                <button id="btn_pencarian">Cari Buku</button>
+
+                <input
+                    type="hidden"
+                    name="kategori"
+                    id="kategori_input"
+                    value="{{ request('kategori') }}"
+                >
+
             </form>
-            <div class="searchingkategori">
-                <button id="plus_kategori"><i class="bx bx-plus"></i></button>
-                <div id="kategori_search_konten">
-                    <p>Belum Ada Kategori Dipilih</p>
+
+            {{-- kategori --}}
+            <div class="mt-4 w-2/3 flex flex-wrap items-center gap-3
+                        bg-white/70 backdrop-blur px-4 py-3 rounded-xl shadow-sm">
+
+                <button id="plus_kategori"
+                    class="flex items-center gap-1.5 px-3 py-1.5 text-xs md:text-sm
+                        rounded-full bg-violet-600 text-white hover:bg-violet-700 transition">
+                    <i class="bx bx-plus"></i>
+                </button>
+
+                <div id="kategori_search_konten" class="text-xs md:text-sm text-gray-600">
+                    Belum Ada Kategori Dipilih
                 </div>
-                <button id="delete_all_kategori"><i class='bx bxs-trash'></i> <span>Hapus</span></button>
+
+                <button id="delete_all_kategori"
+                    class="flex items-center gap-1.5 px-3 py-1.5 text-xs md:text-sm
+                        rounded-full bg-red-500 text-white hover:bg-red-600 transition ml-auto">
+                    <i class='bx bxs-trash'></i>
+                    <span>Hapus</span>
+                </button>
+            </div>
+
+            {{-- btn mobile --}}
+            <div class="mt-5 flex justify-center md:hidden">
+                <button
+                    type="submit"
+                    form="form_search_buku"
+                    class="px-10 py-2.5 rounded-full bg-violet-600 text-white font-medium
+                        shadow-md hover:bg-violet-700 transition">
+                    Cari Buku
+                </button>
             </div>
         </div>
-        <div class="btn_pencarian_bawah">
-            <button id="btn_pencarian">Cari Buku</button>
-        </div>
 
-      <div class="flex flex-wrap mt-8 gap-5 items-center justify-center">
-        @foreach ($buku as $buku)
+        {{-- card bukunya --}}
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 mt-8">
+            @foreach ($buku as $item)
+
+            <a href="{{route('buku_detail', $item->id_buku)}}" class="group block w-full rounded-md bg-white/80 backdrop-blur shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
         
-          <a href="{{ route('buku_detail', $buku->id_buku) }}" class="group block w-[280px] rounded-2xl bg-white/80 backdrop-blur shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-      
-              <!-- Cover -->
-              <div class="relative overflow-hidden rounded-t-2xl aspect-[4/5] bg-gray-100">
-                  <img
-                      src="{{ asset('storage/image/sampul/' . $buku->sampul) }}"
-                      alt="Cover Buku"
-                      class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-      
-                  <!-- Status Badge -->
-                  <span class="absolute top-3 right-3 rounded-full {{ $buku->stok <= 0 ? 'bg-red-500/90' : 'bg-emerald-500/90' }} 
-                              px-3 py-1 text-xs font-medium text-white shadow">
-                      {{ $buku->stok <= 0 ? 'Tidak Tersedia' : 'Tersedia' }}
-                  </span>
-              </div>
-      
-              <!-- Content -->
-              <div class="p-4">
-                  <h3 class="text-[15px] font-semibold text-gray-900 leading-snug line-clamp-2">
-                      {{ $buku->judul_buku }}
-                  </h3>
-      
-                  <p class="mt-1 text-xs text-gray-500">
-                      {{ $buku->penulis }}
-                  </p>
-      
-                  <!-- Footer -->
-                  <div class="mt-4 flex items-center justify-between">
-                      <span class="text-xs font-medium text-gray-600">
-                          Stok: <span class="text-gray-900 font-semibold">{{ $buku->stok }}</span>
-                      </span>
-                  </div>
-              </div>
-          </a>
-        @endforeach
-      </div>
+                <!-- Cover -->
+                <div class="relative overflow-hidden rounded-t-md aspect-4/5 p-4">
+                    <img
+                        src="{{ asset('storage/image/sampul/' . $item->sampul) }}"
+                        alt="Cover Buku"
+                        class="h-full w-full object-cover rounded-md border border-gray-200"
+                    />
+                </div>
+        
+                <!-- Content -->
+                <div class="p-4">
+                    <!-- Status Badge -->
+                    <span class="rounded-full {{$item->stok <= 0 ? 'bg-red-500/90' : 'bg-emerald-500/90'}} px-3 py-1 text-xs font-medium text-white shadow">
+                        {{$item->stok <= 0 ? 'Habis' : 'Tersedia'}}
+                    </span>
+
+                    <h3 class="text-base font-semibold text-gray-900 leading-snug line-clamp-2">
+                        {{$item->judul_buku}}
+                    </h3>
+        
+                    <p class="mt-1 text-xs text-gray-500">
+                        {{$item->penulis}}
+                    </p>
+        
+                    <!-- Footer -->
+                    <div class="mt-4 flex items-center justify-between">
+                        <span class="text-xs font-medium text-gray-600">
+                            Stok: <span class="text-gray-900 font-semibold">{{$item->stok}}</span>
+                        </span>
+                    </div>
+                </div>
+            </a>
+            @endforeach
+        </div>
     </section>
 
-    <div class="search_kategori_modal">
-        <button type="button" id="tutup_kategori_modal"><i class="bx bx-x text-3xl"></i></button>
-        <h3>Cari Kategori Buku</h3>
-        <p>Klik Untuk Memilih Kategori Buku</p>
-        <p class="text-error-modal-kategori hidden">Sudah Terdapat Kategori</p>
+    {{-- modal kategori --}}
+    <div id="modalKategori"
+        class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm">
 
-        <form class="search_modal">
-            <div>
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" placeholder="Cari Kategori Berdasarkan Nama...">
+        <div class="bg-white rounded-xl w-[90%] max-w-md p-5 animate-scaleIn">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-semibold text-gray-800">
+                    Pilih Kategori
+                </h3>
+                <button id="closeModalKategori"
+                    class="text-gray-400 hover:text-gray-700 text-xl">
+                    <i class="bx bx-x"></i>
+                </button>
             </div>
-            <button>Cari Kategori</button>
-        </form>
-        
-        <ul id="list_kategori_content">
-        </ul>
+
+            <div class="flex flex-wrap gap-2 max-h-[300px] overflow-y-auto">
+                @foreach ($kategori as $item)
+                    <button
+                        type="button"
+                        data-id="{{ $item->id_kategori }}"
+                        class="kategori-chip px-4 py-1.5 rounded-full text-xs md:text-sm
+                            bg-gray-200 text-gray-700
+                            hover:bg-violet-600 hover:text-white transition">
+                        {{ $item->nama_kategori }}
+                    </button>
+                @endforeach
+            </div>
+        </div>
     </div>
-    <div class="bgblur"></div>
 
+    {{-- script kategori single --}}
     <script>
-        window.allKategori = @json($kategori ?? []);
-        const bgblur = document.querySelector(".bgblur");
-        const kategori_modal = document.querySelector(".search_kategori_modal");
-        const tutup_kategori_modal = document.querySelector("#tutup_kategori_modal");
-        const plusKategori = document.querySelector("#plus_kategori");
-        const kategoriItems = document.querySelectorAll(".search_kategori_modal ul li");
-        const delete_all_kategori = document.querySelector("#delete_all_kategori");
-        const text_error_modal_kategori = document.querySelector(".text-error-modal-kategori");
-        const kategoriContainer = document.querySelector("#kategori_search_konten");
-        const kategoriInput = document.querySelector("#kategori_input");
-        const list_kategori_content = document.querySelector('#list_kategori_content');
-        const btn_pencarian = document.querySelectorAll('#btn_pencarian');
-        const MAX_KATEGORI = 1;
-        let selectedKategories = [];
+        document.addEventListener('DOMContentLoaded', () => {
 
-        btn_pencarian.forEach((btn) => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault;
-                document.querySelector("#form_search_buku").submit();
+            const kategoriButtons = document.querySelectorAll('.kategori-chip');
+            const kategoriInput   = document.getElementById('kategori_input');
+            const kategoriKonten  = document.getElementById('kategori_search_konten');
+            const formSearch      = document.querySelector('form'); // form search
+
+            // ===== MODAL =====
+            const modal        = document.getElementById('modalKategori');
+            const btnPlus      = document.getElementById('plus_kategori');
+            const btnClose     = document.getElementById('closeModalKategori');
+            const btnDeleteAll = document.getElementById('delete_all_kategori');
+
+            /* =========================
+            OPEN / CLOSE MODAL
+            ========================== */
+            btnPlus?.addEventListener('click', () => {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
             });
-        });
 
-        window.allKategori.forEach((kategori) => {
-            list_kategori_content.innerHTML += `<li data-id="${kategori.id_kategori}">
-                <h5>${kategori.nama_kategori}</h5>
-                <p>Jumlah Buku : <span>${kategori.buku_count}</span></p>
-            </li>`;
-        })
+            btnClose?.addEventListener('click', () => {
+                closeModal();
+            });
 
-        // Tangkap Params Kategori
-        const params = new URLSearchParams(window.location.search);
-        const kategoriParam = params.get("kategori");
+            function closeModal() {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
 
-        // KATEGORI SEARCH
-        plusKategori.addEventListener("click", () => {
-            text_error_modal_kategori.classList.add("hidden");
-            bgblur.classList.add("active");
-            kategori_modal.classList.add("active");
-        })
-        tutup_kategori_modal.addEventListener("click", () => {
-            kategori_modal.classList.remove("active");
-            setTimeout(() => {
-                bgblur.classList.remove("active");
-            }, 500);
-        })
+            /* =========================
+            PILIH KATEGORI (SINGLE)
+            ========================== */
+            kategoriButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
 
-        function renderKategori() {
-            kategoriContainer.innerHTML = "";
-
-            if(selectedKategories.length === 0) {
-                kategoriContainer.innerHTML = "<p>Belum Ada Kategori Dipilih</p>"
-            } else {
-                selectedKategories.forEach((k, i) => {
-                    const wrap = document.createElement("div");
-                    wrap.innerHTML = `<span>${k.nama}</span>
-                        <i class="bx bx-x hapus_kategori"></i>`;
-            
-                    wrap.querySelector(".hapus_kategori").addEventListener("click", () => {
-                        selectedKategories.splice(i, 1);
-                        renderKategori();
+                    // reset semua kategori
+                    kategoriButtons.forEach(b => {
+                        b.classList.remove('bg-violet-600', 'text-white');
+                        b.classList.add('bg-gray-200', 'text-gray-700');
                     });
-            
-                    kategoriContainer.appendChild(wrap);
+
+                    // aktifkan kategori terpilih
+                    btn.classList.remove('bg-gray-200', 'text-gray-700');
+                    btn.classList.add('bg-violet-600', 'text-white');
+
+                    // set hidden input
+                    kategoriInput.value = btn.dataset.id;
+
+                    // tampilkan kategori terpilih
+                    kategoriKonten.innerHTML = `
+                        <span class="px-3 py-1 rounded-full bg-violet-100 text-violet-700">
+                            ${btn.innerText}
+                        </span>
+                    `;
+
+                    // tutup modal
+                    closeModal();
+
+                    // ===== AUTO SUBMIT (OPSIONAL) =====
+                    // kalau mau langsung search setelah pilih kategori
+                    formSearch.submit();
                 });
-            }
-
-            // UPDATE hidden input → 1,2,3
-            kategoriInput.value = selectedKategories
-                                    .map(k => k.id)
-                                    .join(",");
-
-
-            if (selectedKategories.length >= MAX_KATEGORI) {
-                plusKategori.setAttribute("disabled", true);
-                plusKategori.classList.add("disabled");
-            } else {
-                plusKategori.removeAttribute("disabled");
-                plusKategori.classList.remove("disabled");
-            }
-        }
-
-        if(kategoriParam) {
-            console.log(window.allKategori);
-            const ids = kategoriParam.split(",").map(Number);
-
-            ids.forEach(id => {
-                const found = window.allKategori.find(k => k.id_kategori == id);
-
-                if(found) {
-                    selectedKategories.push({
-                        id: found.id_kategori,
-                        nama: found.nama_kategori
-                    });
-                }
             });
 
-            renderKategori();
-        }
+            /* =========================
+            HAPUS KATEGORI
+            ========================== */
+            btnDeleteAll?.addEventListener('click', () => {
+                kategoriButtons.forEach(b => {
+                    b.classList.remove('bg-violet-600', 'text-white');
+                    b.classList.add('bg-gray-200', 'text-gray-700');
+                });
 
-        // EVENT Ketika LI diklik
-        list_kategori_content.addEventListener('click', (e) => {
-            const items = e.target.closest("li");
-            if (!items) return;
-            
-            const namaKategori = items.querySelector("h5").innerText;
-            const idKategori = items.dataset.id;
+                kategoriInput.value = '';
+                kategoriKonten.innerHTML = 'Belum Ada Kategori Dipilih';
 
-            // Cek Duplicate
-            if(selectedKategories.some(k => k.id == idKategori)) {
-                text_error_modal_kategori.innerText = "Kategori Sudah Dipilih";
-                text_error_modal_kategori.classList.remove("hidden");
-                return;
-            }
-
-            // Maksimal 3 Kategori
-            if(selectedKategories.length > MAX_KATEGORI) {
-                text_error_modal_kategori.innerText = "Sudah Terdapat 1 Kategori";
-                text_error_modal_kategori.classList.remove("hidden");
-                return;
-            }
-
-            selectedKategories.push({
-                id: Number(idKategori),
-                nama: namaKategori
+                // submit ulang tanpa kategori (opsional)
+                formSearch.submit();
             });
 
-            renderKategori();
-            kategori_modal.classList.remove("active");
-            setTimeout(() => {
-                bgblur.classList.remove("active");
-            }, 500);
-            
-        })
+            /* =========================
+            PERSIST KATEGORI (RELOAD)
+            ========================== */
+            const selectedKategori = "{{ request('kategori') }}";
 
-        // kategoriItems.forEach(items => {
-        //     items.addEventListener("click", () => {
-                
-        //     })
-        // })
+            if (selectedKategori) {
+                kategoriButtons.forEach(btn => {
+                    if (btn.dataset.id === selectedKategori) {
+                        btn.classList.remove('bg-gray-200', 'text-gray-700');
+                        btn.classList.add('bg-violet-600', 'text-white');
 
-        delete_all_kategori.addEventListener("click", () => {
-            selectedKategories = [];
-            renderKategori();
+                        kategoriKonten.innerHTML = `
+                            <span class="px-3 py-1 rounded-full bg-violet-100 text-violet-700">
+                                ${btn.innerText}
+                            </span>
+                        `;
+                    }
+                });
+
+                // pastikan input hidden tetap keisi
+                kategoriInput.value = selectedKategori;
+            }
+
         });
-    </script>
+        </script>
+
+
+
+
 @endsection

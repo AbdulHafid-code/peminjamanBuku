@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 
 class DashboardController extends Controller
 {
@@ -253,7 +254,11 @@ class DashboardController extends Controller
 
     public function riwayat(Request $request)
     {
-        $query = Transaksi::with('buku');
+        $query = Transaksi::query()
+            ->join('buku', 'transaksi.buku_id', '=', 'buku.id_buku')
+            ->where('transaksi.user_id', auth()->user()->id_user)
+            ->select('transaksi.*')
+            ->with('buku');
 
         // search
         if ($request->filled('search')) {
@@ -275,28 +280,146 @@ class DashboardController extends Controller
             });
         }
 
+        match ($request->order) {
+            'asc' => $query
+                ->orderByRaw("CASE WHEN status = 1 THEN 0 ELSE 1 END")
+                ->orderBy('buku.judul_buku', 'asc'),
+
+            'desc' => $query
+                ->orderByRaw("CASE WHEN status = 1 THEN 0 ELSE 1 END")
+                ->orderBy('buku.judul_buku', 'desc'),
+
+            'newest' => $query->orderBy('created_at', 'desc'),
+            'oldest' => $query->orderBy('created_at', 'asc'),
+
+            default => $query
+                ->orderByRaw("CASE WHEN status = 1 THEN 0 ELSE 1 END")
+                ->orderBy('created_at', 'desc'),
+        };
+
+
         // reset
         if ($request->filled('reset')) {
             return redirect()->route('riwayat');
         }
 
-        // $transaksiPerBulan = $query->where('user_id', auth()->user()->id_user)
-        //     ->whereIn('status', [1, 2])
-        //     ->orderByDesc('created_at')
-        //     ->get()
-        //     ->groupBy(function ($item) {
-        //         return $item->created_at->format('Y-m');
-        //     })
-        //     ->map(function ($item, $bulan) {
-        //         return [
-        //             'label' => Carbon::createFromFormat('Y-m', $bulan)->translatedFormat('F Y'),
-        //             'items' => $item
-        //         ];
-        //     });
-        $transaksiPerBulan = Transaksi::where('user_id', auth()->user()->id_user)->get();
+        $transaksi = $query->get();
         return view('dashboard.riwayat', [
-            'transaksiPerBulan' => $transaksiPerBulan
+            'transaksi' => $transaksi
         ]);
+    }
+
+    public function pengajuan()
+    {
+
+        return view('dashboard.pengajuan', [
+            'transaksi' => Transaksi::whereNotNull('pengajuan_kembali')->where('pengajuan_kembali', '>', 0)->get()
+        ]);
+    }
+
+    public function pengajuan_kembali(Request $request, $id)
+    {
+        try {
+
+            $transaksi = Transaksi::findOrFail($id);
+            $pengajuan_kembali = $request->pengajuan_kembali;
+
+            $pengajuan['pengajuan_kembali'] = $pengajuan_kembali;
+
+            $transaksi->update($pengajuan);
+
+            return redirect()->back()->with('success', 'Pengajuan Berhasil Dikirim');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Pengajuan Gagal Dikirim');
+        }
+    }
+
+    public function membatalkan_pengajuan(Request $request, $id)
+    {
+        try {
+
+            $transaksi = Transaksi::findOrFail($id);
+            $transaksi->update([
+                'pengajuan_kembali' => null
+            ]);
+
+            return redirect()->back()->with('success', 'Pembatalan Berhasil Dilakukan');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Pembatalan Gagal Dilakukan');
+        }
+    }
+
+    public function terima_pengajuan(Request $request, $id)
+    {
+        try {
+            $transaksi = Transaksi::findOrFail($id);
+            $buku = Buku::findOrFail($transaksi->buku_id);
+
+            $jumlahDikembalikan = $transaksi->pengajuan_kembali;
+
+            if (!$jumlahDikembalikan || $jumlahDikembalikan < 1) {
+                return redirect()->back()->with('error', 'Jumlah pengajuan kembali tidak valid');
+            }
+
+            /* =====================
+           KEMBALIKAN STOK
+        ====================== */
+            $buku->stok += $jumlahDikembalikan;
+            $buku->save();
+
+            /* =====================
+           UPDATE JUMLAH DIKEMBALIKAN
+        ====================== */
+            $transaksi->jumlah_dikembalikan += $jumlahDikembalikan;
+
+            /* =====================
+           HITUNG DENDA (JIKA TELAT)
+        ====================== */
+            $tanggalKembali = Carbon::parse($transaksi->tanggal_kembali)->startOfDay();
+            $hariIni = now()->startOfDay();
+
+            $hariTelat = 0;
+            $dendaTambahan = 0;
+            $tarif = 2000;
+
+            if ($hariIni->gt($tanggalKembali)) {
+                $hariTelat = $tanggalKembali->diffInDays($hariIni);
+                $dendaTambahan = $hariTelat * $jumlahDikembalikan * $tarif;
+
+                $transaksi->denda += $dendaTambahan;
+                $transaksi->hari_telat = $hariTelat;
+            }
+
+            /* =====================
+           STATUS TRANSAKSI
+        ====================== */
+            if ($transaksi->jumlah_dikembalikan >= $transaksi->total_pinjam) {
+                // semua buku sudah kembali
+                $transaksi->status = 2; // dikembalikan
+            } else {
+                // masih ada yang dipinjam
+                $transaksi->status = 1;
+            }
+
+            /* =====================
+           RESET PENGAJUAN
+        ====================== */
+            $transaksi->pengajuan_kembali = null;
+            $transaksi->save();
+
+            /* =====================
+           PESAN SUKSES
+        ====================== */
+            $pesan = "Berhasil menerima pengembalian {$jumlahDikembalikan} buku";
+
+            if ($dendaTambahan > 0) {
+                $pesan .= " dengan denda Rp " . number_format($dendaTambahan, 0, ',', '.');
+            }
+
+            return redirect()->back()->with('success', $pesan);
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Gagal menerima pengajuan kembali');
+        }
     }
 
     public function favorit(Request $request)
@@ -359,4 +482,41 @@ class DashboardController extends Controller
             return redirect()->back()->with('error', 'Terjadi Kesalahan Saat Menghapus Buku Favorit.');
         }
     }
+
+    public function denda(Request $request)
+    {
+
+        $denda = Transaksi::where('user_id', auth()->user()->id_user)->where('denda', '>', 0)->get();
+        return view('dashboard.denda', [
+            'denda' => $denda,
+            'semuaDenda' => Transaksi::where('denda', '>', 0)->get(),
+        ]);
+    }
+
+    public function bayar(Request $request, $id)
+    {
+        $request->validate([
+            'pembayaran' => 'required|numeric|min:1'
+        ]);
+
+        $transaksi = Transaksi::findOrFail($id);
+
+        if ($transaksi->denda <= 0) {
+            return back()->with('error', 'Tidak ada denda yang harus dibayar');
+        }
+
+        if ($request->pembayaran > $transaksi->denda) {
+            return back()->with('error', 'Pembayaran melebihi total denda');
+        }
+
+        $sisaDenda = $transaksi->denda - $request->pembayaran;
+
+        $transaksi->update([
+            'denda' => $sisaDenda,
+            'status_denda' => $sisaDenda == 0 ? 'lunas' : 'belum_bayar'
+        ]);
+
+        return Redirect()->back()->with('success', 'Pembayaran denda berhasil');
+    }
+
 }

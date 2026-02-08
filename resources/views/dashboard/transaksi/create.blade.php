@@ -73,7 +73,6 @@
                 id="jumlahInput"
                 name="total_pinjam"
                 value="{{ old('total_pinjam') }}"
-                min="1"
                 class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500"
                 placeholder="Masukkan jumlah buku"
             />

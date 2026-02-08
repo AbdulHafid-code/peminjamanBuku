@@ -63,7 +63,13 @@
 						</td>
 						<td class="px-1.5 sm:px-4 py-2 hidden md:table-cell"> {{ $item->tanggal_pinjam->translatedFormat('d M Y') }} </td>
 						<td class="px-1.5 sm:px-4 py-2 hidden md:table-cell">{{$item->tanggal_kembali->translatedFormat('d M Y')}} </td>
-						<td class="px-1.5 sm:px-4 py-2 hidden md:table-cell">{{$item->total_pinjam - $item->jumlah_dikembalikan}} Buku</td>
+						<td class="px-1.5 sm:px-4 py-2 hidden md:table-cell">
+							@if($item->status == 2)
+								{{ $item->total_pinjam }} Buku
+							@else
+								{{ $item->total_pinjam - $item->jumlah_dikembalikan }} Buku
+							@endif
+						</td>
 						<td class="px-1.5 sm:px-4 py-2 align-middle">
 							<div class="flex justify-center gap-2 font-normal text-sm">
 								<x-button-detail :href="route('transaksi.show', $item->id_transaksi)"></x-button-detail>
@@ -82,7 +88,7 @@
 								@elseif($item->status == 1)
 
 									@if($item->tanggal_kembali > now())
-										<form action="{{ route('edit_status_transaksi', [$item->id_transaksi, 'dipulihkan'] ) }}" class="hidden lg:flex" method="POST">
+										<form action="{{ route('edit_status_transaksi', [$item->id_transaksi, 'dipulihkan'] ) }}" class="hidden md:flex" method="POST">
 											@method('PUT')
 											@csrf
 											<button type="submit" id="btn-delete" data-pesan="Apakah Anda Yakin Ingin Mengembalikan Data ini" class="flex items-center justify-center px-2 py-2 gap-2 rounded-md text-white bg-green-500 transition-all duration-300 hover:bg-green-600"><i class='bx bx-revision'></i> Pulihkan </button>
@@ -91,16 +97,16 @@
 
 									@if(($item->total_pinjam - $item->jumlah_dikembalikan) > 1)
 										<button type="button"
-											class="px-2 py-2 bg-sky-200 text-sky-800 rounded hover:bg-sky-600 hover:text-white"
+											class="px-2 py-2 bg-sky-200 text-sky-800 rounded hover:bg-sky-600 hover:text-white hidden md:flex items-center gap-2"
 											onclick="openReturnModal({{ $item->id_transaksi }}, {{ $item->total_pinjam }}, {{ $item->jumlah_dikembalikan }})">
 											<i class='bx bx-check'></i> Dikembalikan
 										</button>
 									@else
-										<form action="{{ route('edit_status_transaksi', [$item->id_transaksi, 'dikembalikan']) }}" method="POST">
+										<form action="{{ route('edit_status_transaksi', [$item->id_transaksi, 'dikembalikan']) }}" class="hidden md:flex" method="POST">
 											@csrf
 											@method('PUT')
 											<input type="hidden" name="jumlah_dikembalikan" value="{{$item->total_pinjam - $item->jumlah_dikembalikan}}">
-											<button type="submit" class="px-2 py-2 bg-sky-200 text-sky-800 rounded hover:bg-sky-600 hover:text-white">
+											<button type="submit" class="px-2 py-2 bg-sky-200 text-sky-800 rounded hover:bg-sky-600 hover:text-white flex items-center gap-2">
 												<i class='bx bx-check'></i> Dikembalikan
 											</button>
 										</form>
@@ -128,55 +134,96 @@
 			</tbody>
 		</table>
 
-		<div id="returnModal" class="fixed inset-0 bg-black/10 bg-opacity-50 flex items-center justify-center hidden z-50">
-			<div class="bg-white rounded-lg p-6 w-80 shadow-lg">
-				<h2 class="text-lg font-semibold mb-4">Kembalikan Buku</h2>
-				<form id="returnForm" method="POST">
+		{{-- modalll --}}
+		<div id="returnModal"
+			class="fixed inset-0 z-50 flex items-center justify-center px-4
+				bg-black/20 backdrop-blur-sm
+				opacity-0 pointer-events-none
+				transition-opacity duration-300 ease-out">
+
+			<div id="modalBox"
+				class="w-full max-w-md bg-gray-50 dark:bg-gray-800 rounded-xl shadow-2xl 
+					p-6 sm:p-8 relative
+					scale-95 translate-y-6
+					transition-all duration-300 ease-out">
+
+				<!-- close -->
+				<button onclick="closeReturnModal()"
+					class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition">
+					<i class='bx bx-x text-2xl'></i>
+				</button>
+
+				<!-- header -->
+				<div class="text-center mb-6">
+					<h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200">
+						Kembalikan Buku
+					</h2>
+					<p class="text-sm text-gray-500 dark:text-gray-300 mt-1">
+						Masukkan jumlah buku yang ingin dikembalikan
+					</p>
+				</div>
+
+				<form id="returnForm" method="POST" class="space-y-5">
 					@csrf
 					@method('PUT')
-					<label for="jumlah_dikembalikan" class="block mb-2">Jumlah yang ingin dikembalikan:</label>
-					<input 
-						type="number" 
-						id="jumlah_dikembalikan" 
-						name="jumlah_dikembalikan" 
-						min="1" 
-						value="1" 
-						class="w-full border rounded p-2 mb-4"
-					>
-					<div class="flex justify-end gap-2">
-						<button type="button" onclick="closeReturnModal()" class="px-3 py-1 bg-gray-300 rounded hover:bg-gray-400">Batal</button>
-						<button type="submit" class="px-3 py-1 bg-sky-500 text-white rounded hover:bg-sky-600">Kembalikan</button>
+
+					<div>
+						<label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">
+							Jumlah dikembalikan
+						</label>
+						<input
+							type="number"
+							id="jumlah_dikembalikan"
+							name="jumlah_dikembalikan"
+							min="1"
+							class="w-full rounded-xl border text-gray-900 dark:text-gray-50 border-gray-300 px-4 py-2.5
+								focus:ring-2 focus:ring-sky-400 focus:border-sky-400
+								transition outline-none">
+					</div>
+
+					<div class="flex justify-end gap-3 pt-2">
+						<button type="submit" class="rounded-sm bg-violet-600 px-5 py-2 text-sm font-medium text-white hover:bg-violet-700 flex items-center gap-2">
+							<i class='bx bx-paper-plane'></i> Kirim
+						</button>
 					</div>
 				</form>
+
 			</div>
 		</div>
+
+
 	</div>
 
 
 <script>
 	function openReturnModal(transaksiId, totalPinjam, jumlahDikembalikan) {
 		const modal = document.getElementById('returnModal');
+		const box = document.getElementById('modalBox');
 		const form = document.getElementById('returnForm');
 		const input = document.getElementById('jumlah_dikembalikan');
 
 		// Set action form sesuai transaksi
 		form.action = `/dashboard/transaksi/Editstatus/${transaksiId}/dikembalikan`;
 		
-		// Set max value sesuai total pinjam
-		input.max = totalPinjam;
-
+		
 		if (!jumlahDikembalikan) {
+			input.max = totalPinjam;
 			input.value = totalPinjam;
 		} else {
+			input.max = totalPinjam - jumlahDikembalikan;
 			input.value = totalPinjam - jumlahDikembalikan; // default semua dikembalikan
 		}
 
-		modal.classList.remove('hidden');
+		modal.classList.remove('opacity-0','pointer-events-none');
+		box.classList.remove('scale-95','translate-y-6');
 	}
 
 	function closeReturnModal() {
 		const modal = document.getElementById('returnModal');
-		modal.classList.add('hidden');
+		const box = document.getElementById('modalBox');
+
+		modal.classList.add('opacity-0','pointer-events-none');
+		box.classList.add('scale-95','translate-y-6');
 	}
 </script>
 

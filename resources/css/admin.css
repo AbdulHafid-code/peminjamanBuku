@@ -91,14 +91,14 @@ a, button {
 
 /* NAVBAR */
 nav {
-    @apply bg-white dark:bg-gray-900 h-18 border-b border-gray-200 dark:border-gray-800 px-5 flex items-center sticky top-0 left-0 z-100;
+    @apply bg-white dark:bg-gray-900 h-18 border-b border-gray-200 dark:border-gray-800 px-5 flex items-center justify-between sticky top-0 left-0 z-100;
 	grid-gap: 28px;
 }
 nav .toggle-sidebar {
     @apply text-lg text-gray-800 dark:text-gray-100 cursor-pointer;
 }
 nav form {
-    @apply max-w-100 w-75 sm:w-125 mr-auto;
+    @apply flex-1 sm:max-w-100 sm:w-75 lg:w-125 mr-auto;
 }
 nav .form-group {
 	@apply relative;
@@ -110,7 +110,7 @@ nav .form-group .icon {
     @apply absolute top-1/2 -translate-1/2 right-4 text-gray-800 dark:text-gray-200;
 }
 nav .nav-link {
-    @apply relative hidden md:block lg:flex justify-center items-center rounded-full border border-gray-200 dark:border-gray-800 w-10 h-10 transition-all duration-300 hover:bg-gray-400/10 dark:hover:bg-gray-600/20;
+    @apply relative flex justify-center items-center rounded-full border border-gray-200 dark:border-gray-800 w-10 h-10 transition-all duration-300 hover:bg-gray-400/10 dark:hover:bg-gray-600/20;
 }
 nav .nav-link .icon {
     @apply text-xl text-gray-600 dark:text-gray-400;

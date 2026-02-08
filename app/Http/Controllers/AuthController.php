@@ -58,7 +58,7 @@ class AuthController extends Controller
             return back()->with('error', 'Username / Password Salah');
         }
 
-        if ($user->status_akun === 'pending') {
+        if ($user->status_akun === 'pending' || $user->status_akun === 'nonaktif') {
             return back()->with('error', 'Akun Belum Aktif');
         }
 

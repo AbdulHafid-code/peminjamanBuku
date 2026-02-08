@@ -158,8 +158,8 @@
 										<x-button-detail :href="route('buku.show', $item->buku->id_buku)"></x-button-detail>
 										<form action="{{ route('status', $item->user->id_user) }}" method="POST">
 											@csrf
-											<button id="btn-delete" data-pesan="Apakah Anda Yakin Ingin Mengnonaktifkan {{$item->user->nama}}" type="submit" class="rounded-sm bg-red-500 px-5 py-2 text-sm font-medium text-white hover:bg-red-600 flex items-center gap-2">
-												<i class='bx bx-x' ></i> Non Aktif
+											<button id="btn-delete" data-pesan="Apakah Anda Yakin Ingin Mengnonaktifkan {{$item->nama}}" type="submit" class="rounded-sm bg-red-500 px-2 md:px-5 py-1.5 text-sm font-medium text-white hover:bg-red-600 flex items-center gap-2">
+												<i class='bx bx-x text-xl' ></i> <span class="hidden md:block"> Non Aktif</span>
 											</button>
 										</form>
 									</div>

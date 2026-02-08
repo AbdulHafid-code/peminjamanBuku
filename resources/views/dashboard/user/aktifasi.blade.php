@@ -63,7 +63,7 @@
                                 <form action="{{ route('status', $item->id_user) }}" method="POST">
                                     @csrf
                                     <button id="btn-delete" data-pesan="Apakah Anda Yakin Ingin Mengaktifkan {{$item->nama}}" type="submit" class="rounded-sm bg-amber-500 px-5 py-1.5 text-sm font-medium text-white hover:bg-amber-600 flex items-center gap-2">
-                                        <i class='bx bxs-check-circle ' ></i> Aktif
+                                        <i class='bx bxs-check-circle text-xl' ></i> <span class="hidden sm:block">Aktif</span>
                                     </button>
                                 </form>	
                                 

@@ -7,7 +7,7 @@
 @section('content')
 	<div class="title-container">
 		<div>
-			<h1 class="title">Pengguna Baru</h1>
+			<h1 class="title">Pengguna Di Non-Aktifkan</h1>
 			<ul class="breadcrumbs">
 				<li><a href="{{ route('dashboard')}}">Dashboard</a></li>
 				<i class='bx bx-chevron-right divider'></i>
@@ -63,7 +63,7 @@
                                 <form action="{{ route('status', $item->id_user) }}" method="POST">
                                     @csrf
                                     <button id="btn-delete" data-pesan="Apakah Anda Yakin Ingin Mengaktifkan {{$item->nama}}" type="submit" class="rounded-sm bg-amber-500 px-5 py-1.5 text-sm font-medium text-white hover:bg-amber-600 flex items-center gap-2">
-                                        <i class='bx bxs-check-circle ' ></i> Aktif
+                                        <i class='bx bxs-check-circle text-xl' ></i> <span class="hidden sm:block">Aktif</span>
                                     </button>
                                 </form>	
                                 

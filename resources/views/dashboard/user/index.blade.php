@@ -61,7 +61,7 @@
 								<form action="{{ route('status', $item->id_user) }}" method="POST">
 									@csrf
 									<button id="btn-delete" data-pesan="Apakah Anda Yakin Ingin Mengnonaktifkan {{$item->nama}}" type="submit" class="rounded-sm bg-red-500 px-5 py-1.5 text-sm font-medium text-white hover:bg-red-600 flex items-center gap-2">
-										<i class='bx bx-x' ></i> Non Aktif
+										<i class='bx bx-x text-xl' ></i> <span class="hidden md:block"> Non Aktif</span>
 									</button>
 								</form>
 								<x-button-delete :action="route('user.destroy', $item->id_user)" :trash="true" dataPesan="Apakah Anda Yakin Ingin Menghapus Data User {{$item->nama}}"></x-button-delete>

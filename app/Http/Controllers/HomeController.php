@@ -19,7 +19,7 @@ class HomeController extends Controller
             'transaksi as total_pinjam' => function ($query) {
                 $query->where('status', 1);
             }
-        ])->orderByDesc('total_pinjam')->limit(6)->get();
+        ])->orderByDesc('total_pinjam')->limit(8)->get();
 
         $kategori = Kategori::withCount('buku')->orderByDesc('buku_count');
 
@@ -95,6 +95,7 @@ class HomeController extends Controller
                 ->where('status', 1)
                 ->get(),
             'isFavorit' => $isFavorit,
+            'bukuLainnya' => Buku::limit(4)->get()
         ]);
     }
 

@@ -3,9 +3,13 @@
 	<ul class="side-menu">
 		<li><a href="{{ route('dashboard') }}" class="{{ request()->is('dashboard') ? 'active' : ''}}"><i class='bx bx-qr icon'></i> Dashboard</a></li>
 		<li><a href="{{ route('edit_profil') }}" class="{{ request()->is('dashboard/editprofil') ? 'active' : ''}}"><i class='bx bx-user icon'></i> Profil</a></li>
-		<li><a href="{{ route('riwayat') }}" class="{{ request()->is('dashboard/riwayat') ? 'active' : ''}}"><i class='bx bx-list-ul icon'></i> Riwayat</a></li>
-		<li><a href="{{ route('favorit') }}" class="{{ request()->is('dashboard/favorit') ? 'active' : ''}}"><i class='bx bx-bookmark-heart icon'></i> Buku Favorit</a></li>
 		
+		@can('user')
+			<li class="divider" data-text="User">User</li>
+			<li><a href="{{ route('riwayat') }}" class="{{ request()->is('dashboard/riwayat') ? 'active' : ''}}"><i class='bx bx-list-ul icon'></i> Riwayat</a></li>
+			<li><a href="{{ route('favorit') }}" class="{{ request()->is('dashboard/favorit') ? 'active' : ''}}"><i class='bx bx-bookmark-heart icon'></i> Buku Favorit</a></li>
+		@endcan
+
 		@can('admin')
 			<li class="divider" data-text="Admin">Admin</li>
 			<li>
@@ -25,8 +29,10 @@
 				</ul>
 			</li>
 			<li><a href="{{ route('transaksi.index') }}" class="{{ request()->is('dashboard/transaksi*') ? 'active' : ''}}"><i class='bx bx-cart icon' ></i></i>Transaksi</a></li>
+			<li><a href="{{ route('pengajuan') }}" class="{{ request()->is('dashboard/pengajuan') ? 'active' : ''}}"><i class='bx bx-paper-plane icon'></i> Pengajuan</a></li>
 		@endcan
 
+		<li><a href="{{ route('denda') }}" class="{{ request()->is('dashboard/denda') ? 'active' : ''}}"><i class='bx bx-money icon'></i> Denda</a></li>	
 
 		<li>
 			<form action="{{ route('logout.post') }}" method="post" class="flex items-center font-medium text-sm text-gray-600 dark:text-gray-400 p-3 transition-all duration-300 rounded-[10px] my-1 whitespace-nowrap">

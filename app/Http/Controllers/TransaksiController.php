@@ -82,7 +82,7 @@ class TransaksiController extends Controller
             'user_id' => 'required|exists:user,id_user',
             'tanggal_pinjam' => 'required|date|after_or_equal:today',
             'tanggal_kembali' => 'required|date|after_or_equal:tanggal_pinjam',
-            'total_pinjam' => 'required|integer|min:1',
+            'total_pinjam' => 'required|integer|min:1|max:3',
             'status' => 'required|in:0,1,2,3'
         ]);
 
@@ -152,7 +152,7 @@ class TransaksiController extends Controller
             'user_id' => 'required|exists:user,id_user',
             'tanggal_pinjam' => 'required|date|after_or_equal:today',
             'tanggal_kembali' => 'required|date|after_or_equal:tanggal_pinjam',
-            'total_pinjam' => 'required|integer|min:1',
+            'total_pinjam' => 'required|integer|min:1|max:3',
             'status' => 'required|in:0,1,2,3'
         ]);
 
@@ -198,7 +198,7 @@ class TransaksiController extends Controller
         $gagalTransaksi = null;
 
         try {
-            DB::transaction(function () use ($id, $request, $status, &$gagalTransaksi) {
+            DB::transaction(function () use ($id, $request, $status, &$gagalTransaksi, &$successMessage) {
 
                 // Lock transaksi
                 $transaksi = Transaksi::lockForUpdate()->findOrFail($id);
@@ -271,6 +271,36 @@ class TransaksiController extends Controller
                         } else {
                             $statusQuery = 1;
                         }
+                        // pesan khusus
+                        $successMessage = "Berhasil mengembalikan {$jumlahDikembalikan} buku";
+
+                        // ====================================================
+                        // Denda Future
+
+                        $tanggalKembali = Carbon::parse($transaksi->tanggal_kembali)->startOfDay();
+                        $hariIni = now()->startOfDay();
+
+                        $hariTelat = 0;
+                        $dendaTambahan = 0;
+
+                        if ($hariIni->gt($tanggalKembali)) {
+
+                            $hariTelat = $tanggalKembali->diffInDays($hariIni);
+
+                            $tarif = 2000;
+
+                            // DENDA HANYA UNTUK BUKU YANG DIKEMBALIKAN SEKARANG
+                            $dendaTambahan = $hariTelat * $jumlahDikembalikan * $tarif;
+
+                            // tambahkan ke denda sebelumnya
+                            $transaksi->denda += $dendaTambahan;
+                        }
+
+                        $transaksi->hari_telat = $hariTelat;
+                        $transaksi->save();
+
+                        // =============================================
+
 
                         // Jika Statusnya Selain Diatas Maka Kirim Pesan Error
                     } elseif ($status === 'dipulihkan') {
@@ -311,7 +341,10 @@ class TransaksiController extends Controller
                 return redirect()->back()->with('error', $gagalTransaksi);
             }
 
-            return redirect()->back()->with('success', 'Status berhasil diperbarui menjadi ' . $status);
+            return redirect()->back()->with(
+                'success',
+                $successMessage ?? 'Status berhasil diperbarui menjadi ' . $status
+            );
         } catch (\Exception $e) {
 
             return redirect()->back()->with('error', match ($e->getMessage()) {

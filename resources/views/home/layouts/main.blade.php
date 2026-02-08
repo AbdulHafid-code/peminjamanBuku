@@ -14,7 +14,7 @@
 </head>
 <body class="body-landingpage">
   
-    @yield('navbar')
+    @include('home.layouts.navbar')
   
     @yield('container')
 

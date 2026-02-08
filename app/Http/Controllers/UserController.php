@@ -38,8 +38,10 @@ class UserController extends Controller
 
         // filter search
         if ($request->filled('search')) {
-            $query->where('nama', 'like', "%{$request->search}%")
-                ->orWhere('username', 'like', "%{$request->search}%");
+            $query->where(function ($q) use ($request) {
+                $q->where('nama', 'like', "%{$request->search}%")
+                    ->orWhere('username', 'like', "%{$request->search}%");
+            });
         }
 
         // filter waktu
@@ -217,8 +219,10 @@ class UserController extends Controller
 
         // filter search
         if ($request->filled('search')) {
-            $query->where('nama', 'like', "%{$request->search}%")
-                ->orWhere('username', 'like', "%{$request->search}%");
+            $query->where(function ($q) use ($request) {
+                $q->where('nama', 'like', "%{$request->search}%")
+                    ->orWhere('username', 'like', "%{$request->search}%");
+            });
         }
 
         // filter waktu
@@ -254,8 +258,10 @@ class UserController extends Controller
 
         // filter search
         if ($request->filled('search')) {
-            $query->where('nama', 'like', "%{$request->search}%")
-                ->orWhere('username', 'like', "%{$request->search}%");
+            $query->where(function ($q) use ($request) {
+                $q->where('nama', 'like', "%{$request->search}%")
+                    ->orWhere('username', 'like', "%{$request->search}%");
+            });
         }
 
         // filter waktu

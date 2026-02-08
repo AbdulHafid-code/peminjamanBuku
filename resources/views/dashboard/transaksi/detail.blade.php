@@ -27,7 +27,7 @@
                 <img src="{{ $transaksi->user->profil ? asset('storage/image/profil/' . $transaksi->user->profil) : 'https://ui-avatars.com/api/?name='. preg_replace('/\s+/', '', $transaksi->user->nama) . '&background=random&length=2'}}" alt="" class="size-30 rounded-full object-cover">
                 <div class="block">
                     <p class="font-medium text-sm text-gray-600 dark:text-gray-400">Pengguna Yang Peminjam</p>
-                    <a href="" class="group flex flex-col md:flex-row gap-1.5 items-center transition rounded-full py-1 cursor-pointer">
+                    <a href="" class="group flex flex-col md:flex-row gap-1.5 transition rounded-full py-1 cursor-pointer">
                         <span class="text-2xl font-semibold text-gray-950 dark:text-gray-50 group-hover:text-violet-600 group-hover:underline transition">{{ mb_strimwidth($transaksi->user->nama, 0, 20, '...') }}</span>
                     </a>
                 </div>
@@ -35,7 +35,7 @@
             {{-- buku --}}
             <div class="relative flex p-4 rounded-lg gap-5 bg-gray-100 dark:bg-gray-800 w-full h-55">
 
-                <img src="{{ asset('storage/image/sampul/' . $transaksi->buku->sampul) }}" class="w-30 h-ful hidden sm:block rounded-sm object-cover"/>
+                <img src="{{ asset('storage/image/sampul/' . $transaksi->buku->sampul) }}" class="w-30 h-ful  rounded-sm object-cover"/>
 
                 <div class="flex flex-col justify-center gap-1">
 

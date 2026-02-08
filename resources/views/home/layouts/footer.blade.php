@@ -1,9 +1,9 @@
 <footer class="footer-element">
     <div class="container-footer">
-        <div class="content-utama">
+        <div class="content-utama px-5 min-[450px]:px-10 min-[700px]:px-20">
             <div class="logo-desk">
-                <a href="/" class="text-2xl flex items-center font-bold text-blue-500 z-[100] transition-all duration-300">
-                    <img src="{{ asset('images/man-sitting.svg') }}" class="icon size-8" style='filter: brightness(0) saturate(100%) invert(24%) sepia(98%) saturate(600%) hue-rotate(190deg);'/> LapakBaca
+                <a href="/" class="text-2xl flex items-center gap-3 font-bold text-violet-600 z-100 transition-all duration-300">
+                    <i class='bx bx-library text-3xl'></i> TheBooks
                 </a>
                 <p>TheBooks adalah platform peminjaman buku yang memudahkan pengguna mengakses dan meminjam koleksi bacaan secara praktis. Kami berkomitmen menghadirkan layanan peminjaman yang tertata, informatif, dan nyaman, mulai dari pengelolaan data buku, proses peminjaman, hingga pengembalian yang terjadwal dengan jelas.</p>
             </div>
@@ -52,6 +52,6 @@
         </div>
     </div>
     <div class="copyright-content">
-        <h5>&copy; TheBooks 2025 - Platform Peminjaman Buku</h5>
+        <h5>&copy; Desain dari Fahmy Az-Zu</h5>
     </div>
 </footer>  
