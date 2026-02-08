@@ -386,8 +386,11 @@ class DashboardController extends Controller
                 $hariTelat = $tanggalKembali->diffInDays($hariIni);
                 $dendaTambahan = $hariTelat * $jumlahDikembalikan * $tarif;
 
-                $transaksi->denda += $dendaTambahan;
-                $transaksi->hari_telat = $hariTelat;
+                if ($dendaTambahan > 0) {
+                    $transaksi->denda += $dendaTambahan;
+                    $transaksi->hari_telat = $hariTelat;
+                    $transaksi->status_denda = 'belum_bayar';
+                }
             }
 
             /* =====================
@@ -518,5 +521,4 @@ class DashboardController extends Controller
 
         return Redirect()->back()->with('success', 'Pembayaran denda berhasil');
     }
-
 }

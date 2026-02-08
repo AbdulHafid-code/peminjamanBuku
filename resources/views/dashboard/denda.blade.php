@@ -33,7 +33,7 @@
                         <th class="text-left px-1.5 sm:px-4 py-2 hidden lg:table-cell">Total Denda</th>
                         <th class="text-left px-1.5 sm:px-4 py-2 hidden md:table-cell">Hari Telat</th>
                         <th class="text-left px-1.5 sm:px-4 py-2 hidden md:table-cell">Status Denda</th>
-                        {{-- <th class="text-center px-1.5 sm:px-4 py-2">Aksi</th> --}}
+                        <th class="text-center px-1.5 sm:px-4 py-2">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="text-sm sm:text-base font-medium divide-y divide-gray-300 dark:divide-gray-700 text-gray-950 dark:text-gray-50">
@@ -52,7 +52,7 @@
                             <td class="px-1.5 sm:px-4 py-2 hidden lg:table-cell"> {{$item->denda}}</td>
                             <td class="px-1.5 sm:px-4 py-2 hidden md:table-cell">{{$item->hari_telat}}</td>
                             <td class="px-1.5 sm:px-4 py-2 hidden md:table-cell">{{$item->status_denda}}</td>
-                            {{-- <td class="px-1.5 sm:px-4 py-2 align-middle">
+                            <td class="px-1.5 sm:px-4 py-2 align-middle">
                                 <div class="flex justify-center gap-2 font-normal text-sm">
                                     <button 
                                         type="button"
@@ -61,7 +61,7 @@
                                         <i class='bx bx-money'></i> Bayar
                                     </button>
                                 </div>
-                            </td> --}}
+                            </td>
                         </tr>
                     @empty
                         <tr>
@@ -85,7 +85,7 @@
                         <th class="text-left px-1.5 sm:px-4 py-2 hidden lg:table-cell">Total Denda</th>
                         <th class="text-left px-1.5 sm:px-4 py-2 hidden md:table-cell">Hari Telat</th>
                         <th class="text-left px-1.5 sm:px-4 py-2 hidden md:table-cell">Status Denda</th>
-                        <th class="text-center px-1.5 sm:px-4 py-2">Aksi</th>
+                        <th class="text-center px-1.5 sm:px-4 py-2">Bayar</th>
                     </tr>
                 </thead>
                 <tbody class="text-sm sm:text-base font-medium divide-y divide-gray-300 dark:divide-gray-700 text-gray-950 dark:text-gray-50">
@@ -124,6 +124,7 @@
             </table>
         </div>  
     @endcan
+
 
 
 

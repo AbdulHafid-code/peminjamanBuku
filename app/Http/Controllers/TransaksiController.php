@@ -293,7 +293,10 @@ class TransaksiController extends Controller
                             $dendaTambahan = $hariTelat * $jumlahDikembalikan * $tarif;
 
                             // tambahkan ke denda sebelumnya
-                            $transaksi->denda += $dendaTambahan;
+                            if ($dendaTambahan > 0) {
+                                $transaksi->denda += $dendaTambahan;
+                                $transaksi->status_denda = 'belum_bayar'; 
+                            }
                         }
 
                         $transaksi->hari_telat = $hariTelat;
