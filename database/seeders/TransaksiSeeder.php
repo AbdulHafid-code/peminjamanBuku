@@ -5,70 +5,103 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class TransaksiSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
+
     public function run(): void
     {
-        DB::table('transaksi')->insert([
-            [
-                'id_transaksi' => 1,
-                'user_id' => 2,
-                'buku_id' => 1,
-                'total_pinjam' => 1,
-                'tanggal_pinjam' => now()->subDays(3),
-                'tanggal_kembali' => now()->addDays(4),
-                'status' => 0, // Dipinjam
+        $data = [];
+
+        for ($i = 1; $i <= 40; $i++) {
+
+            /* ======================
+                TOTAL & STATUS AWAL
+            ====================== */
+            $totalPinjam = rand(1, 2);
+            $status = rand(0, 3); // 0=pending,1=sukses,2=dikembalikan,3=ditolak
+
+            $jumlahDikembalikan = null;
+            $pengajuanKembali = null;
+
+            /* ======================
+                LOGIC PENGEMBALIAN
+            ====================== */
+            if ($status !== 0) {
+
+                $jumlahDikembalikan = rand(0, $totalPinjam);
+                $sisa = $totalPinjam - $jumlahDikembalikan;
+
+                // jika semua sudah dikembalikan
+                if ($jumlahDikembalikan === $totalPinjam) {
+                    $status = 2; // dikembalikan
+                    $pengajuanKembali = null;
+                } else if ($sisa > 0) {
+                    $pengajuanKembali = rand(0, $sisa);
+                    if ($pengajuanKembali === 0) {
+                        $pengajuanKembali = null;
+                    }
+                }
+
+                if ($jumlahDikembalikan === 0) {
+                    $jumlahDikembalikan = null;
+                }
+            }
+
+            /* ======================
+                TANGGAL
+            ====================== */
+            $tanggalPinjam = Carbon::now()
+                ->subDays(rand(10, 30))
+                ->startOfDay();
+
+            $tanggalKembali = (clone $tanggalPinjam)
+                ->addDays(rand(5, 14))
+                ->startOfDay();
+
+            $hariIni = Carbon::now()->startOfDay();
+
+            /* ======================
+                LOGIC DENDA
+            ====================== */
+            if ($tanggalKembali->lt($hariIni)) {
+
+                $hariTelat = $tanggalKembali->diffInDays($hariIni);
+                $statusDenda = rand(0, 1) ? 'belum_bayar' : 'lunas';
+
+                $denda = ($statusDenda === 'belum_bayar')
+                    ? $hariTelat * 2000
+                    : 0;
+            } else {
+                $hariTelat = 0;
+                $denda = 0;
+                $statusDenda = 'lunas';
+            }
+
+            /* ======================
+                INSERT DATA
+            ====================== */
+            $data[] = [
+                'buku_id' => rand(1, 15),
+                'user_id' => rand(2, 40),
+                'total_pinjam' => $totalPinjam,
+                'jumlah_dikembalikan' => $jumlahDikembalikan,
+                'pengajuan_kembali' => $pengajuanKembali,
+                'tanggal_pinjam' => $tanggalPinjam->toDateString(),
+                'tanggal_kembali' => $tanggalKembali->toDateString(),
+                'hari_telat' => $hariTelat,
+                'denda' => $denda,
+                'status_denda' => $statusDenda,
+                'status' => $status,
                 'created_at' => now(),
                 'updated_at' => now(),
-            ],
-            [
-                'id_transaksi' => 2,
-                'user_id' => 3,
-                'buku_id' => 2,
-                'total_pinjam' => 2,
-                'tanggal_pinjam' => now()->subDays(7),
-                'tanggal_kembali' => now()->subDays(1),
-                'status' => 1, // Selesai
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_transaksi' => 3,
-                'user_id' => 5,
-                'buku_id' => 4,
-                'total_pinjam' => 1,
-                'tanggal_pinjam' => now()->subDays(1),
-                'tanggal_kembali' => now()->addDays(6),
-                'status' => 0, // Dipinjam
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_transaksi' => 4,
-                'user_id' => 7,
-                'buku_id' => 7,
-                'total_pinjam' => 1,
-                'tanggal_pinjam' => now()->subDays(10),
-                'tanggal_kembali' => now()->subDays(3),
-                'status' => 1, // Selesai
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_transaksi' => 5,
-                'user_id' => 10,
-                'buku_id' => 9,
-                'total_pinjam' => 1,
-                'tanggal_pinjam' => now()->subDays(2),
-                'tanggal_kembali' => now()->addDays(5),
-                'status' => 0, // Dipinjam
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
+            ];
+        }
+
+        DB::table('Transaksi')->insert($data);
     }
 }

@@ -13,933 +13,1052 @@ class BukuSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('buku')->insert([
+        DB::table('Buku')->insert([
+
+            /* =======================
+               KATEGORI: FIKSI (id = 1)
+               ======================= */
+
             [
-                'id_buku' => 1,
-                'kode_buku' => 'NA001',
+                'kode_buku' => 'FK001',
                 'judul_buku' => 'Funiculi Funicula',
                 'penulis' => 'Toshikazu Kawaguchi',
                 'penerbit' => 'Poplar Publishing',
                 'tanggal_terbit' => '2015-01-01',
-                'kategori_id' => 5, // Drama
+                'kategori_id' => 1,
                 'stok' => 10,
                 'sampul' => 'funiculi.jpg',
-                'deskripsi' => 'Novel tentang sebuah kafe misterius yang memungkinkan pengunjungnya melakukan perjalanan waktu dengan syarat tertentu.',
+                'deskripsi' => 'Novel ini bercerita tentang sebuah kafe kecil di Tokyo yang memiliki kemampuan unik untuk membawa pengunjungnya ke masa lalu.
+                                Setiap perjalanan waktu memiliki aturan ketat yang tidak boleh dilanggar oleh siapa pun.
+                                Melalui kisah-kisah para pengunjung, pembaca diajak merenungkan penyesalan, cinta, dan kesempatan kedua.
+                                Cerita disampaikan dengan sederhana namun penuh emosi yang menyentuh hati.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
 
-
             [
-                'id_buku' => 2,
-                'kode_buku' => 'SL001',
-                'judul_buku' => 'Solo Leveling Vol. 1',
-                'penulis' => 'Chugong',
-                'penerbit' => 'D&C Media',
-                'tanggal_terbit' => '2018-01-01',
-                'kategori_id' => 1, // Fantasy / Action
-                'stok' => 12,
-                'sampul' => 'solo_leveling_1.jpg',
-                'deskripsi' => 'Mengisahkan Sung Jin-Woo, hunter terlemah yang hampir tewas dalam dungeon berbahaya dan memperoleh kekuatan misterius untuk berkembang tanpa batas.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 3,
-                'kode_buku' => 'SL002',
-                'judul_buku' => 'Solo Leveling Vol. 2',
-                'penulis' => 'Chugong',
-                'penerbit' => 'D&C Media',
-                'tanggal_terbit' => '2018-05-01',
+                'kode_buku' => 'FK002',
+                'judul_buku' => 'Laut Bercerita',
+                'penulis' => 'Leila S. Chudori',
+                'penerbit' => 'Kepustakaan Populer Gramedia',
+                'tanggal_terbit' => '2017-10-01',
                 'kategori_id' => 1,
-                'stok' => 12,
-                'sampul' => 'solo_leveling_2.jpg',
-                'deskripsi' => 'Jin-Woo mulai menyadari potensi kekuatannya dan memasuki dungeon berbahaya seorang diri demi menjadi lebih kuat.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 4,
-                'kode_buku' => 'SL003',
-                'judul_buku' => 'Solo Leveling Vol. 3',
-                'penulis' => 'Chugong',
-                'penerbit' => 'D&C Media',
-                'tanggal_terbit' => '2018-09-01',
-                'kategori_id' => 1,
-                'stok' => 12,
-                'sampul' => 'solo_leveling_3.jpg',
-                'deskripsi' => 'Kekuatan Jin-Woo berkembang pesat dan mulai menarik perhatian para guild besar.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 5,
-                'kode_buku' => 'SL004',
-                'judul_buku' => 'Solo Leveling Vol. 4',
-                'penulis' => 'Chugong',
-                'penerbit' => 'D&C Media',
-                'tanggal_terbit' => '2019-01-01',
-                'kategori_id' => 1,
-                'stok' => 12,
-                'sampul' => 'solo_leveling_4.jpg',
-                'deskripsi' => 'Jin-Woo membentuk pasukan bayangan dan menghadapi monster yang semakin kuat.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 6,
-                'kode_buku' => 'SL005',
-                'judul_buku' => 'Solo Leveling Vol. 5',
-                'penulis' => 'Chugong',
-                'penerbit' => 'D&C Media',
-                'tanggal_terbit' => '2019-06-01',
-                'kategori_id' => 1,
-                'stok' => 12,
-                'sampul' => 'solo_leveling_5.jpg',
-                'deskripsi' => 'Pertarungan skala besar terjadi dan Jin-Woo semakin dikenal sebagai hunter terkuat.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 7,
-                'kode_buku' => 'SL006',
-                'judul_buku' => 'Solo Leveling Vol. 6',
-                'penulis' => 'Chugong',
-                'penerbit' => 'D&C Media',
-                'tanggal_terbit' => '2019-10-01',
-                'kategori_id' => 1,
-                'stok' => 12,
-                'sampul' => 'solo_leveling_6.jpg',
-                'deskripsi' => 'Jin-Woo menghadapi ancaman yang jauh lebih besar dan mengungkap rahasia kekuatannya.',
+                'stok' => 8,
+                'sampul' => 'laut_bercerita.jpg',
+                'deskripsi' => 'Buku ini mengisahkan perjuangan para aktivis mahasiswa pada masa Orde Baru.
+                                Cerita disampaikan melalui sudut pandang korban penculikan dan keluarganya yang ditinggalkan.
+                                Novel ini memperlihatkan sisi kemanusiaan, ketakutan, dan harapan di tengah represi politik.
+                                Pembaca diajak memahami sejarah melalui cerita yang emosional dan mendalam.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
 
-
             [
-                'id_buku' => 8,
-                'kode_buku' => 'YN001',
-                'judul_buku' => 'Your Name',
-                'penulis' => 'Makoto Shinkai',
-                'penerbit' => 'Kadokawa',
-                'tanggal_terbit' => '2016-06-18',
-                'kategori_id' => 3, // Drama / Romance
-                'stok' => 15,
-                'sampul' => 'your_name_1.jpg',
-                'deskripsi' => 'Kisah Mitsuha dan Taki yang secara misterius bertukar tubuh dan terhubung oleh takdir melintasi ruang dan waktu.',
+                'kode_buku' => 'FK003',
+                'judul_buku' => 'Cantik Itu Luka',
+                'penulis' => 'Eka Kurniawan',
+                'penerbit' => 'Gramedia Pustaka Utama',
+                'tanggal_terbit' => '2002-01-01',
+                'kategori_id' => 1,
+                'stok' => 6,
+                'sampul' => 'cantik_itu_luka.jpg',
+                'deskripsi' => 'Novel ini menggabungkan realisme magis dengan sejarah Indonesia.
+                                Mengisahkan kehidupan Dewi Ayu dan keturunannya yang penuh tragedi dan ironi.
+                                Cerita dipenuhi kritik sosial, politik, serta budaya patriarki.
+                                Gaya bahasanya khas dan kuat, menjadikan novel ini sangat berkesan.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+
+            /* =========================
+               KATEGORI: NON-FIKSI (id = 2)
+               ========================= */
+
             [
-                'id_buku' => 9,
-                'kode_buku' => 'YN002',
-                'judul_buku' => 'Your Name – Another Side: Earthbound',
-                'penulis' => 'Makoto Shinkai',
-                'penerbit' => 'Kadokawa',
-                'tanggal_terbit' => '2016-08-01',
+                'kode_buku' => 'NF001',
+                'judul_buku' => 'Atomic Habits',
+                'penulis' => 'James Clear',
+                'penerbit' => 'Penguin Random House',
+                'tanggal_terbit' => '2018-10-16',
+                'kategori_id' => 2,
+                'stok' => 12,
+                'sampul' => 'atomic_habits.jpg',
+                'deskripsi' => 'Buku ini membahas bagaimana kebiasaan kecil dapat membawa perubahan besar dalam hidup.
+                                Penulis menjelaskan konsep perubahan perilaku dengan pendekatan ilmiah dan praktis.
+                                Disertai contoh nyata yang mudah dipahami dan diterapkan.
+                                Cocok bagi siapa pun yang ingin memperbaiki kualitas hidup secara bertahap.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'kode_buku' => 'NF002',
+                'judul_buku' => 'Filosofi Teras',
+                'penulis' => 'Henry Manampiring',
+                'penerbit' => 'Kompas',
+                'tanggal_terbit' => '2018-11-26',
+                'kategori_id' => 2,
+                'stok' => 9,
+                'sampul' => 'filosofi_teras.jpg',
+                'deskripsi' => 'Buku ini memperkenalkan filsafat Stoikisme dengan bahasa yang ringan.
+                                Pembaca diajak memahami cara mengelola emosi dan pikiran secara rasional.
+                                Konsep-konsep filsafat dijelaskan dengan contoh kehidupan sehari-hari.
+                                Sangat relevan untuk menghadapi tekanan hidup modern.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'kode_buku' => 'NF003',
+                'judul_buku' => 'Sapiens',
+                'penulis' => 'Yuval Noah Harari',
+                'penerbit' => 'Harvill Secker',
+                'tanggal_terbit' => '2011-01-01',
+                'kategori_id' => 2,
+                'stok' => 7,
+                'sampul' => 'sapiens.jpg',
+                'deskripsi' => 'Buku ini membahas sejarah umat manusia dari masa purba hingga modern.
+                                Penulis mengaitkan biologi, sejarah, dan budaya secara komprehensif.
+                                Banyak gagasan kritis yang memancing pembaca untuk berpikir ulang.
+                                Cocok bagi pembaca yang menyukai wawasan mendalam tentang peradaban manusia.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            /* =====================
+               KATEGORI: NOVEL (id = 3)
+               ===================== */
+
+            [
+                'kode_buku' => 'NV001',
+                'judul_buku' => 'Hujan',
+                'penulis' => 'Tere Liye',
+                'penerbit' => 'Gramedia Pustaka Utama',
+                'tanggal_terbit' => '2016-01-01',
                 'kategori_id' => 3,
                 'stok' => 10,
-                'sampul' => 'your_name_earthbound.jpg',
-                'deskripsi' => 'Cerita tambahan dari sudut pandang karakter lain yang memperluas dunia Your Name.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 10,
-                'kode_buku' => 'YN003',
-                'judul_buku' => 'Weathering With You',
-                'penulis' => 'Makoto Shinkai',
-                'penerbit' => 'Kadokawa',
-                'tanggal_terbit' => '2019-07-19',
-                'kategori_id' => 3, // Drama / Romance / Supernatural
-                'stok' => 12,
-                'sampul' => 'weathering_with_you.jpg',
-                'deskripsi' => 'Kisah Hodaka dan Hina yang memiliki kemampuan mengendalikan cuaca di tengah Tokyo yang terus diguyur hujan.',
+                'sampul' => 'hujan.jpg',
+                'deskripsi' => 'Novel ini berlatar dunia masa depan dengan teknologi canggih.
+                                Mengisahkan tentang kehilangan, persahabatan, dan kenangan.
+                                Cerita disampaikan dengan emosi yang kuat dan menyentuh.
+                                Sangat cocok bagi pembaca yang menyukai drama romantis.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
 
-
             [
-                'id_buku' => 11,
-                'kode_buku' => 'GR001',
-                'judul_buku' => 'Grimgar of Fantasy and Ash Vol. 1',
-                'penulis' => 'Ao Jyumonji',
-                'penerbit' => 'Overlap',
-                'tanggal_terbit' => '2013-06-25',
-                'kategori_id' => 5, // Fantasy / Adventure
-                'stok' => 10,
-                'sampul' => 'grimgar_1.jpg',
-                'deskripsi' => 'Sekelompok pemuda terbangun di dunia asing bernama Grimgar tanpa ingatan dan harus bertahan hidup sebagai prajurit sukarelawan.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 12,
-                'kode_buku' => 'GR002',
-                'judul_buku' => 'Grimgar of Fantasy and Ash Vol. 2',
-                'penulis' => 'Ao Jyumonji',
-                'penerbit' => 'Overlap',
-                'tanggal_terbit' => '2013-09-25',
-                'kategori_id' => 5,
-                'stok' => 10,
-                'sampul' => 'grimgar_2.jpg',
-                'deskripsi' => 'Kelompok Haruhiro menghadapi tantangan baru dan belajar bekerja sama demi bertahan hidup.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 13,
-                'kode_buku' => 'GR003',
-                'judul_buku' => 'Grimgar of Fantasy and Ash Vol. 3',
-                'penulis' => 'Ao Jyumonji',
-                'penerbit' => 'Overlap',
-                'tanggal_terbit' => '2014-01-25',
-                'kategori_id' => 5,
-                'stok' => 10,
-                'sampul' => 'grimgar_3.jpg',
-                'deskripsi' => 'Pertarungan semakin berat dan kehilangan menjadi bagian dari perjalanan mereka.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 14,
-                'kode_buku' => 'GR004',
-                'judul_buku' => 'Grimgar of Fantasy and Ash Vol. 4',
-                'penulis' => 'Ao Jyumonji',
-                'penerbit' => 'Overlap',
-                'tanggal_terbit' => '2014-05-25',
-                'kategori_id' => 5,
-                'stok' => 10,
-                'sampul' => 'grimgar_4.jpg',
-                'deskripsi' => 'Petualangan membawa mereka ke wilayah baru dengan musuh yang lebih berbahaya.',
+                'kode_buku' => 'NV002',
+                'judul_buku' => 'Bumi',
+                'penulis' => 'Tere Liye',
+                'penerbit' => 'Gramedia Pustaka Utama',
+                'tanggal_terbit' => '2014-01-01',
+                'kategori_id' => 3,
+                'stok' => 11,
+                'sampul' => 'bumi.jpg',
+                'deskripsi' => 'Novel ini mengisahkan petualangan remaja dengan kekuatan istimewa.
+                                Dunia paralel menjadi latar utama dalam cerita ini.
+                                Dipenuhi aksi, misteri, dan persahabatan.
+                                Menjadi awal dari serial petualangan yang sangat populer.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
 
-
             [
-                'id_buku' => 15,
-                'kode_buku' => 'DAL001',
-                'judul_buku' => 'Date A Live Vol. 1',
-                'penulis' => 'Kōshi Tachibana',
-                'penerbit' => 'Fujimi Shobo',
-                'tanggal_terbit' => '2011-03-19',
-                'kategori_id' => 12, // Fantasy / Romance / Action
-                'stok' => 14,
-                'sampul' => 'date_a_live_1.jpg',
-                'deskripsi' => 'Shido Itsuka harus menyelamatkan dunia dengan cara unik: mengencani para Spirit yang mengancam umat manusia.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 16,
-                'kode_buku' => 'DAL002',
-                'judul_buku' => 'Date A Live Vol. 2',
-                'penulis' => 'Kōshi Tachibana',
-                'penerbit' => 'Fujimi Shobo',
-                'tanggal_terbit' => '2011-06-18',
-                'kategori_id' => 12,
-                'stok' => 14,
-                'sampul' => 'date_a_live_2.jpg',
-                'deskripsi' => 'Spirit baru muncul dan Shido kembali menjalankan misi berbahaya dengan cara romantis.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 17,
-                'kode_buku' => 'DAL003',
-                'judul_buku' => 'Date A Live Vol. 3',
-                'penulis' => 'Kōshi Tachibana',
-                'penerbit' => 'Fujimi Shobo',
-                'tanggal_terbit' => '2011-09-17',
-                'kategori_id' => 12,
-                'stok' => 14,
-                'sampul' => 'date_a_live_3.jpg',
-                'deskripsi' => 'Hubungan Shido dengan para Spirit semakin kompleks di tengah ancaman organisasi misterius.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 18,
-                'kode_buku' => 'DAL004',
-                'judul_buku' => 'Date A Live Vol. 4',
-                'penulis' => 'Kōshi Tachibana',
-                'penerbit' => 'Fujimi Shobo',
-                'tanggal_terbit' => '2012-01-20',
-                'kategori_id' => 12,
-                'stok' => 14,
-                'sampul' => 'date_a_live_4.jpg',
-                'deskripsi' => 'Konflik besar muncul saat kekuatan Spirit mulai lepas kendali.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 19,
-                'kode_buku' => 'DAL005',
-                'judul_buku' => 'Date A Live Vol. 16',
-                'penulis' => 'Kōshi Tachibana',
-                'penerbit' => 'Fujimi Shobo',
-                'tanggal_terbit' => '2017-05-19',
-                'kategori_id' => 12,
-                'stok' => 14,
-                'sampul' => 'date_a_live_16.jpg',
-                'deskripsi' => 'Pertarungan semakin intens dan rahasia dunia Spirit mulai terungkap.',
+                'kode_buku' => 'NV003',
+                'judul_buku' => 'Perahu Kertas',
+                'penulis' => 'Dewi Lestari',
+                'penerbit' => 'Bentang Pustaka',
+                'tanggal_terbit' => '2009-01-01',
+                'kategori_id' => 3,
+                'stok' => 8,
+                'sampul' => 'perahu_kertas.jpg',
+                'deskripsi' => 'Novel ini mengisahkan perjalanan cinta dan pencarian jati diri.
+                                Tokoh utama berjuang antara idealisme dan realitas hidup.
+                                Cerita dikemas dengan bahasa yang puitis dan hangat.
+                                Sangat cocok untuk pembaca yang menyukai kisah romantis inspiratif.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
 
+            /* =====================
+   KATEGORI: CERPEN (id = 4)
+   ===================== */
 
             [
-                'id_buku' => 20,
-                'kode_buku' => 'AB001',
-                'judul_buku' => 'Angel Beats! – Track ZERO',
-                'penulis' => 'Jun Maeda',
-                'penerbit' => 'ASCII Media Works',
-                'tanggal_terbit' => '2010-05-10',
-                'kategori_id' => 10, // Drama / Supernatural
-                'stok' => 10,
-                'sampul' => 'angel_beats_zero.jpg',
-                'deskripsi' => 'Prekuel yang menceritakan awal terbentuknya SSS dan perjuangan mereka di dunia setelah kematian.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 21,
-                'kode_buku' => 'AB002',
-                'judul_buku' => 'Angel Beats! – Last Operation Vol. 1',
-                'penulis' => 'Jun Maeda',
-                'penerbit' => 'ASCII Media Works',
-                'tanggal_terbit' => '2017-12-20',
-                'kategori_id' => 10,
-                'stok' => 10,
-                'sampul' => 'angel_beats_last_1.jpg',
-                'deskripsi' => 'Versi novelisasi yang memperluas cerita anime dengan sudut pandang dan detail baru.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 22,
-                'kode_buku' => 'AB003',
-                'judul_buku' => 'Angel Beats! – Last Operation Vol. 2',
-                'penulis' => 'Jun Maeda',
-                'penerbit' => 'ASCII Media Works',
-                'tanggal_terbit' => '2018-06-20',
-                'kategori_id' => 10,
-                'stok' => 10,
-                'sampul' => 'angel_beats_last_2.jpg',
-                'deskripsi' => 'Kelanjutan kisah emosional yang menggali masa lalu para karakter.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-
-
-
-            [
-                'id_buku' => 23,
-                'kode_buku' => 'VE001',
-                'judul_buku' => 'Violet Evergarden Vol. 1',
-                'penulis' => 'Kana Akatsuki',
-                'penerbit' => 'KA Esuma Bunko',
-                'tanggal_terbit' => '2015-12-25',
-                'kategori_id' => 4, // Drama / Slice of Life
-                'stok' => 13,
-                'sampul' => 'violet_evergarden_1.jpg',
-                'deskripsi' => 'Violet, mantan prajurit muda, berusaha memahami arti kata “aku mencintaimu” melalui pekerjaannya sebagai penulis surat.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 24,
-                'kode_buku' => 'VE002',
-                'judul_buku' => 'Violet Evergarden Vol. 2',
-                'penulis' => 'Kana Akatsuki',
-                'penerbit' => 'KA Esuma Bunko',
-                'tanggal_terbit' => '2016-01-15',
+                'kode_buku' => 'CP001',
+                'judul_buku' => 'Robohnya Surau Kami',
+                'penulis' => '',
+                'penerbit' => 'Balai Pustaka',
+                'tanggal_terbit' => '1956-01-01',
                 'kategori_id' => 4,
-                'stok' => 13,
-                'sampul' => 'violet_evergarden_2.jpg',
-                'deskripsi' => 'Perjalanan Violet berlanjut dengan kisah-kisah klien yang penuh emosi dan makna kehidupan.',
+                'stok' => 7,
+                'sampul' => 'robohnya_surau.jpg',
+                'deskripsi' => 'Kumpulan cerpen ini menyindir kehidupan sosial dan religius masyarakat.
+Cerita disampaikan dengan gaya satir yang tajam dan kritis.
+Pembaca diajak berpikir ulang tentang makna ibadah dan kemanusiaan.
+Karya ini menjadi salah satu cerpen klasik sastra Indonesia.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+
             [
-                'id_buku' => 25,
-                'kode_buku' => 'VE003',
-                'judul_buku' => 'Violet Evergarden Gaiden',
-                'penulis' => 'Kana Akatsuki',
-                'penerbit' => 'KA Esuma Bunko',
-                'tanggal_terbit' => '2018-03-23',
+                'kode_buku' => 'CP002',
+                'judul_buku' => 'Senja di Jakarta',
+                'penulis' => 'Mochtar Lubis',
+                'penerbit' => 'Yayasan Obor',
+                'tanggal_terbit' => '1963-01-01',
                 'kategori_id' => 4,
-                'stok' => 11,
-                'sampul' => 'violet_evergarden_gaiden.jpg',
-                'deskripsi' => 'Kumpulan cerita sampingan yang memperdalam dunia dan karakter Violet Evergarden.',
+                'stok' => 6,
+                'sampul' => 'senja_jakarta.jpg',
+                'deskripsi' => 'Buku ini menggambarkan kehidupan masyarakat Jakarta pasca kemerdekaan.
+Cerita-cerita pendeknya penuh realitas sosial dan konflik batin.
+Penulis menampilkan sisi gelap kehidupan perkotaan.
+Cocok untuk pembaca yang menyukai cerpen bernuansa serius.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
 
-
             [
-                'id_buku' => 26,
-                'kode_buku' => 'SAO001',
-                'judul_buku' => 'Sword Art Online Vol. 1: Aincrad',
-                'penulis' => 'Reki Kawahara',
-                'penerbit' => 'ASCII Media Works',
-                'tanggal_terbit' => '2009-04-10',
-                'kategori_id' => 6, // Fantasy / Action / Sci-Fi
-                'stok' => 15,
-                'sampul' => 'sao_1.jpg',
-                'deskripsi' => 'Kirito terjebak dalam game VRMMO mematikan dan harus menaklukkan 100 lantai Aincrad untuk bisa keluar.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 27,
-                'kode_buku' => 'SAO002',
-                'judul_buku' => 'Sword Art Online Vol. 2: Aincrad',
-                'penulis' => 'Reki Kawahara',
-                'penerbit' => 'ASCII Media Works',
-                'tanggal_terbit' => '2009-08-10',
-                'kategori_id' => 6,
-                'stok' => 15,
-                'sampul' => 'sao_2.jpg',
-                'deskripsi' => 'Kisah lanjutan perjuangan Kirito dan Asuna menghadapi dunia Aincrad yang brutal.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 28,
-                'kode_buku' => 'SAO003',
-                'judul_buku' => 'Sword Art Online Vol. 3: Fairy Dance',
-                'penulis' => 'Reki Kawahara',
-                'penerbit' => 'ASCII Media Works',
-                'tanggal_terbit' => '2009-12-10',
-                'kategori_id' => 6,
-                'stok' => 15,
-                'sampul' => 'sao_3.jpg',
-                'deskripsi' => 'Kirito memasuki dunia game baru untuk menyelamatkan Asuna yang terjebak di Alfheim Online.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 29,
-                'kode_buku' => 'SAO004',
-                'judul_buku' => 'Sword Art Online Vol. 4: Fairy Dance',
-                'penulis' => 'Reki Kawahara',
-                'penerbit' => 'ASCII Media Works',
-                'tanggal_terbit' => '2010-04-10',
-                'kategori_id' => 6,
-                'stok' => 15,
-                'sampul' => 'sao_4.jpg',
-                'deskripsi' => 'Pertarungan klimaks Kirito melawan penguasa Alfheim.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 30,
-                'kode_buku' => 'SAO005',
-                'judul_buku' => 'Sword Art Online Vol. 5: Phantom Bullet',
-                'penulis' => 'Reki Kawahara',
-                'penerbit' => 'ASCII Media Works',
-                'tanggal_terbit' => '2010-08-10',
-                'kategori_id' => 6,
-                'stok' => 15,
-                'sampul' => 'sao_5.jpg',
-                'deskripsi' => 'Kirito menyelidiki kasus misterius di game Gun Gale Online.',
+                'kode_buku' => 'CP003',
+                'judul_buku' => 'Sepotong Senja untuk Pacarku',
+                'penulis' => 'Seno Gumira Ajidarma',
+                'penerbit' => 'Gramedia',
+                'tanggal_terbit' => '1991-01-01',
+                'kategori_id' => 4,
+                'stok' => 8,
+                'sampul' => 'sepotong_senja.jpg',
+                'deskripsi' => 'Cerpen-cerpen dalam buku ini sarat dengan simbol dan makna.
+Bahasanya puitis namun tetap membumi.
+Cerita menggambarkan cinta, kehilangan, dan kegelisahan manusia.
+Menjadi salah satu karya cerpen modern yang berpengaruh.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
 
+            /* =====================
+   KATEGORI: KOMIK (id = 5)
+   ===================== */
 
             [
-                'id_buku' => 31,
-                'kode_buku' => 'LH001',
-                'judul_buku' => 'Log Horizon Vol. 1: The Beginning of Another World',
-                'penulis' => 'Mamare Touno',
-                'penerbit' => 'Enterbrain',
-                'tanggal_terbit' => '2011-03-31',
-                'kategori_id' => 2, // Fantasy / Adventure
-                'stok' => 13,
-                'sampul' => 'log_horizon_1.jpg',
-                'deskripsi' => 'Shiroe dan ribuan pemain terjebak dalam game Elder Tale dan harus membangun peradaban baru.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 32,
-                'kode_buku' => 'LH002',
-                'judul_buku' => 'Log Horizon Vol. 2: The Knights of Camelot',
-                'penulis' => 'Mamare Touno',
-                'penerbit' => 'Enterbrain',
-                'tanggal_terbit' => '2011-08-31',
-                'kategori_id' => 2,
-                'stok' => 13,
-                'sampul' => 'log_horizon_2.jpg',
-                'deskripsi' => 'Konflik antar guild mulai muncul saat dunia baru ini berkembang.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 33,
-                'kode_buku' => 'LH003',
-                'judul_buku' => 'Log Horizon Vol. 3: The Gold of the Kunie Clan',
-                'penulis' => 'Mamare Touno',
-                'penerbit' => 'Enterbrain',
-                'tanggal_terbit' => '2012-02-29',
-                'kategori_id' => 2,
-                'stok' => 13,
-                'sampul' => 'log_horizon_3.jpg',
-                'deskripsi' => 'Intrik politik dan ekonomi menjadi kunci bertahan hidup di dunia Elder Tale.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 34,
-                'kode_buku' => 'LH004',
-                'judul_buku' => 'Log Horizon Vol. 4: The Feast of the Gods',
-                'penulis' => 'Mamare Touno',
-                'penerbit' => 'Enterbrain',
-                'tanggal_terbit' => '2012-09-30',
-                'kategori_id' => 2,
-                'stok' => 13,
-                'sampul' => 'log_horizon_4.jpg',
-                'deskripsi' => 'Rahasia dunia game perlahan terungkap seiring munculnya ancaman baru.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-
-
-            [
-                'id_buku' => 35,
-                'kode_buku' => 'YS001',
-                'judul_buku' => 'Youjo Senki Vol. 1: Deus lo Vult',
-                'penulis' => 'Carlo Zen',
-                'penerbit' => 'Enterbrain',
-                'tanggal_terbit' => '2013-10-31',
-                'kategori_id' => 16, // Military Fantasy
-                'stok' => 11,
-                'sampul' => 'youjo_senki_1.jpg',
-                'deskripsi' => 'Seorang pria bereinkarnasi sebagai gadis kecil bernama Tanya dan terjun ke medan perang dunia magis.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 36,
-                'kode_buku' => 'YS002',
-                'judul_buku' => 'Youjo Senki Vol. 2: Plus Ultra',
-                'penulis' => 'Carlo Zen',
-                'penerbit' => 'Enterbrain',
-                'tanggal_terbit' => '2014-03-31',
-                'kategori_id' => 16,
-                'stok' => 11,
-                'sampul' => 'youjo_senki_2.jpg',
-                'deskripsi' => 'Tanya memimpin pasukan elit dalam misi-misi berbahaya di medan perang.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 37,
-                'kode_buku' => 'YS003',
-                'judul_buku' => 'Youjo Senki Vol. 3',
-                'penulis' => 'Carlo Zen',
-                'penerbit' => 'Enterbrain',
-                'tanggal_terbit' => '2014-08-30',
-                'kategori_id' => 16,
-                'stok' => 11,
-                'sampul' => 'youjo_senki_3.jpg',
-                'deskripsi' => 'Perang semakin meluas dan strategi Tanya makin kejam serta efektif.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 38,
-                'kode_buku' => 'YS004',
-                'judul_buku' => 'Youjo Senki Vol. 4',
-                'penulis' => 'Carlo Zen',
-                'penerbit' => 'Enterbrain',
-                'tanggal_terbit' => '2015-01-30',
-                'kategori_id' => 16,
-                'stok' => 11,
-                'sampul' => 'youjo_senki_4.jpg',
-                'deskripsi' => 'Konflik global memuncak dan Tanya menghadapi musuh yang lebih berbahaya.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 39,
-                'kode_buku' => 'YS005',
-                'judul_buku' => 'Youjo Senki Vol. 5',
-                'penulis' => 'Carlo Zen',
-                'penerbit' => 'Enterbrain',
-                'tanggal_terbit' => '2015-06-30',
-                'kategori_id' => 16, // Military Fantasy
-                'stok' => 11,
-                'sampul' => 'youjo_senki_5.jpg',
-                'deskripsi' => 'Tanya menghadapi front perang baru dengan strategi brutal yang mengguncang dunia.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 40,
-                'kode_buku' => 'YS006',
-                'judul_buku' => 'Youjo Senki Vol. 6',
-                'penulis' => 'Carlo Zen',
-                'penerbit' => 'Enterbrain',
-                'tanggal_terbit' => '2015-12-26',
-                'kategori_id' => 16,
-                'stok' => 11,
-                'sampul' => 'youjo_senki_6.jpg',
-                'deskripsi' => 'Pertempuran skala besar menentukan arah masa depan kekaisaran dan dunia.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-
-
-
-            [
-                'id_buku' => 41,
-                'kode_buku' => 'JJK001',
-                'judul_buku' => 'Jujutsu Kaisen Vol. 1',
-                'penulis' => 'Gege Akutami',
+                'kode_buku' => 'KM001',
+                'judul_buku' => 'One Piece Vol. 1',
+                'penulis' => 'Eiichiro Oda',
                 'penerbit' => 'Shueisha',
-                'tanggal_terbit' => '2018-07-04',
-                'kategori_id' => 15, // Action / Supernatural
-                'stok' => 16,
-                'sampul' => 'jjk_1.jpg',
-                'deskripsi' => 'Yuji Itadori menelan jari terkutuk Sukuna dan terjun ke dunia penyihir jujutsu.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 42,
-                'kode_buku' => 'JJK002',
-                'judul_buku' => 'Jujutsu Kaisen Vol. 2',
-                'penulis' => 'Gege Akutami',
-                'penerbit' => 'Shueisha',
-                'tanggal_terbit' => '2018-09-04',
-                'kategori_id' => 15,
-                'stok' => 16,
-                'sampul' => 'jjk_2.jpg',
-                'deskripsi' => 'Pelatihan berbahaya dimulai di bawah bimbingan Gojo Satoru.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 43,
-                'kode_buku' => 'JJK003',
-                'judul_buku' => 'Jujutsu Kaisen Vol. 3',
-                'penulis' => 'Gege Akutami',
-                'penerbit' => 'Shueisha',
-                'tanggal_terbit' => '2018-11-02',
-                'kategori_id' => 15,
-                'stok' => 16,
-                'sampul' => 'jjk_3.jpg',
-                'deskripsi' => 'Pertarungan sengit melawan kutukan tingkat tinggi.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 44,
-                'kode_buku' => 'JJK004',
-                'judul_buku' => 'Jujutsu Kaisen Vol. 4',
-                'penulis' => 'Gege Akutami',
-                'penerbit' => 'Shueisha',
-                'tanggal_terbit' => '2019-01-04',
-                'kategori_id' => 15,
-                'stok' => 16,
-                'sampul' => 'jjk_4.jpg',
-                'deskripsi' => 'Ancaman besar mulai muncul dari dunia kutukan.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 45,
-                'kode_buku' => 'JJK005',
-                'judul_buku' => 'Jujutsu Kaisen Vol. 5',
-                'penulis' => 'Gege Akutami',
-                'penerbit' => 'Shueisha',
-                'tanggal_terbit' => '2019-03-04',
-                'kategori_id' => 15,
-                'stok' => 16,
-                'sampul' => 'jjk_5.jpg',
-                'deskripsi' => 'Konflik semakin rumit dengan munculnya musuh baru.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 46,
-                'kode_buku' => 'JJK006',
-                'judul_buku' => 'Jujutsu Kaisen Vol. 6',
-                'penulis' => 'Gege Akutami',
-                'penerbit' => 'Shueisha',
-                'tanggal_terbit' => '2019-05-02',
-                'kategori_id' => 15,
-                'stok' => 16,
-                'sampul' => 'jjk_6.jpg',
-                'deskripsi' => 'Pertempuran epik menguji batas kemampuan para penyihir.',
+                'tanggal_terbit' => '1997-07-22',
+                'kategori_id' => 5,
+                'stok' => 15,
+                'sampul' => 'one_piece_1.jpg',
+                'deskripsi' => 'Komik ini mengisahkan petualangan Monkey D. Luffy.
+Ia bercita-cita menjadi Raja Bajak Laut.
+Dunia One Piece penuh aksi, humor, dan persahabatan.
+Sangat populer di kalangan remaja hingga dewasa.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
 
-
             [
-                'id_buku' => 47,
-                'kode_buku' => 'WB001',
-                'judul_buku' => 'Wind Breaker Vol. 1',
-                'penulis' => 'Jo Yongseok',
-                'penerbit' => 'Naver Webtoon',
-                'tanggal_terbit' => '2019-01-10',
-                'kategori_id' => 14, // Manhwa / Webtoon / Action
-                'stok' => 15,
-                'sampul' => 'wind_breaker_1.jpg',
-                'deskripsi' => 'Jin Woo pindah ke kota baru dan menghadapi tantangan tim sepeda jalanan elit.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 48,
-                'kode_buku' => 'WB002',
-                'judul_buku' => 'Wind Breaker Vol. 2',
-                'penulis' => 'Jo Yongseok',
-                'penerbit' => 'Naver Webtoon',
-                'tanggal_terbit' => '2019-05-10',
-                'kategori_id' => 14,
-                'stok' => 15,
-                'sampul' => 'wind_breaker_2.jpg',
-                'deskripsi' => 'Pertemuan dengan rival baru memicu kompetisi sepeda yang menegangkan.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 49,
-                'kode_buku' => 'WB003',
-                'judul_buku' => 'Wind Breaker Vol. 3',
-                'penulis' => 'Jo Yongseok',
-                'penerbit' => 'Naver Webtoon',
-                'tanggal_terbit' => '2019-09-10',
-                'kategori_id' => 14,
-                'stok' => 15,
-                'sampul' => 'wind_breaker_3.jpg',
-                'deskripsi' => 'Tim Jin Woo mulai menunjukkan kekompakan dan strategi untuk mengalahkan rival.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 50,
-                'kode_buku' => 'WB004',
-                'judul_buku' => 'Wind Breaker Vol. 4',
-                'penulis' => 'Jo Yongseok',
-                'penerbit' => 'Naver Webtoon',
-                'tanggal_terbit' => '2020-01-10',
-                'kategori_id' => 14,
-                'stok' => 15,
-                'sampul' => 'wind_breaker_4.jpg',
-                'deskripsi' => 'Konflik semakin seru dengan turnamen sepeda yang penuh tantangan.',
+                'kode_buku' => 'KM002',
+                'judul_buku' => 'Naruto Vol. 1',
+                'penulis' => 'Masashi Kishimoto',
+                'penerbit' => 'Shueisha',
+                'tanggal_terbit' => '1999-09-21',
+                'kategori_id' => 5,
+                'stok' => 14,
+                'sampul' => 'naruto_1.jpg',
+                'deskripsi' => 'Naruto adalah ninja muda yang bercita-cita menjadi Hokage.
+Cerita dipenuhi aksi dan perjuangan hidup.
+Nilai persahabatan dan pantang menyerah sangat kuat.
+Komik ini menjadi salah satu manga terlaris sepanjang masa.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
 
-
             [
-                'id_buku' => 51,
-                'kode_buku' => 'HY001',
-                'judul_buku' => 'Hyouka Vol. 1',
-                'penulis' => 'Honobu Yonezawa',
-                'penerbit' => 'Kadokawa',
-                'tanggal_terbit' => '2001-04-10',
-                'kategori_id' => 8, // Mystery
+                'kode_buku' => 'KM003',
+                'judul_buku' => 'Doraemon Vol. 1',
+                'penulis' => 'Fujiko F. Fujio',
+                'penerbit' => 'Shogakukan',
+                'tanggal_terbit' => '1974-01-01',
+                'kategori_id' => 5,
                 'stok' => 12,
-                'sampul' => 'hyouka_1.jpg',
-                'deskripsi' => 'Oreki Houtarou yang hemat energi bergabung klub Sastra Klasik dan terlibat memecahkan misteri kecil di sekolah.',
+                'sampul' => 'doraemon_1.jpg',
+                'deskripsi' => 'Doraemon adalah robot kucing dari masa depan.
+Ia membantu Nobita dengan alat-alat ajaib.
+Cerita ringan dan penuh pesan moral.
+Sangat cocok untuk anak-anak dan keluarga.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+
+            /* =====================
+   KATEGORI: BIOGRAFI (id = 6)
+   ===================== */
+
             [
-                'id_buku' => 52,
-                'kode_buku' => 'HY002',
-                'judul_buku' => 'Hyouka Vol. 2',
-                'penulis' => 'Honobu Yonezawa',
-                'penerbit' => 'Kadokawa',
-                'tanggal_terbit' => '2002-03-15',
+                'kode_buku' => 'BG001',
+                'judul_buku' => 'Habibie & Ainun',
+                'penulis' => 'B.J. Habibie',
+                'penerbit' => 'THC Mandiri',
+                'tanggal_terbit' => '2010-01-01',
+                'kategori_id' => 6,
+                'stok' => 9,
+                'sampul' => 'habibie_ainun.jpg',
+                'deskripsi' => 'Buku ini menceritakan kisah cinta Habibie dan Ainun.
+Ditulis langsung oleh B.J. Habibie.
+Penuh ketulusan, kesetiaan, dan perjuangan hidup.
+Menjadi salah satu biografi paling menyentuh di Indonesia.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'kode_buku' => 'BG002',
+                'judul_buku' => 'Soekarno: Penyambung Lidah Rakyat',
+                'penulis' => 'Cindy Adams',
+                'penerbit' => 'Gunung Agung',
+                'tanggal_terbit' => '1965-01-01',
+                'kategori_id' => 6,
+                'stok' => 6,
+                'sampul' => 'soekarno.jpg',
+                'deskripsi' => 'Biografi ini mengisahkan perjalanan hidup Ir. Soekarno.
+Ditulis berdasarkan cerita langsung dari sang tokoh.
+Membahas perjuangan kemerdekaan Indonesia.
+Buku ini sarat nilai sejarah dan nasionalisme.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'kode_buku' => 'BG003',
+                'judul_buku' => 'Steve Jobs',
+                'penulis' => 'Walter Isaacson',
+                'penerbit' => 'Simon & Schuster',
+                'tanggal_terbit' => '2011-10-24',
+                'kategori_id' => 6,
+                'stok' => 7,
+                'sampul' => 'steve_jobs.jpg',
+                'deskripsi' => 'Buku ini mengisahkan pendiri Apple, Steve Jobs.
+Mengupas sisi jenius dan kontroversialnya.
+Memberikan gambaran dunia teknologi modern.
+Sangat inspiratif bagi pembaca muda.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+
+            /* =====================
+   KATEGORI: SAINS (id = 8)
+   ===================== */
+
+            [
+                'kode_buku' => 'SN001',
+                'judul_buku' => 'A Brief History of Time',
+                'penulis' => 'Stephen Hawking',
+                'penerbit' => 'Bantam Books',
+                'tanggal_terbit' => '1988-04-01',
                 'kategori_id' => 8,
-                'stok' => 12,
-                'sampul' => 'hyouka_2.jpg',
-                'deskripsi' => 'Oreki dan teman-temannya memecahkan misteri klasik dengan deduksi cerdas dan intrik sekolah.',
+                'stok' => 6,
+                'sampul' => 'brief_history_time.jpg',
+                'deskripsi' => 'Buku ini membahas asal-usul alam semesta secara ilmiah.
+Konsep fisika kompleks dijelaskan dengan bahasa sederhana.
+Membahas ruang, waktu, dan lubang hitam.
+Menjadi bacaan wajib bagi pecinta sains.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+
             [
-                'id_buku' => 53,
-                'kode_buku' => 'HY003',
-                'judul_buku' => 'Hyouka Vol. 3',
-                'penulis' => 'Honobu Yonezawa',
-                'penerbit' => 'Kadokawa',
-                'tanggal_terbit' => '2003-07-10',
+                'kode_buku' => 'SN002',
+                'judul_buku' => 'Cosmos',
+                'penulis' => 'Carl Sagan',
+                'penerbit' => 'Random House',
+                'tanggal_terbit' => '1980-01-01',
                 'kategori_id' => 8,
+                'stok' => 5,
+                'sampul' => 'cosmos.jpg',
+                'deskripsi' => 'Cosmos mengajak pembaca menjelajahi alam semesta.
+Buku ini menghubungkan sains dengan peradaban manusia.
+Bahasanya puitis dan penuh kekaguman.
+Sangat cocok bagi pembaca yang mencintai astronomi.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'kode_buku' => 'SN003',
+                'judul_buku' => 'The Selfish Gene',
+                'penulis' => 'Richard Dawkins',
+                'penerbit' => 'Oxford University Press',
+                'tanggal_terbit' => '1976-01-01',
+                'kategori_id' => 8,
+                'stok' => 4,
+                'sampul' => 'selfish_gene.jpg',
+                'deskripsi' => 'Buku ini membahas teori evolusi dari sudut pandang gen.
+Menjelaskan perilaku makhluk hidup secara ilmiah.
+Gagasannya kontroversial namun berpengaruh besar.
+Cocok untuk pembaca yang ingin memahami biologi evolusioner.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            /* =====================
+   KATEGORI: TEKNOLOGI (id = 9)
+   ===================== */
+
+            [
+                'kode_buku' => 'TK001',
+                'judul_buku' => 'Clean Code',
+                'penulis' => 'Robert C. Martin',
+                'penerbit' => 'Prentice Hall',
+                'tanggal_terbit' => '2008-08-01',
+                'kategori_id' => 9,
+                'stok' => 10,
+                'sampul' => 'clean_code.jpg',
+                'deskripsi' => 'Buku ini membahas cara menulis kode yang bersih dan rapi.
+Dilengkapi contoh praktik pemrograman yang baik.
+Sangat direkomendasikan bagi programmer pemula maupun profesional.
+Membantu meningkatkan kualitas software secara keseluruhan.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'kode_buku' => 'TK002',
+                'judul_buku' => 'The Pragmatic Programmer',
+                'penulis' => 'Andrew Hunt & David Thomas',
+                'penerbit' => 'Addison-Wesley',
+                'tanggal_terbit' => '1999-10-20',
+                'kategori_id' => 9,
+                'stok' => 8,
+                'sampul' => 'pragmatic_programmer.jpg',
+                'deskripsi' => 'Buku ini membahas pola pikir programmer profesional.
+Memberikan tips praktis dalam pengembangan software.
+Bahasanya ringan dan penuh analogi.
+Sangat cocok untuk pengembang aplikasi modern.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'kode_buku' => 'TK003',
+                'judul_buku' => 'Artificial Intelligence Basics',
+                'penulis' => 'Tom Taulli',
+                'penerbit' => 'Apress',
+                'tanggal_terbit' => '2019-01-01',
+                'kategori_id' => 9,
+                'stok' => 7,
+                'sampul' => 'ai_basics.jpg',
+                'deskripsi' => 'Buku ini mengenalkan konsep dasar kecerdasan buatan.
+Membahas machine learning dan deep learning.
+Cocok untuk pemula yang ingin memahami AI.
+Disertai contoh penggunaan di dunia nyata.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            /* =====================
+   KATEGORI: PENDIDIKAN (id = 10)
+   ===================== */
+
+            [
+                'kode_buku' => 'PD001',
+                'judul_buku' => 'Pendidikan Karakter',
+                'penulis' => 'Thomas Lickona',
+                'penerbit' => 'Bumi Aksara',
+                'tanggal_terbit' => '2012-01-01',
+                'kategori_id' => 10,
+                'stok' => 9,
+                'sampul' => 'pendidikan_karakter.jpg',
+                'deskripsi' => 'Buku ini membahas pentingnya pendidikan karakter.
+Menekankan nilai moral dalam proses pembelajaran.
+Cocok untuk guru dan pendidik.
+Mendukung pembentukan generasi berintegritas.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'kode_buku' => 'PD002',
+                'judul_buku' => 'Strategi Pembelajaran',
+                'penulis' => 'Wina Sanjaya',
+                'penerbit' => 'Kencana',
+                'tanggal_terbit' => '2010-01-01',
+                'kategori_id' => 10,
+                'stok' => 8,
+                'sampul' => 'strategi_pembelajaran.jpg',
+                'deskripsi' => 'Buku ini membahas metode dan strategi mengajar.
+Membantu guru menciptakan pembelajaran efektif.
+Disertai teori dan praktik pendidikan.
+Sangat berguna dalam dunia akademik.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'kode_buku' => 'PD003',
+                'judul_buku' => 'Psikologi Pendidikan',
+                'penulis' => 'Slavin',
+                'penerbit' => 'Pearson',
+                'tanggal_terbit' => '2011-01-01',
+                'kategori_id' => 10,
+                'stok' => 6,
+                'sampul' => 'psikologi_pendidikan.jpg',
+                'deskripsi' => 'Buku ini membahas perilaku belajar peserta didik.
+Mengaitkan psikologi dengan proses pendidikan.
+Memberikan wawasan tentang motivasi belajar.
+Cocok bagi mahasiswa dan pendidik.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            /* =====================
+   KATEGORI: AGAMA (id = 11)
+   ===================== */
+
+            [
+                'kode_buku' => 'AG001',
+                'judul_buku' => 'Tafsir Ibnu Katsir',
+                'penulis' => 'Ibnu Katsir',
+                'penerbit' => 'Darul Fikr',
+                'tanggal_terbit' => '2000-01-01',
+                'kategori_id' => 11,
+                'stok' => 5,
+                'sampul' => 'tafsir_ibnu_katsir.jpg',
+                'deskripsi' => 'Kitab tafsir ini menjelaskan ayat-ayat Al-Qur’an.
+Menggunakan hadits dan pendapat ulama salaf.
+Menjadi rujukan utama dalam kajian Islam.
+Sangat cocok untuk studi keagamaan mendalam.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'kode_buku' => 'AG002',
+                'judul_buku' => 'La Tahzan',
+                'penulis' => 'Aidh al-Qarni',
+                'penerbit' => 'Qisthi Press',
+                'tanggal_terbit' => '2004-01-01',
+                'kategori_id' => 11,
+                'stok' => 10,
+                'sampul' => 'la_tahzan.jpg',
+                'deskripsi' => 'Buku ini memberikan motivasi berbasis nilai Islam.
+Mengajak pembaca untuk bersabar dan bersyukur.
+Bahasanya ringan dan menyentuh.
+Sangat cocok untuk penguatan mental dan spiritual.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'kode_buku' => 'AG003',
+                'judul_buku' => 'Fiqih Islam Lengkap',
+                'penulis' => 'Sulaiman Rasyid',
+                'penerbit' => 'Sinar Baru Algensindo',
+                'tanggal_terbit' => '2001-01-01',
+                'kategori_id' => 11,
+                'stok' => 7,
+                'sampul' => 'fiqih_islam.jpg',
+                'deskripsi' => 'Buku ini membahas hukum-hukum Islam secara lengkap.
+Disusun sistematis dan mudah dipahami.
+Cocok untuk pelajar dan masyarakat umum.
+Menjadi referensi fiqih sehari-hari.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+
+            /* =====================
+   KATEGORI: FILSAFAT (id = 12)
+   ===================== */
+
+            [
+                'kode_buku' => 'FL001',
+                'judul_buku' => 'Dunia Sophie',
+                'penulis' => 'Jostein Gaarder',
+                'penerbit' => 'Mizan',
+                'tanggal_terbit' => '1991-01-01',
+                'kategori_id' => 12,
+                'stok' => 8,
+                'sampul' => 'dunia_sophie.jpg',
+                'deskripsi' => 'Novel ini menjadi pengantar filsafat yang sangat populer.
+Mengisahkan seorang gadis yang belajar sejarah filsafat Barat.
+Konsep berat disampaikan melalui cerita yang menarik.
+Sangat cocok bagi pemula yang ingin memahami filsafat.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'kode_buku' => 'FL002',
+                'judul_buku' => 'Meditations',
+                'penulis' => 'Marcus Aurelius',
+                'penerbit' => 'Penguin Classics',
+                'tanggal_terbit' => '0180-01-01',
+                'kategori_id' => 12,
+                'stok' => 6,
+                'sampul' => 'meditations.jpg',
+                'deskripsi' => 'Buku ini berisi pemikiran filsafat Stoikisme.
+Ditulis sebagai refleksi pribadi seorang kaisar Romawi.
+Membahas ketenangan, kebajikan, dan pengendalian diri.
+Masih relevan untuk kehidupan modern saat ini.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'kode_buku' => 'FL003',
+                'judul_buku' => 'Being and Nothingness',
+                'penulis' => 'Jean-Paul Sartre',
+                'penerbit' => 'Gallimard',
+                'tanggal_terbit' => '1943-01-01',
+                'kategori_id' => 12,
+                'stok' => 4,
+                'sampul' => 'being_nothingness.jpg',
+                'deskripsi' => 'Buku ini membahas filsafat eksistensialisme secara mendalam.
+Menjelaskan kebebasan dan tanggung jawab manusia.
+Bahasanya kompleks dan filosofis.
+Cocok untuk pembaca tingkat lanjut.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            /* =====================
+   KATEGORI: PSIKOLOGI (id = 13)
+   ===================== */
+
+            [
+                'kode_buku' => 'PS001',
+                'judul_buku' => 'Man’s Search for Meaning',
+                'penulis' => 'Viktor E. Frankl',
+                'penerbit' => 'Beacon Press',
+                'tanggal_terbit' => '1946-01-01',
+                'kategori_id' => 13,
+                'stok' => 7,
+                'sampul' => 'mans_search_meaning.jpg',
+                'deskripsi' => 'Buku ini mengisahkan pengalaman penulis di kamp konsentrasi.
+Menghubungkan penderitaan dengan makna hidup.
+Menjadi dasar pendekatan logoterapi.
+Sangat inspiratif dan menyentuh.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'kode_buku' => 'PS002',
+                'judul_buku' => 'Thinking, Fast and Slow',
+                'penulis' => 'Daniel Kahneman',
+                'penerbit' => 'Farrar, Straus and Giroux',
+                'tanggal_terbit' => '2011-01-01',
+                'kategori_id' => 13,
+                'stok' => 6,
+                'sampul' => 'thinking_fast_slow.jpg',
+                'deskripsi' => 'Buku ini membahas dua sistem berpikir manusia.
+Mengulas bias kognitif dan pengambilan keputusan.
+Ditulis oleh peraih Nobel Ekonomi.
+Cocok untuk memahami cara kerja pikiran.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'kode_buku' => 'PS003',
+                'judul_buku' => 'Psikologi Kepribadian',
+                'penulis' => 'Alwisol',
+                'penerbit' => 'UMM Press',
+                'tanggal_terbit' => '2014-01-01',
+                'kategori_id' => 13,
+                'stok' => 8,
+                'sampul' => 'psikologi_kepribadian.jpg',
+                'deskripsi' => 'Buku ini membahas teori-teori kepribadian utama.
+Mulai dari psikoanalisis hingga humanistik.
+Disusun sistematis untuk mahasiswa psikologi.
+Sangat cocok sebagai buku referensi akademik.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            /* =====================
+   KATEGORI: SASTRA (id = 14)
+   ===================== */
+
+            [
+                'kode_buku' => 'SS001',
+                'judul_buku' => 'Laskar Pelangi',
+                'penulis' => 'Andrea Hirata',
+                'penerbit' => 'Bentang Pustaka',
+                'tanggal_terbit' => '2005-01-01',
+                'kategori_id' => 14,
                 'stok' => 12,
-                'sampul' => 'hyouka_3.jpg',
-                'deskripsi' => 'Klub Sastra Klasik menghadapi kasus misterius baru yang menguji kemampuan observasi Oreki.',
+                'sampul' => 'laskar_pelangi.jpg',
+                'deskripsi' => 'Novel ini mengisahkan perjuangan anak-anak Belitung.
+Mengangkat tema pendidikan dan persahabatan.
+Bahasanya sederhana namun penuh makna.
+Menjadi salah satu karya sastra Indonesia paling populer.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'kode_buku' => 'SS002',
+                'judul_buku' => 'Ronggeng Dukuh Paruk',
+                'penulis' => 'Ahmad Tohari',
+                'penerbit' => 'Gramedia',
+                'tanggal_terbit' => '1982-01-01',
+                'kategori_id' => 14,
+                'stok' => 6,
+                'sampul' => 'ronggeng_dukuh_paruk.jpg',
+                'deskripsi' => 'Novel ini menggambarkan kehidupan desa tradisional.
+Mengangkat budaya dan konflik sosial masyarakat.
+Bahasanya kuat dan sarat makna.
+Merupakan karya sastra klasik Indonesia.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'kode_buku' => 'SS003',
+                'judul_buku' => 'Tenggelamnya Kapal Van der Wijck',
+                'penulis' => 'Buya Hamka',
+                'penerbit' => 'Balai Pustaka',
+                'tanggal_terbit' => '1938-01-01',
+                'kategori_id' => 14,
+                'stok' => 5,
+                'sampul' => 'van_der_wijck.jpg',
+                'deskripsi' => 'Novel ini mengisahkan cinta terhalang adat.
+Latar budaya Minangkabau sangat kuat.
+Cerita penuh tragedi dan nilai moral.
+Menjadi karya sastra legendaris Indonesia.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            /* =====================
+   KATEGORI: BAHASA (id = 15)
+   ===================== */
+
+            [
+                'kode_buku' => 'BH001',
+                'judul_buku' => 'Kamus Besar Bahasa Indonesia',
+                'penulis' => 'Tim Penyusun',
+                'penerbit' => 'Balai Pustaka',
+                'tanggal_terbit' => '2016-01-01',
+                'kategori_id' => 15,
+                'stok' => 10,
+                'sampul' => 'kbbi.jpg',
+                'deskripsi' => 'KBBI merupakan rujukan resmi Bahasa Indonesia.
+Memuat ribuan kosakata baku.
+Digunakan dalam dunia pendidikan dan akademik.
+Sangat penting bagi pelajar dan penulis.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'kode_buku' => 'BH002',
+                'judul_buku' => 'English Grammar in Use',
+                'penulis' => 'Raymond Murphy',
+                'penerbit' => 'Cambridge University Press',
+                'tanggal_terbit' => '2004-01-01',
+                'kategori_id' => 15,
+                'stok' => 9,
+                'sampul' => 'grammar_in_use.jpg',
+                'deskripsi' => 'Buku ini menjadi panduan tata bahasa Inggris.
+Disertai contoh dan latihan praktis.
+Digunakan secara internasional.
+Cocok untuk pemula hingga menengah.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'kode_buku' => 'BH003',
+                'judul_buku' => 'Linguistik Umum',
+                'penulis' => 'Ferdinand de Saussure',
+                'penerbit' => 'Gadjah Mada University Press',
+                'tanggal_terbit' => '1916-01-01',
+                'kategori_id' => 15,
+                'stok' => 4,
+                'sampul' => 'linguistik_umum.jpg',
+                'deskripsi' => 'Buku ini membahas dasar-dasar ilmu linguistik.
+Menjadi fondasi studi bahasa modern.
+Bahasannya teoritis dan akademik.
+Cocok untuk mahasiswa bahasa dan sastra.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
 
 
+            /* =====================
+   KATEGORI: EKONOMI (id = 16)
+   ===================== */
 
             [
-                'id_buku' => 54,
-                'kode_buku' => 'SOE001',
-                'judul_buku' => 'Seraph of the End Vol. 1',
-                'penulis' => 'Takaya Kagami',
-                'penerbit' => 'Shueisha',
-                'tanggal_terbit' => '2013-01-04',
-                'kategori_id' => 19, // Dark Fantasy / Action
-                'stok' => 14,
-                'sampul' => 'seraph_1.jpg',
-                'deskripsi' => 'Dunia hancur oleh virus misterius dan manusia bertarung melawan vampir demi bertahan hidup.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 55,
-                'kode_buku' => 'SOE002',
-                'judul_buku' => 'Seraph of the End Vol. 2',
-                'penulis' => 'Takaya Kagami',
-                'penerbit' => 'Shueisha',
-                'tanggal_terbit' => '2013-05-02',
-                'kategori_id' => 19,
-                'stok' => 14,
-                'sampul' => 'seraph_2.jpg',
-                'deskripsi' => 'Yuichiro bergabung dengan pasukan pembasmi vampir dan menjalani pelatihan brutal.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 56,
-                'kode_buku' => 'SOE003',
-                'judul_buku' => 'Seraph of the End Vol. 3',
-                'penulis' => 'Takaya Kagami',
-                'penerbit' => 'Shueisha',
-                'tanggal_terbit' => '2013-09-04',
-                'kategori_id' => 19,
-                'stok' => 14,
-                'sampul' => 'seraph_3.jpg',
-                'deskripsi' => 'Konflik antara manusia dan vampir semakin memanas.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 57,
-                'kode_buku' => 'SOE004',
-                'judul_buku' => 'Seraph of the End Vol. 4',
-                'penulis' => 'Takaya Kagami',
-                'penerbit' => 'Shueisha',
-                'tanggal_terbit' => '2014-01-04',
-                'kategori_id' => 19,
-                'stok' => 14,
-                'sampul' => 'seraph_4.jpg',
-                'deskripsi' => 'Rahasia eksperimen seraph mulai terungkap.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 58,
-                'kode_buku' => 'SOE005',
-                'judul_buku' => 'Seraph of the End Vol. 5',
-                'penulis' => 'Takaya Kagami',
-                'penerbit' => 'Shueisha',
-                'tanggal_terbit' => '2014-05-02',
-                'kategori_id' => 19,
-                'stok' => 14,
-                'sampul' => 'seraph_5.jpg',
-                'deskripsi' => 'Pertarungan besar menentukan nasib umat manusia.',
+                'kode_buku' => 'EK001',
+                'judul_buku' => 'Pengantar Ilmu Ekonomi',
+                'penulis' => 'N. Gregory Mankiw',
+                'penerbit' => 'Salemba Empat',
+                'tanggal_terbit' => '2014-01-01',
+                'kategori_id' => 16,
+                'stok' => 8,
+                'sampul' => 'pengantar_ekonomi.jpg',
+                'deskripsi' => 'Buku ini membahas konsep dasar ilmu ekonomi.
+Mulai dari penawaran, permintaan, hingga pasar.
+Disusun dengan bahasa yang mudah dipahami.
+Cocok untuk mahasiswa dan pelajar ekonomi.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
 
+            [
+                'kode_buku' => 'EK002',
+                'judul_buku' => 'Ekonomi Mikro',
+                'penulis' => 'Sadono Sukirno',
+                'penerbit' => 'Rajawali Pers',
+                'tanggal_terbit' => '2013-01-01',
+                'kategori_id' => 16,
+                'stok' => 6,
+                'sampul' => 'ekonomi_mikro.jpg',
+                'deskripsi' => 'Buku ini membahas perilaku konsumen dan produsen.
+Menjelaskan teori pasar secara rinci.
+Digunakan sebagai buku teks perguruan tinggi.
+Sangat penting untuk memahami ekonomi modern.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
 
             [
-                'id_buku' => 59,
-                'kode_buku' => 'KAB001',
-                'judul_buku' => 'Kabaneri of the Iron Fortress – Part 1: Gathering Light',
-                'penulis' => 'Ichirō Ōkouchi',
-                'penerbit' => 'Kadokawa',
-                'tanggal_terbit' => '2016-06-03',
-                'kategori_id' => 21, // Action / Post-Apocalyptic
+                'kode_buku' => 'EK003',
+                'judul_buku' => 'Ekonomi Makro',
+                'penulis' => 'Boediono',
+                'penerbit' => 'BPFE',
+                'tanggal_terbit' => '2012-01-01',
+                'kategori_id' => 16,
+                'stok' => 5,
+                'sampul' => 'ekonomi_makro.jpg',
+                'deskripsi' => 'Buku ini membahas ekonomi dalam skala nasional.
+Topik inflasi, pengangguran, dan pertumbuhan ekonomi.
+Bahasannya sistematis dan terstruktur.
+Cocok untuk pembelajaran ekonomi tingkat lanjut.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            /* =====================
+   KATEGORI: BISNIS (id = 17)
+   ===================== */
+
+            [
+                'kode_buku' => 'BS001',
+                'judul_buku' => 'Rich Dad Poor Dad',
+                'penulis' => 'Robert T. Kiyosaki',
+                'penerbit' => 'Warner Books',
+                'tanggal_terbit' => '1997-01-01',
+                'kategori_id' => 17,
                 'stok' => 12,
-                'sampul' => 'kabaneri_1.jpg',
-                'deskripsi' => 'Umat manusia bertahan di dalam benteng melawan makhluk undead bernama Kabane.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_buku' => 60,
-                'kode_buku' => 'KAB002',
-                'judul_buku' => 'Kabaneri of the Iron Fortress – Part 2: Burning Life',
-                'penulis' => 'Ichirō Ōkouchi',
-                'penerbit' => 'Kadokawa',
-                'tanggal_terbit' => '2016-08-05',
-                'kategori_id' => 21,
-                'stok' => 12,
-                'sampul' => 'kabaneri_2.jpg',
-                'deskripsi' => 'Ikoma dan Mumei menghadapi ancaman Kabane yang semakin mematikan di tengah kekacauan dunia.',
+                'sampul' => 'rich_dad.jpg',
+                'deskripsi' => 'Buku ini membahas pola pikir dalam mengelola uang.
+Perbandingan dua sudut pandang tentang kekayaan.
+Memberikan inspirasi kemandirian finansial.
+Sangat populer di kalangan pebisnis pemula.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
 
+            [
+                'kode_buku' => 'BS002',
+                'judul_buku' => 'The Lean Startup',
+                'penulis' => 'Eric Ries',
+                'penerbit' => 'Crown Business',
+                'tanggal_terbit' => '2011-01-01',
+                'kategori_id' => 17,
+                'stok' => 8,
+                'sampul' => 'lean_startup.jpg',
+                'deskripsi' => 'Buku ini membahas metode membangun startup.
+Mengutamakan eksperimen dan validasi pasar.
+Cocok untuk wirausahawan modern.
+Membantu mengurangi risiko kegagalan bisnis.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
 
             [
-                'id_buku' => 61,
-                'kode_buku' => 'KOT001',
-                'judul_buku' => 'King of Thorn Vol. 1',
-                'penulis' => 'Yuji Iwahara',
-                'penerbit' => 'Enterbrain',
-                'tanggal_terbit' => '2002-10-25',
-                'kategori_id' => 21, // Sci-Fi / Horror / Mystery
-                'stok' => 10,
-                'sampul' => 'king_of_thorn_1.jpg',
-                'deskripsi' => 'Manusia terbangun dari cryostasis di dunia yang dipenuhi makhluk mematikan.',
+                'kode_buku' => 'BS003',
+                'judul_buku' => 'Good to Great',
+                'penulis' => 'Jim Collins',
+                'penerbit' => 'HarperBusiness',
+                'tanggal_terbit' => '2001-01-01',
+                'kategori_id' => 17,
+                'stok' => 6,
+                'sampul' => 'good_to_great.jpg',
+                'deskripsi' => 'Buku ini meneliti perusahaan sukses jangka panjang.
+Menjelaskan faktor kepemimpinan dan budaya kerja.
+Berdasarkan riset mendalam.
+Cocok untuk manajer dan eksekutif.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+
+            /* =====================
+   KATEGORI: HUKUM (id = 18)
+   ===================== */
+
             [
-                'id_buku' => 62,
-                'kode_buku' => 'KOT002',
-                'judul_buku' => 'King of Thorn Vol. 2',
-                'penulis' => 'Yuji Iwahara',
-                'penerbit' => 'Enterbrain',
-                'tanggal_terbit' => '2003-03-25',
-                'kategori_id' => 21,
-                'stok' => 10,
-                'sampul' => 'king_of_thorn_2.jpg',
-                'deskripsi' => 'Rahasia dunia baru mulai terungkap di balik teror monster.',
+                'kode_buku' => 'HK001',
+                'judul_buku' => 'Pengantar Ilmu Hukum',
+                'penulis' => 'Sudikno Mertokusumo',
+                'penerbit' => 'Liberty',
+                'tanggal_terbit' => '2009-01-01',
+                'kategori_id' => 18,
+                'stok' => 7,
+                'sampul' => 'pengantar_hukum.jpg',
+                'deskripsi' => 'Buku ini membahas dasar-dasar ilmu hukum.
+Menjelaskan sistem hukum dan peraturan.
+Digunakan sebagai buku wajib mahasiswa hukum.
+Bahasannya runtut dan mudah dipahami.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+
             [
-                'id_buku' => 63,
-                'kode_buku' => 'KOT003',
-                'judul_buku' => 'King of Thorn Vol. 3',
-                'penulis' => 'Yuji Iwahara',
-                'penerbit' => 'Enterbrain',
-                'tanggal_terbit' => '2003-08-25',
-                'kategori_id' => 21,
-                'stok' => 10,
-                'sampul' => 'king_of_thorn_3.jpg',
-                'deskripsi' => 'Konflik antar manusia bertambah rumit di tengah kehancuran.',
+                'kode_buku' => 'HK002',
+                'judul_buku' => 'Hukum Perdata',
+                'penulis' => 'R. Subekti',
+                'penerbit' => 'Intermasa',
+                'tanggal_terbit' => '2008-01-01',
+                'kategori_id' => 18,
+                'stok' => 6,
+                'sampul' => 'hukum_perdata.jpg',
+                'deskripsi' => 'Buku ini membahas hubungan hukum antar individu.
+Menjelaskan perjanjian dan tanggung jawab hukum.
+Disusun berdasarkan KUH Perdata.
+Sangat penting dalam praktik hukum perdata.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+
             [
-                'id_buku' => 64,
-                'kode_buku' => 'KOT004',
-                'judul_buku' => 'King of Thorn Vol. 4',
-                'penulis' => 'Yuji Iwahara',
-                'penerbit' => 'Enterbrain',
-                'tanggal_terbit' => '2004-01-25',
-                'kategori_id' => 21,
+                'kode_buku' => 'HK003',
+                'judul_buku' => 'Hukum Pidana',
+                'penulis' => 'Moeljatno',
+                'penerbit' => 'Bumi Aksara',
+                'tanggal_terbit' => '2010-01-01',
+                'kategori_id' => 18,
+                'stok' => 5,
+                'sampul' => 'hukum_pidana.jpg',
+                'deskripsi' => 'Buku ini membahas tindak pidana dan sanksi hukum.
+Mengulas asas-asas hukum pidana.
+Digunakan dalam pendidikan hukum.
+Cocok untuk pemahaman hukum dasar.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            /* =====================
+   KATEGORI: KESEHATAN (id = 19)
+   ===================== */
+
+            [
+                'kode_buku' => 'KS001',
+                'judul_buku' => 'Gizi Seimbang',
+                'penulis' => 'Almatsier',
+                'penerbit' => 'Gramedia',
+                'tanggal_terbit' => '2015-01-01',
+                'kategori_id' => 19,
+                'stok' => 9,
+                'sampul' => 'gizi_seimbang.jpg',
+                'deskripsi' => 'Buku ini membahas pentingnya pola makan sehat.
+Menjelaskan kebutuhan gizi harian.
+Cocok untuk masyarakat umum.
+Mendukung gaya hidup sehat.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'kode_buku' => 'KS002',
+                'judul_buku' => 'Hidup Sehat ala Rasulullah',
+                'penulis' => 'Muhammad Al-Farisi',
+                'penerbit' => 'Qisthi Press',
+                'tanggal_terbit' => '2014-01-01',
+                'kategori_id' => 19,
+                'stok' => 8,
+                'sampul' => 'hidup_sehat_rasulullah.jpg',
+                'deskripsi' => 'Buku ini membahas pola hidup sehat Islami.
+Mengacu pada sunnah Rasulullah SAW.
+Menjelaskan kebiasaan makan dan olahraga.
+Menggabungkan kesehatan fisik dan spiritual.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'kode_buku' => 'KS003',
+                'judul_buku' => 'Medical Physiology',
+                'penulis' => 'Guyton & Hall',
+                'penerbit' => 'Elsevier',
+                'tanggal_terbit' => '2011-01-01',
+                'kategori_id' => 19,
+                'stok' => 4,
+                'sampul' => 'medical_physiology.jpg',
+                'deskripsi' => 'Buku ini membahas sistem tubuh manusia.
+Digunakan dalam pendidikan kedokteran.
+Bahasannya ilmiah dan mendalam.
+Menjadi referensi utama mahasiswa kesehatan.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            /* =====================
+   KATEGORI: UMUM / REFERENSI (id = 20)
+   ===================== */
+
+            [
+                'kode_buku' => 'UM001',
+                'judul_buku' => 'Ensiklopedia Nasional Indonesia',
+                'penulis' => 'Tim Penyusun',
+                'penerbit' => 'Cipta Adi Pustaka',
+                'tanggal_terbit' => '2004-01-01',
+                'kategori_id' => 20,
+                'stok' => 6,
+                'sampul' => 'ensiklopedia.jpg',
+                'deskripsi' => 'Ensiklopedia ini memuat berbagai pengetahuan umum.
+Mencakup sains, budaya, dan sejarah.
+Digunakan sebagai sumber referensi.
+Sangat berguna untuk pelajar dan umum.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'kode_buku' => 'UM002',
+                'judul_buku' => 'Atlas Dunia',
+                'penulis' => 'National Geographic',
+                'penerbit' => 'National Geographic Society',
+                'tanggal_terbit' => '2013-01-01',
+                'kategori_id' => 20,
+                'stok' => 7,
+                'sampul' => 'atlas_dunia.jpg',
+                'deskripsi' => 'Atlas ini memuat peta dunia lengkap.
+Disertai informasi geografis dan budaya.
+Visualnya jelas dan informatif.
+Cocok untuk pendidikan dan referensi.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'kode_buku' => 'UM003',
+                'judul_buku' => 'Buku Pintar Pengetahuan Umum',
+                'penulis' => 'Tim Redaksi',
+                'penerbit' => 'Erlangga',
+                'tanggal_terbit' => '2016-01-01',
+                'kategori_id' => 20,
                 'stok' => 10,
-                'sampul' => 'king_of_thorn_4.jpg',
-                'deskripsi' => 'Pertarungan bertahan hidup mencapai titik kritis.',
+                'sampul' => 'pengetahuan_umum.jpg',
+                'deskripsi' => 'Buku ini memuat berbagai fakta menarik.
+Disusun dengan bahasa yang mudah dipahami.
+Cocok untuk semua kalangan.
+Menambah wawasan pengetahuan umum.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

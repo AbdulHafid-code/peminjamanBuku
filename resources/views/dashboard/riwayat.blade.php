@@ -23,7 +23,7 @@
     {{-- filter bar --}}
 	<x-filter-bar :searchPlaceholder="'Cari Riwayat Pinjam...'"/> 
 
-    @foreach ($transaksi as $transaksi)
+    @forelse ($transaksi as $transaksi)
         <div class="relative bg-white dark:bg-gray-800/50 rounded-lg py-5 pl-5 pr-8 mb-5 flex flex-col md:flex-row justify-start md:items-center shadow-md shadow-gray-200/60 dark:shadow-violet-800/20 gap-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
             
             @php
@@ -153,7 +153,11 @@
                 </div>
             </div>
         </div>
-    @endforeach
+        @empty
+            <h3 colspan="100%" class="py-3 text-gray-600 dark:text-gray-400 text-center">
+                Data Riwayat Kosong
+            </h3>
+        @endforelse
 
     {{-- modalll --}}
     <div id="returnModal"

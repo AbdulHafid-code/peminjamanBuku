@@ -123,6 +123,7 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
+        $request->session()->flash('halaman_register', true);
 
         $validate = $request->validate([
             'nama' => 'required|min:3',

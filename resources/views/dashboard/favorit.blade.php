@@ -24,7 +24,7 @@
 	<x-filter-bar :searchPlaceholder="'Cari Nama Buku Favorit...'"/> 
 
     <div class="grid grid-cols-1 lg:grid-cols-2 mt-5 gap-5 w-full">
-        @foreach($bukuFavorit as $item)
+        @forelse($bukuFavorit as $item)
             <a href="{{ route('buku_detail', $item->id_buku) }}" class="relative bg-white dark:bg-gray-800/50 rounded-lg py-5 pl-5 pr-8 md:h-45 lg:h-60 flex justify-start items-center shadow-md shadow-gray-200/60 dark:shadow-violet-800/20 gap-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
                 <form action="{{ route('favorit_delete', $item->id_favorit) }}" method="post" class="absolute top-0 right-0 bg-violet-600 p-2.5 rounded-tl-lg rounded-br-lg">
                     @method('DELETE')
@@ -62,7 +62,11 @@
 
                 </div>
             </a>
-        @endforeach
+        @empty
+            <h3 colspan="100%" class="py-3 text-gray-600 dark:text-gray-400 text-center">
+                Data Buku Favorit Kosong
+            </h3>
+        @endforelse
 
     </div>
 

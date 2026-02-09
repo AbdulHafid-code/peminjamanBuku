@@ -34,7 +34,7 @@
 				<tr>
 					<th class="text-left px-1.5 sm:px-4 py-2">No</th>
 					<th class="text-left px-1.5 sm:px-4 py-2">Buku</th>
-					<th class="text-center px-1.5 sm:px-4 py-2">User</th>
+					<th class="text-center px-1.5 sm:px-4 py-2">Pengguna</th>
 					<th class="text-left px-1.5 sm:px-4 py-2 hidden md:table-cell">Tanggal Pinjam</th>
 					<th class="text-left px-1.5 sm:px-4 py-2 hidden md:table-cell">Tanggal Kembali</th>
 					<th class="text-left px-1.5 sm:px-4 py-2 hidden md:table-cell">Jumlah</th>
@@ -190,10 +190,7 @@
 
 			</div>
 		</div>
-
-
 	</div>
-
 
 <script>
 	function openReturnModal(transaksiId, totalPinjam, jumlahDikembalikan) {

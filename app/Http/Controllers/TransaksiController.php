@@ -86,6 +86,7 @@ class TransaksiController extends Controller
             'status' => 'required|in:0,1,2,3'
         ]);
 
+        // bisa pinjam berapa kali atur disini
         if (Transaksi::where('user_id', $request->user_id)->where('status', 1)->exists() || Transaksi::where('user_id', $request->user_idun)->where('status', 0)->exists()) {
             return redirect()->route('transaksi.index')->with('error', 'Maaf, Anda Masih Memiliki Buku Yang Belum Dikembalikan');
         }

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('buku_id');
             $table->foreignId('user_id');
             $table->integer('total_pinjam')->default(1);
-            $table->integer('jumlah_dikembalikan')->default(0)->after('total_pinjam');
+            $table->integer('jumlah_dikembalikan')->nullable();
             $table->date('tanggal_pinjam');
             $table->date('tanggal_kembali');
             $table->tinyInteger('status')->default(0)->comment('0=pending,1=sukses,2=Dikembalikan,3=Ditolak'); // 0: Dipinjam, 1: Dikembalikan

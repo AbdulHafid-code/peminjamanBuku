@@ -30,6 +30,7 @@
                     <tr>
                         <th class="text-left px-1.5 sm:px-4 py-2">No</th>
                         <th class="text-left px-1.5 sm:px-4 py-2">Buku</th>
+                        <th class="text-center px-1.5 sm:px-4 py-2">Pengguna</th>
                         <th class="text-left px-1.5 sm:px-4 py-2 hidden lg:table-cell">Total Denda</th>
                         <th class="text-left px-1.5 sm:px-4 py-2 hidden md:table-cell">Hari Telat</th>
                         <th class="text-left px-1.5 sm:px-4 py-2 hidden md:table-cell">Status Denda</th>
@@ -47,6 +48,14 @@
                                         {{ mb_strimwidth($item->buku->judul_buku, 0, 40, '...') }}
                                     </span>
                                     <span class="px-2 py-0.5 rounded font-semibold text-xs bg-violet-100 text-violet-600 dark:bg-violet-900/45 dark:text-violet-400 w-fit">{{$item->buku->kode_buku}}</span>
+                                </div>
+                            </td>
+                            <td class="px-1.5 sm:px-4 py-2 ">
+                                <div class="flex items-center flex-col gap-2 ">
+                                    <img src="{{ $item->user->profil ? asset('storage/image/profil/' . $item->user->profil) : 'https://ui-avatars.com/api/?name='. preg_replace('/\s+/', '', $item->user->nama) . '&background=random&length=2'}}" class="hidden md:block size-12 rounded-full object-cover">
+                                    <span class="line-clamp-2">
+                                        {{ mb_strimwidth($item->user->nama, 0, 17, '...') }}
+                                    </span>
                                 </div>
                             </td>
                             <td class="px-1.5 sm:px-4 py-2 hidden lg:table-cell"> {{$item->denda}}</td>
@@ -85,7 +94,7 @@
                         <th class="text-left px-1.5 sm:px-4 py-2 hidden lg:table-cell">Total Denda</th>
                         <th class="text-left px-1.5 sm:px-4 py-2 hidden md:table-cell">Hari Telat</th>
                         <th class="text-left px-1.5 sm:px-4 py-2 hidden md:table-cell">Status Denda</th>
-                        <th class="text-center px-1.5 sm:px-4 py-2">Bayar</th>
+                        {{-- <th class="text-center px-1.5 sm:px-4 py-2">Bayar</th> --}}
                     </tr>
                 </thead>
                 <tbody class="text-sm sm:text-base font-medium divide-y divide-gray-300 dark:divide-gray-700 text-gray-950 dark:text-gray-50">
@@ -104,14 +113,13 @@
                             <td class="px-1.5 sm:px-4 py-2 hidden lg:table-cell"> {{$item->denda}}</td>
                             <td class="px-1.5 sm:px-4 py-2 hidden md:table-cell">{{$item->hari_telat}}</td>
                             <td class="px-1.5 sm:px-4 py-2 hidden md:table-cell">{{$item->status_denda}}</td>
-                            <td class="px-1.5 sm:px-4 py-2 align-middle">
+                            {{-- <td class="px-1.5 sm:px-4 py-2 align-middle">
                                 <div class="flex justify-center gap-2 font-normal text-sm">
-                                    okk
-                                    {{-- <x-button-detail :href=""></x-button-detail>
+                                    <x-button-detail :href=""></x-button-detail>
                                     <x-button-edit :href="" :edit='true'></x-button-edit>
-                                    <x-button-delete :action="" :trash="true" dataPesan="Apakah Anda Yakin Ingin Menghapus Data Buku {{$item->judul_buku}}"></x-button-delete> --}}
+                                    <x-button-delete :action="" :trash="true" dataPesan="Apakah Anda Yakin Ingin Menghapus Data Buku {{$item->judul_buku}}"></x-button-delete>
                                 </div>
-                            </td>
+                            </td> --}}
                         </tr>
                     @empty
                         <tr>
