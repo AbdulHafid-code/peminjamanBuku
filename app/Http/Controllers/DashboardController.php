@@ -75,7 +75,7 @@ class DashboardController extends Controller
         $bukuFavorit = Buku_Favorit::where('user_id', auth()->user()->id_user)->get();
         $riwayatTransaksi = Transaksi::where('user_id', auth()->user()->id_user)->get();
         $dipinjam = Transaksi::where('user_id', auth()->user()->id_user)->where('status', 1)->count();
-        $totalBuku = Transaksi::where('user_id', auth()->user()->id_user)->sum('total_pinjam');
+        $denda = Transaksi::where('user_id', auth()->user()->id_user)->sum('denda');
 
         // untuk user
         $bukuUser = Buku_Favorit::where('user_id', auth()->user()->id_user)->get();
@@ -117,7 +117,7 @@ class DashboardController extends Controller
             'bukuFavorit' => $bukuFavorit,
             'riwayatTransaksi' => $riwayatTransaksi,
             'dipinjam' => $dipinjam,
-            'totalBuku' => $totalBuku,
+            'denda' => $denda,
             'aktivitas' => $aktivitas,
         ]);
     }
@@ -309,11 +309,51 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function pengajuan()
+    public function pengajuan(Request $request)
     {
+        $query = Transaksi::query();
+
+        // dikembalikan
+        match ($request->status_filter) {
+            'tunggu' => $query->where('status', 0), //
+            'dipinjam' => $query->where('status', 1)->whereDate('tanggal_kembali', '>', Carbon::now()),
+            'terlambat' => $query->where('status', 1)->whereDate('tanggal_kembali', '<=', Carbon::now()),
+            'dikembalikan' => $query->where('status', 2), //
+            'ditolak' => $query->where('status', 3), //
+            default => $query->where('status', 0), //
+        };
+
+        // search
+        if ($request->filled('search')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('id_transaksi', 'like', "%{$request->search}%")
+                    ->orWhereHas('buku', function ($q2) use ($request) {
+                        $q2->where('judul_buku', 'like', "%{$request->search}%")
+                            ->orWhere('kode_buku', 'like', "%{$request->search}%");
+                    })
+                    ->orWhereHas('user', function ($q3) use ($request) {
+                        $q3->where('nama', 'like', "%{$request->search}%")
+                            ->orWhere('username', 'like', "%{$request->search}%");
+                    });
+            });
+        }
+
+        // reset
+        if ($request->filled('reset')) {
+            return redirect()->route('transaksi.index');
+        }
+
+        // filter waktu
+        match ($request->order) {
+            'newest' => $query->orderBy('created_at', 'desc'),
+            'oldest' => $query->orderBy('created_at', 'asc'),
+            default => $query->orderBy('created_at', 'asc'),
+        };
+
+        $data = $query->get();
 
         return view('dashboard.pengajuan', [
-            'transaksi' => Transaksi::whereNotNull('pengajuan_kembali')->where('pengajuan_kembali', '>', 0)->get()
+            'transaksi' => $data
         ]);
     }
 
@@ -488,11 +528,42 @@ class DashboardController extends Controller
 
     public function denda(Request $request)
     {
+        $query = Transaksi::query();
 
-        $denda = Transaksi::where('user_id', auth()->user()->id_user)->where('denda', '>', 0)->get();
+        // search
+        if ($request->filled('search')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('id_transaksi', 'like', "%{$request->search}%")
+                    ->orWhereHas('buku', function ($q2) use ($request) {
+                        $q2->where('judul_buku', 'like', "%{$request->search}%")
+                            ->orWhere('kode_buku', 'like', "%{$request->search}%");
+                    })
+                    ->orWhereHas('user', function ($q3) use ($request) {
+                        $q3->where('nama', 'like', "%{$request->search}%")
+                            ->orWhere('username', 'like', "%{$request->search}%");
+                    });
+            });
+        }
+
+        // reset
+        if ($request->filled('reset')) {
+            return redirect()->route('transaksi.index');
+        }
+
+        // filter waktu
+        match ($request->order) {
+            'newest' => $query->orderBy('created_at', 'desc'),
+            'oldest' => $query->orderBy('created_at', 'asc'),
+            default => $query->orderBy('created_at', 'asc'),
+        };
+
+        
+        $denda = (clone $query)->where('user_id', auth()->user()->id_user)->where('denda', '>', 0)->get();
+        $semuaDenda = (clone $query)->where('denda', '>', 0)->get();
+
         return view('dashboard.denda', [
             'denda' => $denda,
-            'semuaDenda' => Transaksi::where('denda', '>', 0)->get(),
+            'semuaDenda' => $semuaDenda,
         ]);
     }
 

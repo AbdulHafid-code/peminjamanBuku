@@ -1,7 +1,7 @@
 @extends('dashboard.layouts.main')
 
 @section('title') 
-  Dashboard Admin | Pengajuan Pengembalian
+  Dashboard | Pengajuan Pengembalian
 @endsection
 
 @section('content')

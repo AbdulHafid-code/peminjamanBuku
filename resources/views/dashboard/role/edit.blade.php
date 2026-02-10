@@ -1,7 +1,7 @@
 @extends('dashboard.layouts.main')
 
 @section('title')
-	Dashboard Admin | Edit Hak Akses
+	Dashboard | Edit Hak Akses
 @endsection
 
 @section('content')

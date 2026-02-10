@@ -1,7 +1,7 @@
 @extends('dashboard.layouts.main')
 
 @section('title')
-	Dashboard Admin | Detail Pengguna
+	Dashboard | Detail Pengguna
 @endsection
 
 @section('content')

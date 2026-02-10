@@ -1,7 +1,7 @@
 @extends('dashboard.layouts.main')
 
 @section('title')
-	Dashboard Admin | Dashboard Buku
+	Dashboard | Dashboard Buku
 @endsection
 
 @section('content')
@@ -233,18 +233,18 @@
 				</div>
 			</div>
 
-			<!-- Total Buku -->
+			<!-- Denda -->
 			<div class="bg-white dark:bg-gray-800 p-4 rounded-lg h-full shadow-md shadow-gray-200/60 dark:shadow-violet-800/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
 				<div class="flex gap-4 items-center border-b-2 border-gray-300 dark:border-gray-700 border-dashed pb-4">
 					<div class="flex justify-center items-center bg-violet-500/30 rounded-lg w-15 h-15 text-3xl text-violet-600">
-						<i class='bx bx-collection'></i>
+						<i class='bx bx-money'></i>
 					</div>
 					<div>
-						<h3 class="font-bold text-4xl text-gray-950 dark:text-white">
-							{{$totalBuku}}
+						<h3 class="font-bold text-3xl text-gray-950 dark:text-white">
+							{{$denda}}
 						</h3>
 						<p class="font-medium text-lg text-gray-600 dark:text-gray-400">
-							Total Buku
+							Total Denda
 						</p>
 					</div>
 				</div>

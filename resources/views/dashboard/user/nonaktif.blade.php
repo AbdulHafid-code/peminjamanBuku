@@ -1,7 +1,7 @@
 @extends('dashboard.layouts.main')
 
 @section('title')
-	Dashboard Admin | Akun Non-Aktif
+	Dashboard | Akun Non-Aktif
 @endsection
 
 @section('content')

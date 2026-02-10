@@ -130,7 +130,7 @@ class AuthController extends Controller
             'username' => 'required|min:3|unique:user,username',
             'password' => [
                 'required',
-                'min:5', // minimal 8 karakter
+                'min:5',
                 'confirmed',
                 'regex:/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]+$/'
             ],

@@ -11,14 +11,14 @@
 		<a href="/" class="nav-link">
 			<i class="bx bx-home icon"></i>
 		</a>
-		<a href="#" id="dark-light" class="nav-link">
+		<div href="#" id="dark-light" class="nav-link">
 			<div class="block dark:hidden">
 				<i class="bx bx-moon icon"></i>
 			</div>
 			<div class="hidden dark:block">
 				<i class="bx bx-sun icon"></i>
 			</div>
-		</a>
+		</div>
 		<div class="profile">
 			<img src="{{ auth()->user()->profil ? asset('storage/image/profil/' . auth()->user()->profil) : 'https://ui-avatars.com/api/?name='. preg_replace('/\s+/', '', auth()->user()->nama) . '&background=random&length=2'}}" alt="">
 			<h3 class="hidden md:block text-xs">{{ auth()->user()->nama }}</h3>

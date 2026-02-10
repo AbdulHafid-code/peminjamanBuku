@@ -10,27 +10,42 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-        {{-- sampuk --}}
-        <div class="flex justify-center">
-            <img
-                src="{{ asset('storage/image/sampul/' . $buku->sampul) }}"
-                alt="Cover Buku"
-                class="w-64 h-[380px] object-cover rounded-xl shadow-lg"
-            />
+        {{-- sampul --}}
+        <div class="flex flex-col items-center gap-4">
+
+            {{-- btn kembali --}}
+            <a href="{{ url()->previous() }}"
+            class="self-start inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700 text-sm font-medium transition">
+                <i class="bx bx-arrow-back text-lg"></i> Kembali
+            </a>
+
+            {{-- cover --}}
+            <div
+                class="relative w-full max-w-xs sm:max-w-sm md:max-w-md
+                    aspect-3/4 rounded-2xl overflow-hidden
+                    bg-white dark:bg-gray-800
+                    shadow-xl shadow-gray-300/40 dark:shadow-violet-900/30">
+
+                <img
+                    src="{{ asset('storage/image/sampul/' . $buku->sampul) }}"
+                    alt="Cover Buku"
+                    class="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+                />
+            </div>
         </div>
 
         {{-- info --}}
-        <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-6">
+        <div class="lg:col-span-2 bg-white dark:bg-gray-800 shadow-md shadow-gray-200/60 dark:shadow-violet-800/20 rounded-2xl p-6 space-y-6 mt-12">
 
             {{-- judul buku --}}
             <div>
-                <h1 class="text-3xl font-bold text-gray-900 leading-tight">
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 leading-tight">
                     {{ $buku->judul_buku }}
                 </h1>
 
-                <p class="text-sm text-gray-500 mt-1">
+                <p class="text-sm text-gray-700 dark:text-gray-300 mt-1">
                     Kode Buku:
-                    <span class="font-medium text-gray-700">
+                    <span class="font-medium text-gray-500">
                         {{ $buku->kode_buku }}
                     </span>
                 </p>
@@ -38,28 +53,28 @@
 
             {{-- detail info --}}
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-6 text-sm">
-                <p class="text-gray-600">
-                    <span class="font-medium text-gray-800">Kategori:</span>
+                <p class="text-gray-600 dark:text-gray-400">
+                    <span class="font-medium text-gray-800 dark:text-gray-200">Kategori:</span>
                     {{ $buku->kategori->nama_kategori }}
                 </p>
 
-                <p class="text-gray-600">
-                    <span class="font-medium text-gray-800">Penulis:</span>
+                <p class="text-gray-600 dark:text-gray-400">
+                    <span class="font-medium text-gray-800 dark:text-gray-200">Penulis:</span>
                     {{ $buku->penulis }}
                 </p>
 
-                <p class="text-gray-600">
-                    <span class="font-medium text-gray-800">Penerbit:</span>
+                <p class="text-gray-600 dark:text-gray-400">
+                    <span class="font-medium text-gray-800 dark:text-gray-200">Penerbit:</span>
                     {{ $buku->penerbit }}
                 </p>
 
                 <p class="text-gray-600 flex items-center gap-2">
-                    <span class="font-medium text-gray-800">Stok:</span>
+                    <span class="font-medium text-gray-800 dark:text-gray-200">Stok:</span>
                     <span
                         class="px-3 py-1 rounded-full text-xs font-semibold
                         {{ $buku->stok > 0
-                            ? 'bg-green-100 text-green-700'
-                            : 'bg-red-100 text-red-700' }}">
+                            ? 'bg-green-100 dark:bg-green-700/20 text-green-700 '
+                            : 'bg-red-100 dark:bg-red-700/20 text-red-700' }}">
                         {{ $buku->stok > 0 ? 'Tersedia (' . $buku->stok . ')' : 'Habis' }}
                     </span>
                 </p>
@@ -75,7 +90,7 @@
                             class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium transition
                             {{ $isFavorit
                                 ? 'bg-red-500 hover:bg-red-600 text-white'
-                                : 'bg-gray-100 hover:bg-gray-200 text-gray-700' }}">
+                                : 'bg-gray-100 dark:bg-gray-900/30 hover:bg-gray-200 dark:hover:bg-gray-900/50 text-gray-700 dark:text-gray-300' }}">
                             
                             <i class="bx {{ $isFavorit ? 'bxs-heart' : 'bx-heart' }} text-lg"></i>
                             {{ $isFavorit ? 'Hapus Favorit' : 'Tambah Favorit' }}
@@ -86,7 +101,7 @@
                         <button
                             disabled
                             class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium
-                                bg-gray-200 text-gray-500 cursor-not-allowed">
+                                bg-gray-200 dark:bg-gray-800 text-gray-500 cursor-not-allowed">
 
                             <i class="bx bx-lock text-lg"></i>
                             Tambah Favorit
@@ -104,11 +119,11 @@
 
             {{-- deskripsi buku --}}
             <div>
-                <h2 class="text-lg font-semibold text-gray-800 mb-2">
+                <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">
                     Deskripsi Buku
                 </h2>
 
-                <p class="text-gray-600 leading-relaxed text-justify">
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed text-justify">
                     {{ $buku->deskripsi }}
                 </p>
             </div>
@@ -121,13 +136,13 @@
 
         {{-- left --}}
         <div class="lg:col-span-1">
-            <div class="bg-white rounded-xl shadow-md p-6">
-                <h2 class="text-lg font-semibold mb-6">Form Peminjaman</h2>
+            <div class="rounded-xl p-6 bg-white dark:bg-gray-800 shadow-md shadow-gray-200/60 dark:shadow-violet-800/20">
+                <h2 class="text-lg font-semibold mb-6 text-gray-900 dark:text-gray-100">Form Peminjaman</h2>
                 {{-- alert --}}
                 <x-alert-success-error :session="session('success')"/>
                 <x-alert-success-error type='error' :session="session('error')"/>
 
-                <form action="{{ route('transaksi_pinjam') }}" method="POST" class="flex flex-col gap-4">
+                <form action="{{ route('transaksi_pinjam') }}" method="POST" class="flex flex-col gap-4 text-gray-700 dark:text-gray-300 ">
                     @csrf
                     <input type="hidden" name="buku_id" value="{{ $buku->id_buku }}">
 
@@ -185,12 +200,12 @@
         {{-- peminjam --}}
         <div class="lg:col-span-2 space-y-6">
 
-            <div class="bg-white rounded-xl shadow-md p-6">
-                <h2 class="text-lg font-semibold mb-4">Peminjam Buku</h2>
+            <div class="bg-white dark:bg-gray-800 shadow-md shadow-gray-200/60 dark:shadow-violet-800/20 rounded-xl p-6">
+                <h2 class="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">Peminjam Buku</h2>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                     @forelse($transaksi as $item)
-                        <div class="flex items-center gap-3 p-3 rounded-lg bg-gray-50">
+                        <div class="flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-900/80">
                             <img
                                 src="{{ $item->user->profil
                                     ? asset('storage/image/profil/' . $item->user->profil)
@@ -199,7 +214,7 @@
                             />
 
                             <div>
-                                <p class="font-medium text-gray-800">
+                                <p class="font-medium text-gray-800 dark:text-gray-200">
                                     {{ mb_strimwidth($item->user->nama, 0, 18, '...') }}
                                 </p>
                                 <p class="text-xs text-gray-500">
@@ -210,7 +225,7 @@
                             </div>
                         </div>
                     @empty
-                        <p class="text-sm text-gray-500 text-center">
+                        <p class="text-sm text-gray-500">
                             Belum ada peminjam
                         </p>
                     @endforelse
@@ -225,49 +240,45 @@
 
 <section class="pt-20">
     <div class="flex justify-between">
-    <h4 class="font-semibold text-4xl titlePage">Koleksi Buku Lainnya</h4>
-    {{-- <a class="rounded-sm bg-violet-600 px-5 py-2 text-sm font-medium text-white hover:bg-violet-700 flex items-center gap-2" href='{{ route("buku.home") }}'>Terus Jelajahi <i class='bx bx-right-arrow-alt'></i></a> --}}
+    <h4 class="font-semibold text-4xl lg:titlePage text-gray-900 dark:text-gray-100">Koleksi Buku Lainnya</h4>
     </div>
 
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 mt-8">
-    @foreach ($bukuLainnya as $item)
-
-        <a href="{{route('buku_detail', $item->id_buku)}}" class="group block w-full rounded-md bg-white/80 backdrop-blur shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-    
-            <!-- Cover -->
-            <div class="relative overflow-hidden rounded-t-md aspect-4/5 p-4">
-                <img
-                    src="{{ asset('storage/image/sampul/' . $item->sampul) }}"
-                    alt="Cover Buku"
-                    class="h-full w-full object-cover rounded-md border border-gray-200"
-                />
-            </div>
-    
-            <!-- Content -->
-            <div class="p-4">
-            <!-- Status Badge -->
-                <span class="rounded-full {{$item->stok <= 0 ? 'bg-red-500/90' : 'bg-emerald-500/90'}} px-3 py-1 text-xs font-medium text-white shadow">
-                {{$item->stok <= 0 ? 'Habis' : 'Tersedia'}}
-                </span>
-
-                <h3 class="text-base font-semibold text-gray-900 leading-snug line-clamp-2">
-                    {{$item->judul_buku}}
-                </h3>
-    
-                <p class="mt-1 text-xs text-gray-500">
-                    {{$item->penulis}}
-                </p>
-    
-                <!-- Footer -->
-                <div class="mt-4 flex items-center justify-between">
-                    <span class="text-xs font-medium text-gray-600">
-                        Stok: <span class="text-gray-900 font-semibold">{{$item->stok}}</span>
-                    </span>
+        @foreach ($bukuLainnya as $item)
+            <a href="{{route('buku_detail', $item->id_buku)}}" class="group block w-full rounded-md backdrop-blur bg-white dark:bg-gray-800/50 shadow-md shadow-gray-200/60 dark:shadow-violet-800/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                {{-- sampul --}}
+                <div class="relative overflow-hidden rounded-t-md aspect-4/5 p-4">
+                    <img
+                        src="{{ asset('storage/image/sampul/' . $item->sampul) }}"
+                        alt="Cover Buku"
+                        class="h-full w-full object-cover rounded-md border border-gray-200 dark:border-gray-800"
+                    />
                 </div>
-            </div>
-        </a>
-    @endforeach
+        
+                {{-- detail --}}
+                <div class="px-4 pb-4">
+                    {{-- status --}}
+                    <span class="rounded-full {{$item->stok <= 0 ? 'bg-red-500/90' : 'bg-emerald-500/90'}} px-3 py-1 text-xs font-medium text-white shadow">
+                        {{$item->stok <= 0 ? 'Habis' : 'Tersedia'}}
+                    </span>
 
+                    <h3 class="mt-1 text-base font-semibold text-gray-900 dark:text-gray-100 leading-snug line-clamp-2">
+                        {{$item->judul_buku}}
+                    </h3>
+        
+                    <p class="mt-1 text-xs text-gray-600 dark:text-gray-400">
+                        {{$item->penulis}}
+                    </p>
+        
+                        {{-- stok --}}
+                        <div class="mt-4 flex items-center justify-between">
+                        <span class="text-xs font-medium text-gray-600 dark:text-gray-400">
+                            Stok: <span class="font-semibold">{{$item->stok}}</span>
+                        </span>
+                    </div>
+                </div>
+            </a>
+        @endforeach
     </div>
 </section>
 

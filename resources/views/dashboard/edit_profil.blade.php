@@ -1,7 +1,7 @@
 @extends('dashboard.layouts.main')
 
 @section('title') 
-  Dashboard Admin | Edit Profil 
+  Dashboard | Edit Profil 
 @endsection
 
 @section('content')

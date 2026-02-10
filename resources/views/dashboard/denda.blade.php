@@ -1,7 +1,7 @@
 @extends('dashboard.layouts.main')
 
 @section('title') 
-  Dashboard Admin | Denda Terlambat
+  Dashboard | Denda Terlambat
 @endsection
 
 @section('content')
@@ -149,13 +149,13 @@
                 scale-95 translate-y-6
                 transition-all duration-300 ease-out">
 
-            <!-- close -->
+            {{-- close  --}}
             <button onclick="closeReturnModal()"
                 class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition">
                 <i class='bx bx-x text-2xl'></i>
             </button>
 
-            <!-- header -->
+            {{-- close  --}}
             <div class="text-center mb-6">
                 <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200">
                     Bayar Denda

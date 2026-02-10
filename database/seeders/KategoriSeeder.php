@@ -40,7 +40,7 @@ class KategoriSeeder extends Seeder
         ];
 
         foreach ($kategori as $item) {
-            DB::table('Kategori')->insert([
+            DB::table('kategori')->insert([
                 'nama_kategori' => $item,
                 'created_at'    => $now,
                 'updated_at'    => $now,

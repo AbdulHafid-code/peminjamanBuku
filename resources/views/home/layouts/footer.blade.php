@@ -1,57 +1,85 @@
-<footer class="footer-element">
-    <div class="container-footer">
-        <div class="content-utama px-5 min-[450px]:px-10 min-[700px]:px-20">
-            <div class="logo-desk">
-                <a href="/" class="text-2xl flex items-center gap-3 font-bold text-violet-600 z-100 transition-all duration-300">
-                    <i class='bx bx-library text-3xl'></i> TheBooks
+<footer class="bg-gray-300/70 dark:bg-gray-800/70 mt-20">
+
+    <div class="px-5 min-[450px]:px-10 min-[700px]:px-20 py-10 flex flex-col lg:flex-row gap-10 lg:justify-between">
+        
+        <div class="space-y-6 lg:w-1/2">
+            <a href="/" class="flex items-center gap-3 text-2xl font-bold text-violet-600">
+                <i class='bx bx-library text-3xl'></i>
+                TheBooks
+            </a>
+            <p class="text-base font-medium text-gray-900 dark:text-gray-200 leading-relaxed">
+                TheBooks adalah platform peminjaman buku yang memudahkan pengguna
+                mengakses dan meminjam koleksi bacaan secara praktis. Kami berkomitmen
+                menghadirkan layanan peminjaman yang tertata, informatif, dan nyaman.
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-10">
+            <div class="flex flex-col gap-3 font-medium">
+                <h3 class="font-semibold mb-2 text-gray-900 dark:text-gray-200">Link Cepat</h3>
+                <a href="/" class=" text-gray-800 dark:text-gray-200 dark:font-light hover:underline hover:text-violet-600 transition">Beranda</a>
+                <a href="/kategori.html" class=" text-gray-800 dark:text-gray-200 dark:font-light hover:underline hover:text-violet-600 transition">Buku</a>
+                <a href="/koleksi.html" class=" text-gray-800 dark:text-gray-200 dark:font-light hover:underline hover:text-violet-600 transition">Kategori</a>
+            </div>
+            <div class="flex flex-col gap-3 font-medium">
+                <h3 class="font-semibold mb-2 text-gray-900 dark:text-gray-200">Kategori Populer</h3>
+                <a href="/" class=" text-gray-800 dark:text-gray-200 dark:font-light hover:underline hover:text-violet-600 transition">Fiksi</a>
+                <a href="/kategori.html" class=" text-gray-800 dark:text-gray-200 dark:font-light hover:underline hover:text-violet-600 transition">Non-Fiksi</a>
+                <a href="/koleksi.html" class=" text-gray-800 dark:text-gray-200 dark:font-light hover:underline hover:text-violet-600 transition">Novel</a>
+            </div>
+        </div>
+ 
+        <div class="flex flex-col gap-5">
+            <h3 class="font-semibold text-gray-900 dark:text-gray-200">Sosial Media</h3>
+            <div class="flex gap-4">
+                <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-700  text-gray-950 dark:text-gray-50 hover:bg-violet-600 hover:border-none hover:text-white transition">
+                    <i class='bx bxl-youtube'></i>
                 </a>
-                <p>TheBooks adalah platform peminjaman buku yang memudahkan pengguna mengakses dan meminjam koleksi bacaan secara praktis. Kami berkomitmen menghadirkan layanan peminjaman yang tertata, informatif, dan nyaman, mulai dari pengelolaan data buku, proses peminjaman, hingga pengembalian yang terjadwal dengan jelas.</p>
-            </div>
-            <div class="link-cepat">
-                <h3>Link Cepat</h3>
-                <a href="/">Beranda</a>
-                <a href="/wisata.html">Login</a>
-                <a href="/penginapan.html">Register</a>
-                <a href="/kategori.html">Buku Data</a>
-                <a href="/koleksi.html">Kategori Data</a>
-            </div>
-            <div class="kategori-populer">
-                <h3>Kategori Populer</h3>
-                <a href="/wisata.html?kategori=1">Pantai</a>
-                <a href="/wisata.html?kategori=2">Gunung</a>
-                <a href="/wisata.html?kategori=3">Religi</a>
-                <a href="/wisata.html?kategori=4">Sejarah</a>
-                <a href="/wisata,html?kategori=5">Candi</a>
-            </div>
-            <div class="medsos-content">
-                <h3>Sosial Media</h3>
-                <div>
-                    <a href="https://www.youtube.com/@fktech.nology" target="_blank"><i class='bx bxl-youtube' ></i></a>
-                    <a href="https://www.tiktok.com/@fk_clippers" target="_blank"><i class='bx bxl-tiktok' ></i></a>
-                    <a href="https://x.com/Fahmy_4you" target="_blank"><i class='bx bxl-twitter'></i></a>
-                </div>
+                <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-700 text-gray-950 dark:text-gray-50 hover:bg-violet-600 hover:border-none hover:text-white transition">
+                    <i class='bx bxl-tiktok'></i>
+                </a>
+                <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-700 text-gray-950 dark:text-gray-50 hover:bg-violet-600 hover:border-none hover:text-white transition">
+                    <i class='bx bxl-twitter'></i>
+                </a>
             </div>
         </div>
-        <div class="container-contact">
-            <a>
-                <div><i class='bx bx-map'></i></div>
-                <h5>Umbulsari Jember Jawa Timur</h5>
-            </a>
-            <a>
-                <div><i class='bx bxs-phone'></i></div>
-                <h5>(0036) 444 112</h5>
-            </a>
-            <a>
-                <div><i class='bx bxs-envelope' ></i></div>
-                <h5>lapakbaca@gmail.com</h5>
-            </a>
-            <a>
-                <div><i class='bx bxl-whatsapp' ></i></div>
-                <h5>+62 881 0368 43274</h5>
-            </a>
+
+    </div>
+    
+    <div class="py-6 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 justify-items-center text-sm sm:text-[15px]">
+
+        <div class="flex items-center gap-3 text-center">
+            <div class="w-10 h-10 bg-violet-600 text-white flex items-center justify-center rounded-full">
+                <i class='bx bx-map'></i>
+            </div>
+            <span class="text-gray-950 dark:text-gray-50">Semboro, Jember, Jawa Timur</span>
         </div>
+
+        <div class="flex items-center gap-3 text-center">
+            <div class="w-10 h-10 bg-violet-600 text-white flex items-center justify-center rounded-full">
+                <i class='bx bxs-phone'></i>
+            </div>
+            <span class="text-gray-950 dark:text-gray-50">(0336) 444112</span>
+        </div>
+
+        <div class="flex items-center gap-3 text-center break-all">
+            <div class="w-10 h-10 bg-violet-600 text-white flex items-center justify-center rounded-full">
+                <i class='bx bxs-envelope'></i>
+            </div>
+            <span class="text-gray-950 dark:text-gray-50">smknegeri08jember@gmail.com</span>
+        </div>
+
+        <div class="flex items-center gap-3 text-center">
+            <div class="w-10 h-10 bg-violet-600 text-white flex items-center justify-center rounded-full">
+                <i class='bx bxl-whatsapp'></i>
+            </div>
+            <span class="text-gray-950 dark:text-gray-50">+62 881 0368 43274</span>
+        </div>
+
     </div>
-    <div class="copyright-content">
-        <h5>&copy; Desain dari Fahmy Az-Zu</h5>
+
+    <div class="border-t border-gray-700 text-center text-xs sm:text-sm py-5 text-gray-950 dark:text-gray-50">
+        &copy; Desain dari Fahmy Az-Zu
     </div>
-</footer>  
+
+</footer>

@@ -13,7 +13,7 @@ class BukuSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('Buku')->insert([
+        DB::table('buku')->insert([
 
             /* =======================
                KATEGORI: FIKSI (id = 1)

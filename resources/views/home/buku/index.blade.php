@@ -8,17 +8,16 @@
 
     <section id="materi" class="pt-30">
         <div class="flex items-center flex-col text-center">
-            <h1 class="text-2xl min-[420px]:text-3xl md:text-4xl font-fredoka font-semibold">
+            <h1 class="text-2xl min-[420px]:text-3xl md:text-4xl font-semibold text-gray-900 dark:text-gray-100">
                 Cari Buku Yang Mau Dibaca
             </h1>
-            <p class="text-[12px] min-[420px]:text-[13px] md:text-[15px] mt-2 text-gray-600">
+            <p class="text-[12px] min-[420px]:text-[13px] md:text-[15px] mt-2 text-gray-700 dark:text-gray-300">
                 Temukan dan pinjam buku sesuai minatmu dengan mudah, lalu nikmati pengalaman membaca yang nyaman dan teratur.
             </p>
 
             {{-- search --}}
             <form action="" method="GET" id="form_search_buku" class="mt-6 w-2/3">
-                <div class="flex items-center gap-2 bg-white/80 backdrop-blur rounded-full px-4 py-2 shadow-md
-                            transition-all duration-300 focus-within:ring-2 focus-within:ring-violet-400">
+                <div class="flex items-center gap-2 bg-white/80 dark:bg-gray-800 backdrop-blur rounded-full px-4 py-2 shadow-md transition-all duration-300 focus-within:ring-2 focus-within:ring-violet-400">
 
                     <div class="relative flex items-center w-full">
                         <i class='bx bx-search-alt-2 absolute left-3 text-gray-400 text-lg'></i>
@@ -33,28 +32,18 @@
                     </div>
 
                     {{-- dekstop --}}
-                    <button
-                        type="submit"
-                        class="hidden md:flex items-center justify-center
-                            px-6 py-2 rounded-full
-                            bg-violet-600 text-white font-medium
-                            hover:bg-violet-700 transition">
+                    <button type="submit" class="hidden md:flex items-center justify-center px-6 py-2 rounded-full bg-violet-600 text-white font-medium hover:bg-violet-700 transition">
                         Cari
                     </button>
                 </div>
 
-                <input
-                    type="hidden"
-                    name="kategori"
-                    id="kategori_input"
-                    value="{{ request('kategori') }}"
-                >
+                <input type="hidden" name="kategori" id="kategori_input" value="{{ request('kategori') }}">
 
             </form>
 
             {{-- kategori --}}
             <div class="mt-4 w-2/3 flex flex-wrap items-center gap-3
-                        bg-white/70 backdrop-blur px-4 py-3 rounded-xl shadow-sm">
+                        bg-white/70 dark:bg-gray-800 backdrop-blur px-4 py-3 rounded-xl shadow-sm">
 
                 <button id="plus_kategori"
                     class="flex items-center gap-1.5 px-3 py-1.5 text-xs md:text-sm
@@ -89,41 +78,40 @@
         {{-- card bukunya --}}
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 mt-8">
             @foreach ($buku as $item)
-
-            <a href="{{route('buku_detail', $item->id_buku)}}" class="group block w-full rounded-md bg-white/80 backdrop-blur shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-        
-                <!-- Cover -->
-                <div class="relative overflow-hidden rounded-t-md aspect-4/5 p-4">
-                    <img
-                        src="{{ asset('storage/image/sampul/' . $item->sampul) }}"
-                        alt="Cover Buku"
-                        class="h-full w-full object-cover rounded-md border border-gray-200"
-                    />
-                </div>
-        
-                <!-- Content -->
-                <div class="p-4">
-                    <!-- Status Badge -->
-                    <span class="rounded-full {{$item->stok <= 0 ? 'bg-red-500/90' : 'bg-emerald-500/90'}} px-3 py-1 text-xs font-medium text-white shadow">
-                        {{$item->stok <= 0 ? 'Habis' : 'Tersedia'}}
-                    </span>
-
-                    <h3 class="text-base font-semibold text-gray-900 leading-snug line-clamp-2">
-                        {{$item->judul_buku}}
-                    </h3>
-        
-                    <p class="mt-1 text-xs text-gray-500">
-                        {{$item->penulis}}
-                    </p>
-        
-                    <!-- Footer -->
-                    <div class="mt-4 flex items-center justify-between">
-                        <span class="text-xs font-medium text-gray-600">
-                            Stok: <span class="text-gray-900 font-semibold">{{$item->stok}}</span>
-                        </span>
+                <a href="{{route('buku_detail', $item->id_buku)}}" class="group block w-full rounded-md backdrop-blur bg-white dark:bg-gray-800/50 shadow-md shadow-gray-200/60 dark:shadow-violet-800/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            
+                    {{-- sampul --}}
+                    <div class="relative overflow-hidden rounded-t-md aspect-4/5 p-4">
+                        <img
+                            src="{{ asset('storage/image/sampul/' . $item->sampul) }}"
+                            alt="Cover Buku"
+                            class="h-full w-full object-cover rounded-md border border-gray-200 dark:border-gray-800"
+                        />
                     </div>
-                </div>
-            </a>
+            
+                    {{-- detail --}}
+                    <div class="px-4 pb-4">
+                        {{-- status --}}
+                        <span class="rounded-full {{$item->stok <= 0 ? 'bg-red-500/90' : 'bg-emerald-500/90'}} px-3 py-1 text-xs font-medium text-white shadow">
+                            {{$item->stok <= 0 ? 'Habis' : 'Tersedia'}}
+                        </span>
+
+                        <h3 class="mt-1 text-base font-semibold text-gray-900 dark:text-gray-100 leading-snug line-clamp-2">
+                            {{$item->judul_buku}}
+                        </h3>
+            
+                        <p class="mt-1 text-xs text-gray-600 dark:text-gray-400">
+                            {{$item->penulis}}
+                        </p>
+            
+                            {{-- stok --}}
+                            <div class="mt-4 flex items-center justify-between">
+                            <span class="text-xs font-medium text-gray-600 dark:text-gray-400">
+                                Stok: <span class="font-semibold">{{$item->stok}}</span>
+                            </span>
+                        </div>
+                    </div>
+                </a>
             @endforeach
         </div>
     </section>
@@ -132,7 +120,7 @@
     <div id="modalKategori"
         class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm">
 
-        <div class="bg-white rounded-xl w-[90%] max-w-md p-5 animate-scaleIn">
+        <div class="bg-white dark:bg-gray-800 rounded-xl w-[90%] max-w-md p-5 animate-scaleIn">
             <div class="flex items-center justify-between mb-4">
                 <h3 class="text-lg font-semibold text-gray-800">
                     Pilih Kategori
@@ -144,13 +132,16 @@
             </div>
 
             <div class="flex flex-wrap gap-2 max-h-[300px] overflow-y-auto">
-                @foreach ($kategori as $item)
+               @foreach ($kategori as $item)
                     <button
                         type="button"
                         data-id="{{ $item->id_kategori }}"
                         class="kategori-chip px-4 py-1.5 rounded-full text-xs md:text-sm
-                            bg-gray-200 text-gray-700
-                            hover:bg-violet-600 hover:text-white transition">
+                        bg-violet-100 text-violet-700
+                        hover:bg-violet-600 hover:text-white
+                        dark:bg-violet-900/40 dark:text-violet-200
+                        dark:hover:bg-violet-600 dark:hover:text-white
+                        transition">
                         {{ $item->nama_kategori }}
                     </button>
                 @endforeach

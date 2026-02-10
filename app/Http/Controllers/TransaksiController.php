@@ -73,8 +73,8 @@ class TransaksiController extends Controller
         $user = User::find($request->user_id);
         if ($user->status_akun == 'nonaktif') {
             return redirect()->route('transaksi.index')->with('error', 'Gagal Menambah Transaksi, Pengguna Sedang Di Non-Aktifkan');
-        } else {
-            return redirect()->route('transaksi.index')->with('error', 'Gagal Menambah Transaksi, Pengguna Masih Pending');
+        } else if($user->status_akun == 'pending') {
+            return redirect()->route('transaksi.index')->with('error', 'Gagal Menambah Transaksi, Pengguna Masih Belum Di Aktifkan');
         }
 
         $validate = $request->validate([

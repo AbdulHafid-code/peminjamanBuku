@@ -15,7 +15,7 @@ a {
 }
 
 body {
-  @apply bg-gray-100 overflow-x-hidden;
+  @apply bg-gray-100 dark:bg-gray-900 overflow-x-hidden transition-colors duration-300 ease-in-out;
 }
 
 section{
@@ -32,7 +32,7 @@ section{
 
 /* ketika discroll tambahkan class ini */
 .navbar-element.scroll {
-    @apply bg-white/70 backdrop-blur-sm shadow-md;
+    @apply bg-white/70 dark:bg-gray-700/50 backdrop-blur-sm shadow-md;
 }
 
 .navbar-element .content-nav {
@@ -45,7 +45,7 @@ section{
 }
 
 .link-nav {
-    @apply relative text-sm min-[440px]:text-[15px] 2xl:font-medium overflow-hidden py-1;
+    @apply relative text-sm min-[440px]:text-[15px] 2xl:font-medium overflow-hidden py-1 text-gray-900 dark:text-gray-100;
 }
 
 /* uderline ketika hover dan aktif menunya */
@@ -73,7 +73,7 @@ section{
 }
 
 .hamburger-navbar span {
-    @apply w-7 h-[3px] bg-black block rounded-full absolute transition duration-300;
+    @apply w-7 h-[3px] bg-gray-950 dark:bg-gray-50 block rounded-full absolute transition duration-300;
 }
 
 .hamburger-navbar span:nth-child(1) { @apply top-0 origin-top-left; }
@@ -87,7 +87,7 @@ section{
 
 /* ukuran hp */
 .nav-link-mobile {
-    @apply fixed top-20 left-0 w-full bg-white/90 backdrop-blur-md shadow-md z-[99] flex flex-col p-5 xl:hidden transition-transform duration-500 translate-x-[2000px];
+    @apply fixed top-20 left-0 w-full bg-white/90 dark:bg-gray-700 backdrop-blur-md shadow-md z-[99] flex flex-col p-5 xl:hidden transition-transform duration-500 translate-x-[2000px];
 }
 
 .nav-link-mobile.active {
@@ -102,14 +102,14 @@ section{
 
 
 /* ======================================Hero Section Style ===================================================*/
-#beranda {
+/* #beranda { */
   /* tampilan banyanya data dalam tabel */
   .statistikhero h1 {
-      @apply min-[1270px]:w-[100px] 2xl:w-[140px] max-w-[100px] 2xl:max-w-[140px] font-semibold text-[26px] min-[1120px]:text-3xl 2xl:text-4xl mb-1;
+      @apply min-[1270px]:w-[100px] 2xl:w-[140px] max-w-[100px] 2xl:max-w-[140px] font-semibold text-[26px] min-[1120px]:text-3xl 2xl:text-4xl mb-1 text-gray-800 dark:text-gray-200;
   }
 
   .statistikhero p {
-      @apply text-gray-500 text-[13px] min-[1120px]:text-[14px] 2xl:text-[16px];
+      @apply text-gray-500 dark:text-gray-400 text-[13px] min-[1120px]:text-[14px] 2xl:text-[16px];
   }
 
   /* --- Animasi Ikon Melayang (Floating Icons) --- */
@@ -137,22 +137,22 @@ section{
 
   /* btn */
   .linkhoveranimation {
-      @apply relative px-5 flex items-center gap-x-2 py-2 font-semibold border border-violet-500 rounded-full overflow-hidden transition duration-300 delay-200;
+      @apply relative px-5 flex items-center gap-x-2 py-2 font-semibold border border-violet-600 rounded-full overflow-hidden transition duration-300 delay-200;
       @apply w-full min-[510px]:w-fit justify-center min-[510px]:justify-start;
   }
 
   /* State: Tombol Terisi (Filled) */
   .linkhoveranimation.filled {
-      @apply text-white;
+      @apply text-gray-200 ;
   }
 
   .linkhoveranimation.filled:hover {
-      @apply text-black;
+      @apply text-gray-800 dark:text-gray-200;
   }
 
   /* State: Tombol Outline (Hover Fill) */
   .linkhoveranimation:not(.filled):hover {
-      @apply text-white;
+      @apply text-gray-200;
   }
 
   /* Background Slide Effect */
@@ -188,101 +188,7 @@ section{
       background-color: rgba(59, 130, 246, 0.1);
       @apply rounded-full blur-2xl;
   }
-}
-
-/* ==========================================foter=========================================================== */
-.footer-element {
-  @apply bg-gray-200 mt-20 2xl:mt-30;
-
-  .container-footer {
-    @apply relative;
-
-    .content-utama {
-      @apply relative py-10 grid grid-cols-[auto] min-[715px]:grid-cols-[auto_auto] min-[1110px]:grid-cols-[auto_auto_auto_auto] gap-10 min-[1575px]:gap-15 min-[1640px]:gap-20 justify-between z-2;
-
-      .logo-desk {
-        @apply w-full min-[1110px]:w-[400px] xl:w-[550px] 2xl:w-[800px];
-        p {
-          @apply mt-7 text-sm min-[440px]:text-[15px] 2xl:text-[16px];
-        }
-      }
-
-      .link-cepat {
-        @apply flex flex-col gap-y-2 text-sm min-[440px]:text-[15px] 2xl:text-[16px];
-      }
-
-      .kategori-populer {
-        @apply flex flex-col gap-y-2 text-sm min-[440px]:text-[15px] 2xl:text-[16px];
-      }
-
-      .link-cepat h3,
-      .kategori-populer h3 {
-        @apply mb-3 font-semibold;
-      }
-      .link-cepat a,
-      .kategori-populer a {
-        @apply mt-3 transition-all duration-300 hover:underline hover:text-blue-400;
-      }
-
-      .medsos-content {
-        @apply flex flex-col gap-y-2;
-
-        h3 {
-          @apply mb-3 text-sm min-[440px]:text-[15px] font-semibold;
-        }
-
-        div {
-          @apply flex gap-5 justify-between items-center;
-
-          a {
-            @apply border border-gray-800 size-10 rounded-full flex justify-center items-center relative overflow-hidden 
-            transition duration-300 delay-300;
-
-            i {
-              @apply z-2;
-            }
-          }
-
-          a:hover {
-            @apply text-white;
-          }
-
-          a::before {
-            @apply bg-blue-400 content-[''] absolute top-0 left-0 w-0 h-full z-1 transition-all duration-500;
-          }
-
-          a:hover::before {
-            @apply w-full;
-          }
-        }
-      }
-    }
-
-    .container-contact {
-      @apply relative grid grid-cols-1 min-[715px]:grid-cols-2 gap-y-5 xl:gap-y-0 justify-items-start min-[715px]:justify-items-center xl:grid-cols-4 items-center pb-5 text-sm min-[440px]:text-[15px] 2xl:text-[16px] z-2;
-
-      a {
-        @apply flex gap-2 items-center;
-
-        div {
-          @apply size-10 bg-violet-600 flex items-center justify-center text-white rounded-full;
-        }
-      }
-    }
-
-    .bg-vector {
-      @apply absolute bottom-0 w-full h-full overflow-hidden flex z-1;
-
-      img {
-        @apply object-cover opacity-[.1] w-full h-full;
-      }
-    }
-  }
-
-  .copyright-content {
-    @apply border-t border-gray-700 w-full py-3 items-center flex justify-center text-xs min-[480px]:text-sm md:text-[16px];
-  }
-}
+/* } */
 
 
 /* Buku Section =================================================================*/
