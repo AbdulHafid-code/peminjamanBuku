@@ -20,6 +20,8 @@
     
     @vite(['resources/css/app.css', 'resources/css/admin.css', 'resources/js/app.js', 'resources/js/admin.js'])
 	<title>@yield('title')</title>
+    <link rel="icon" type="image/png" href="{{ asset('logo.png') }}">
+
 </head>
 <body>
 	

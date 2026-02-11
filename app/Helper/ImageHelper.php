@@ -2,6 +2,7 @@
 
 namespace App\Helper;
 
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
 class ImageHelper {
@@ -17,7 +18,9 @@ class ImageHelper {
             $this->deleteImage($pathSave . $oldImage);
         }
 
-        $fileName = time() . '_' . $file->getClientOriginalName();
+        $extension = $file->getClientOriginalExtension();
+
+        $fileName = time() . '_' . Str::random(10) . $extension;
         $file->storeAs($pathSave, $fileName, 'public');
 
         return $fileName;

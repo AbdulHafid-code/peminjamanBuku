@@ -32,7 +32,7 @@
                         <th class="text-left px-1.5 sm:px-4 py-2">Buku</th>
                         <th class="text-center px-1.5 sm:px-4 py-2">Pengguna</th>
                         <th class="text-left px-1.5 sm:px-4 py-2 hidden lg:table-cell">Total Denda</th>
-                        <th class="text-left px-1.5 sm:px-4 py-2 hidden md:table-cell">Hari Telat</th>
+                        <th class="text-left px-1.5 sm:px-4 py-2 hidden md:table-cell">Total Bayar</th>
                         <th class="text-left px-1.5 sm:px-4 py-2 hidden md:table-cell">Status Denda</th>
                         <th class="text-center px-1.5 sm:px-4 py-2">Aksi</th>
                     </tr>
@@ -42,12 +42,12 @@
                         <tr>
                             <td class="px-1.5 sm:px-4 py-2">{{$loop->iteration}}.</td>
                             <td class="flex items-center px-1.5 sm:px-4 py-2 gap-2 ">
-                                <img src="{{ asset('storage/image/sampul/' . $item->buku->sampul) }}" class="w-17.5 h-25 shrink-0 hidden md:block rounded-sm object-cover"/>
+                                <img src="{{ asset('storage/image/sampul/' . $item->transaksi->buku->sampul) }}" class="w-17.5 h-25 shrink-0 hidden md:block rounded-sm object-cover"/>
                                 <div class="flex flex-col gap-1">
                                     <span class="line-clamp-2">
-                                        {{ mb_strimwidth($item->buku->judul_buku, 0, 40, '...') }}
+                                        {{ mb_strimwidth($item->transaksi->buku->judul_buku, 0, 40, '...') }}
                                     </span>
-                                    <span class="px-2 py-0.5 rounded font-semibold text-xs bg-violet-100 text-violet-600 dark:bg-violet-900/45 dark:text-violet-400 w-fit">{{$item->buku->kode_buku}}</span>
+                                    <span class="px-2 py-0.5 rounded font-semibold text-xs bg-violet-100 text-violet-600 dark:bg-violet-900/45 dark:text-violet-400 w-fit">{{$item->transaksi->buku->kode_buku}}</span>
                                 </div>
                             </td>
                             <td class="px-1.5 sm:px-4 py-2 ">
@@ -58,14 +58,17 @@
                                     </span>
                                 </div>
                             </td>
-                            <td class="px-1.5 sm:px-4 py-2 hidden lg:table-cell"> {{$item->denda}}</td>
-                            <td class="px-1.5 sm:px-4 py-2 hidden md:table-cell">{{$item->hari_telat}}</td>
+                            <td class="px-1.5 sm:px-4 py-2 hidden lg:table-cell">Rp. {{$item->total_denda - $item->total_dibayar}}</td>
+                            <td class="px-1.5 sm:px-4 py-2 hidden md:table-cell">Rp. {{$item->total_dibayar ?? '0'}}</td>
                             <td class="px-1.5 sm:px-4 py-2 hidden md:table-cell">{{$item->status_denda}}</td>
                             <td class="px-1.5 sm:px-4 py-2 align-middle">
                                 <div class="flex justify-center gap-2 font-normal text-sm">
                                     <button 
                                         type="button"
-                                        onclick='openReturnModal({{ $item->id_transaksi }}, @json((int) $item->denda))'
+                                        onclick='openReturnModal(
+                                            {{ $item->id_pembayaran_denda }},
+                                            {{ $item->total_denda - ($item->total_dibayar ?? 0) }}
+                                        )'
                                         class="rounded-sm bg-violet-600 px-5 py-2 text-sm font-medium text-white hover:bg-violet-700 flex items-center gap-2">
                                         <i class='bx bx-money'></i> Bayar
                                     </button>
@@ -92,7 +95,7 @@
                         <th class="text-left px-1.5 sm:px-4 py-2">No</th>
                         <th class="text-left px-1.5 sm:px-4 py-2">Buku</th>
                         <th class="text-left px-1.5 sm:px-4 py-2 hidden lg:table-cell">Total Denda</th>
-                        <th class="text-left px-1.5 sm:px-4 py-2 hidden md:table-cell">Hari Telat</th>
+                        <th class="text-left px-1.5 sm:px-4 py-2 hidden md:table-cell">Total Bayar</th>
                         <th class="text-left px-1.5 sm:px-4 py-2 hidden md:table-cell">Status Denda</th>
                         {{-- <th class="text-center px-1.5 sm:px-4 py-2">Bayar</th> --}}
                     </tr>
@@ -102,16 +105,16 @@
                         <tr>
                             <td class="px-1.5 sm:px-4 py-2">{{$loop->iteration}}.</td>
                             <td class="flex items-center px-1.5 sm:px-4 py-2 gap-2 ">
-                                <img src="{{ asset('storage/image/sampul/' . $item->buku->sampul) }}" class="w-17.5 h-25 shrink-0 hidden md:block rounded-sm object-cover"/>
+                                <img src="{{ asset('storage/image/sampul/' . $item->transaksi->buku->sampul) }}" class="w-17.5 h-25 shrink-0 hidden md:block rounded-sm object-cover"/>
                                 <div class="flex flex-col gap-1">
                                     <span class="line-clamp-2">
-                                        {{ mb_strimwidth($item->buku->judul_buku, 0, 40, '...') }}
+                                        {{ mb_strimwidth($item->transaksi->buku->judul_buku, 0, 40, '...') }}
                                     </span>
-                                    <span class="px-2 py-0.5 rounded font-semibold text-xs bg-violet-100 text-violet-600 dark:bg-violet-900/45 dark:text-violet-400 w-fit">{{$item->buku->kode_buku}}</span>
+                                    <span class="px-2 py-0.5 rounded font-semibold text-xs bg-violet-100 text-violet-600 dark:bg-violet-900/45 dark:text-violet-400 w-fit">{{$item->transaksi->buku->kode_buku}}</span>
                                 </div>
                             </td>
-                            <td class="px-1.5 sm:px-4 py-2 hidden lg:table-cell"> {{$item->denda}}</td>
-                            <td class="px-1.5 sm:px-4 py-2 hidden md:table-cell">{{$item->hari_telat}}</td>
+                            <td class="px-1.5 sm:px-4 py-2 hidden lg:table-cell">Rp. {{$item->total_denda}}</td>
+                            <td class="px-1.5 sm:px-4 py-2 hidden md:table-cell">Rp. {{$item->total_bayar ?? '0'}}</td>
                             <td class="px-1.5 sm:px-4 py-2 hidden md:table-cell">{{$item->status_denda}}</td>
                             {{-- <td class="px-1.5 sm:px-4 py-2 align-middle">
                                 <div class="flex justify-center gap-2 font-normal text-sm">

@@ -8,9 +8,7 @@
                 TheBooks
             </a>
             <p class="text-base font-medium text-gray-900 dark:text-gray-200 leading-relaxed">
-                TheBooks adalah platform peminjaman buku yang memudahkan pengguna
-                mengakses dan meminjam koleksi bacaan secara praktis. Kami berkomitmen
-                menghadirkan layanan peminjaman yang tertata, informatif, dan nyaman.
+                Perpustakaan SMKN 8 Jember menyediakan berbagai koleksi buku pelajaran, referensi kejuruan, dan bacaan umum untuk mendukung kegiatan belajar siswa. Ajukan peminjaman dengan mudah dan nikmati pengalaman membaca yang nyaman dan modern.
             </p>
         </div>
         

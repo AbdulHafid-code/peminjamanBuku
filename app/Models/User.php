@@ -26,17 +26,26 @@ class User extends Authenticatable
     public $table = 'user';
     protected $primaryKey = 'id_user';
 
-    public function role(){
+    public function role()
+    {
         return $this->belongsTo(Role::class, 'role_id', 'id_role');
     }
 
-    public function transaksi(){
+    public function transaksi()
+    {
         return $this->hasMany(Transaksi::class, 'user_id', 'id_user');
     }
 
-    public function buku_favorit() {
+    public function buku_favorit()
+    {
         return $this->belongsToMany(Buku::class, 'buku_favorit', 'user_id', 'buku_id');
     }
+
+    public function pembayaranDenda()
+    {
+        return $this->hasMany(PembayaranDenda::class, 'user_id', 'id_user');
+    }
+
 
     /**
      * The attributes that should be hidden for serialization.

@@ -27,23 +27,31 @@ class Transaksi extends Model
         return $this->belongsTo(User::class, 'user_id', 'id_user');
     }
 
-    public function buku() {
+    public function buku()
+    {
         return $this->belongsTo(Buku::class, 'buku_id', 'id_buku');
     }
 
+    public function pembayaranDenda()
+    {
+        return $this->hasOne(PembayaranDenda::class, 'transaksi_id', 'id_transaksi');
+    }
+
+
 
     // =======================================
-    public function getStatusLabelAttribute(){
-        if($this->status == 1 && Carbon::parse($this->tanggal_kembali)->lt(Carbon::today())){
+    public function getStatusLabelAttribute()
+    {
+        if ($this->status == 1 && Carbon::parse($this->tanggal_kembali)->lt(Carbon::today())) {
             return 'Terlambat';
         }
 
-        return match($this->status){
-                        0 => 'Tunggu',
-                        1 => 'Dipinjam',
-                        2 => 'Dikembalikan',
-                        3 => 'Ditolak',
-                        default => 'Tidak Diketahui',
-                    };
+        return match ($this->status) {
+            0 => 'Tunggu',
+            1 => 'Dipinjam',
+            2 => 'Dikembalikan',
+            3 => 'Ditolak',
+            default => 'Tidak Diketahui',
+        };
     }
 }

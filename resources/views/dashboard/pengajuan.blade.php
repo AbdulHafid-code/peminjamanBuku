@@ -58,7 +58,7 @@
 								</span>
 							</div>
 						</td>
-						<td class="px-1.5 sm:px-4 py-2 hidden md:table-cell"> {{ $item->pengajuan_kembali}} Buku</td>
+						<td class="px-1.5 sm:px-4 py-2 hidden md:table-cell"> {{ $item->pengajuan_kembali?? '0'}} Buku</td>
 						<td class="px-1.5 sm:px-4 py-2 hidden md:table-cell">{{$item->total_pinjam - $item->jumlah_dikembalikan}} Buku</td>						
                         <td class="px-1.5 sm:px-4 py-2 align-middle">
 							<div class="flex justify-center gap-2 font-normal text-sm">

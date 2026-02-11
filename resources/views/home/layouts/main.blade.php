@@ -15,16 +15,16 @@
         }
     })();
   </script>
-  
-  @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/home.css', 'resources/js/home.js'])
-
-  <title>TheBooks | @yield('title', 'Beranda')</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
-    
   <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+
+  @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/home.css', 'resources/js/home.js'])
+  <title>TheBooks | @yield('title', 'Beranda')</title>
+  <link rel="icon" type="image/png" href="{{ asset('logo.png') }}">
+
 </head>
 <body class="body-landingpage">
   

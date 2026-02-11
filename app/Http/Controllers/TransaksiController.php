@@ -275,36 +275,6 @@ class TransaksiController extends Controller
                         // pesan khusus
                         $successMessage = "Berhasil mengembalikan {$jumlahDikembalikan} buku";
 
-                        // ====================================================
-                        // Denda Future
-
-                        $tanggalKembali = Carbon::parse($transaksi->tanggal_kembali)->startOfDay();
-                        $hariIni = now()->startOfDay();
-
-                        $hariTelat = 0;
-                        $dendaTambahan = 0;
-
-                        if ($hariIni->gt($tanggalKembali)) {
-
-                            $hariTelat = $tanggalKembali->diffInDays($hariIni);
-
-                            $tarif = 2000;
-
-                            // DENDA HANYA UNTUK BUKU YANG DIKEMBALIKAN SEKARANG
-                            $dendaTambahan = $hariTelat * $jumlahDikembalikan * $tarif;
-
-                            // tambahkan ke denda sebelumnya
-                            if ($dendaTambahan > 0) {
-                                $transaksi->denda += $dendaTambahan;
-                                $transaksi->status_denda = 'belum_bayar'; 
-                            }
-                        }
-
-                        $transaksi->hari_telat = $hariTelat;
-                        $transaksi->save();
-
-                        // =============================================
-
 
                         // Jika Statusnya Selain Diatas Maka Kirim Pesan Error
                     } elseif ($status === 'dipulihkan') {

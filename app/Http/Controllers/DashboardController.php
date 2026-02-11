@@ -6,6 +6,7 @@ use App\Helper\ImageHelper;
 use App\Models\Buku;
 use App\Models\Buku_Favorit;
 use App\Models\Kategori;
+use App\Models\PembayaranDenda;
 use App\Models\Transaksi;
 use App\Models\User;
 use Carbon\Carbon;
@@ -75,7 +76,7 @@ class DashboardController extends Controller
         $bukuFavorit = Buku_Favorit::where('user_id', auth()->user()->id_user)->get();
         $riwayatTransaksi = Transaksi::where('user_id', auth()->user()->id_user)->get();
         $dipinjam = Transaksi::where('user_id', auth()->user()->id_user)->where('status', 1)->count();
-        $denda = Transaksi::where('user_id', auth()->user()->id_user)->sum('denda');
+        $denda = Transaksi::where('user_id', auth()->user()->id_user)->sum('total_pinjam');
 
         // untuk user
         $bukuUser = Buku_Favorit::where('user_id', auth()->user()->id_user)->get();
@@ -311,17 +312,7 @@ class DashboardController extends Controller
 
     public function pengajuan(Request $request)
     {
-        $query = Transaksi::query();
-
-        // dikembalikan
-        match ($request->status_filter) {
-            'tunggu' => $query->where('status', 0), //
-            'dipinjam' => $query->where('status', 1)->whereDate('tanggal_kembali', '>', Carbon::now()),
-            'terlambat' => $query->where('status', 1)->whereDate('tanggal_kembali', '<=', Carbon::now()),
-            'dikembalikan' => $query->where('status', 2), //
-            'ditolak' => $query->where('status', 3), //
-            default => $query->where('status', 0), //
-        };
+        $query = Transaksi::query()->where('pengajuan_kembali', '!=', 'null');
 
         // search
         if ($request->filled('search')) {
@@ -401,63 +392,14 @@ class DashboardController extends Controller
                 return redirect()->back()->with('error', 'Jumlah pengajuan kembali tidak valid');
             }
 
-            /* =====================
-           KEMBALIKAN STOK
-        ====================== */
             $buku->stok += $jumlahDikembalikan;
             $buku->save();
 
-            /* =====================
-           UPDATE JUMLAH DIKEMBALIKAN
-        ====================== */
             $transaksi->jumlah_dikembalikan += $jumlahDikembalikan;
-
-            /* =====================
-           HITUNG DENDA (JIKA TELAT)
-        ====================== */
-            $tanggalKembali = Carbon::parse($transaksi->tanggal_kembali)->startOfDay();
-            $hariIni = now()->startOfDay();
-
-            $hariTelat = 0;
-            $dendaTambahan = 0;
-            $tarif = 2000;
-
-            if ($hariIni->gt($tanggalKembali)) {
-                $hariTelat = $tanggalKembali->diffInDays($hariIni);
-                $dendaTambahan = $hariTelat * $jumlahDikembalikan * $tarif;
-
-                if ($dendaTambahan > 0) {
-                    $transaksi->denda += $dendaTambahan;
-                    $transaksi->hari_telat = $hariTelat;
-                    $transaksi->status_denda = 'belum_bayar';
-                }
-            }
-
-            /* =====================
-           STATUS TRANSAKSI
-        ====================== */
-            if ($transaksi->jumlah_dikembalikan >= $transaksi->total_pinjam) {
-                // semua buku sudah kembali
-                $transaksi->status = 2; // dikembalikan
-            } else {
-                // masih ada yang dipinjam
-                $transaksi->status = 1;
-            }
-
-            /* =====================
-           RESET PENGAJUAN
-        ====================== */
             $transaksi->pengajuan_kembali = null;
             $transaksi->save();
 
-            /* =====================
-           PESAN SUKSES
-        ====================== */
             $pesan = "Berhasil menerima pengembalian {$jumlahDikembalikan} buku";
-
-            if ($dendaTambahan > 0) {
-                $pesan .= " dengan denda Rp " . number_format($dendaTambahan, 0, ',', '.');
-            }
 
             return redirect()->back()->with('success', $pesan);
         } catch (\Throwable $th) {
@@ -528,7 +470,7 @@ class DashboardController extends Controller
 
     public function denda(Request $request)
     {
-        $query = Transaksi::query();
+        $query = PembayaranDenda::query();
 
         // search
         if ($request->filled('search')) {
@@ -557,9 +499,9 @@ class DashboardController extends Controller
             default => $query->orderBy('created_at', 'asc'),
         };
 
-        
-        $denda = (clone $query)->where('user_id', auth()->user()->id_user)->where('denda', '>', 0)->get();
-        $semuaDenda = (clone $query)->where('denda', '>', 0)->get();
+
+        $denda = (clone $query)->where('user_id', auth()->user()->id_user)->get();
+        $semuaDenda = (clone $query)->get();
 
         return view('dashboard.denda', [
             'denda' => $denda,
@@ -567,29 +509,71 @@ class DashboardController extends Controller
         ]);
     }
 
+    // public function bayar(Request $request, $id)
+    // {
+    //     $request->validate([
+    //         'pembayaran' => 'required|numeric|min:1'
+    //     ]);
+
+    //     $transaksi = Transaksi::findOrFail($id);
+
+    //     if ($transaksi->denda <= 0) {
+    //         return back()->with('error', 'Tidak ada denda yang harus dibayar');
+    //     }
+
+    //     if ($request->pembayaran > $transaksi->denda) {
+    //         return back()->with('error', 'Pembayaran melebihi total denda');
+    //     }
+
+    //     $sisaDenda = $transaksi->denda - $request->pembayaran;
+
+    //     $transaksi->update([
+    //         'denda' => $sisaDenda,
+    //         'status_denda' => $sisaDenda == 0 ? 'lunas' : 'belum_bayar'
+    //     ]);
+
+    //     return Redirect()->back()->with('success', 'Pembayaran denda berhasil');
+    // }
+
     public function bayar(Request $request, $id)
     {
         $request->validate([
             'pembayaran' => 'required|numeric|min:1'
         ]);
 
-        $transaksi = Transaksi::findOrFail($id);
+        $denda = PembayaranDenda::findOrFail($id);
 
-        if ($transaksi->denda <= 0) {
-            return back()->with('error', 'Tidak ada denda yang harus dibayar');
+        $totalDibayar = $denda->total_dibayar ?? 0;
+        $sisaDenda = $denda->total_denda - $totalDibayar;
+
+        // kalau sudah lunas
+        if ($sisaDenda <= 0) {
+            return back()->with('error', 'Denda sudah lunas');
         }
 
-        if ($request->pembayaran > $transaksi->denda) {
-            return back()->with('error', 'Pembayaran melebihi total denda');
+        // kalau bayar lebih dari sisa
+        if ($request->pembayaran > $sisaDenda) {
+            return back()->with('error', 'Pembayaran melebihi sisa denda');
         }
 
-        $sisaDenda = $transaksi->denda - $request->pembayaran;
+        // hitung total dibayar baru
+        $totalDibayarBaru = $denda->total_dibayar + $request->pembayaran;
 
-        $transaksi->update([
-            'denda' => $sisaDenda,
-            'status_denda' => $sisaDenda == 0 ? 'lunas' : 'belum_bayar'
+        // tentukan status
+        if ($totalDibayarBaru >= $denda->total_denda) {
+            $status = 'lunas';
+        } elseif ($totalDibayarBaru > 0) {
+            $status = 'sebagian';
+        } else {
+            $status = 'belum_bayar';
+        }
+
+        $denda->update([
+            'total_dibayar' => $totalDibayarBaru,
+            'metode_bayar' => 'cash',
+            'status_denda' => $status
         ]);
 
-        return Redirect()->back()->with('success', 'Pembayaran denda berhasil');
+        return back()->with('success', 'Pembayaran denda berhasil');
     }
 }

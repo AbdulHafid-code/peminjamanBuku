@@ -13,12 +13,12 @@
     <section id="beranda" class="pt-20">
       <div class="flex flex-col-reverse min-[990px]:flex-row items-center justify-between gap-x-20">
         <div class="flex-1 mt-15 min-[990px]:mt-0">
-          <p class="px-5 inline-block text-[12px] min-[750px]:text-[13px] min-[1040px]:text-[14px] py-2 bg-violet-800/30 text-violet-600 font-semibold rounded-full">Ayo Tingkatkan Literasi</p>
+          <p class="px-5 inline-block text-[12px] min-[750px]:text-[13px] min-[1040px]:text-[14px] py-2 bg-violet-800/30 text-violet-600 font-semibold rounded-full">Perpustakaan Digital SMKN 8 Jember</p>
           <h1 class="dark:text-gray-50 text-gray-950 text-[30px] min-[475px]:text-[35px] min-[670px]:text-[30px] min-[750px]:text-[35px] min-[1120px]:text-[43px] min-[1250px]:text-[50px] min-[1270px]:text-[55px] 2xl:text-7xl font-semibold leading-15 min-[1120px]:leading-20 2xl:leading-24 min-[1120px]:mt-2 mb-3 flex items-start min-[670px]:items-center min-[990px]:items-start flex-col min-[670px]:flex-row min-[990px]:flex-col">
-            Jelajahi Dunia Membaca Tanpa Batas
+            Tingkatkan Literasi Bersama Perpustakaan SMKN 8 Jember
           </h1>
         
-          <p class="text-base font-normal text-gray-700 dark:text-gray-300">Temukan berbagai koleksi buku, ajukan peminjaman dengan mudah, dan nikmati pengalaman membaca yang nyaman di TheBooks.</p>
+          <p class="text-base font-normal text-gray-700 dark:text-gray-300">Perpustakaan SMKN 8 Jember menyediakan berbagai koleksi buku pelajaran, referensi kejuruan, dan bacaan umum untuk mendukung kegiatan belajar siswa. Ajukan peminjaman dengan mudah dan nikmati pengalaman membaca yang nyaman dan modern.</p>
           <div class="flex flex-col gap-y-5 min-[510px]:gap-y-0 min-[510px]:flex-row gap-x-8 items-center mt-8 text-gray-800 dark:text-gray-200">
             <a href="{{ route('buku.home') }}" class="linkhoveranimation text-sm filled"><i class='bx bxs-book-alt'></i> Mulai Membacaa</a>
             <a href="#buku_populer" class="linkhoveranimation text-sm">Buku Populer <i class='bx bxs-book-heart'></i></a>
